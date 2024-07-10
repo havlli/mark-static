@@ -1,4 +1,4 @@
-<header class="fixed z-50 flex w-full justify-between p-4 items-center border-b border-gray-500 border-opacity-20">
+<header class="fixed z-50 flex w-full h-[74px] justify-between p-4 items-center border-b border-gray-500 border-opacity-20">
 	<span class="h3 ">
 		Tango procedures
 	</span>
