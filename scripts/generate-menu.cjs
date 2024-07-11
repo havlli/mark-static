@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require("path");
 
 const contentDir = path.resolve('content');
-const outputFile = path.resolve('static/menu.json');
+const outputFile = path.resolve('src/lib/data/sidebar.js');
 
 function buildJsonFromFileStructure(dirPath) {
-	const sections = fs.readdirSync(dirPath, { withFileTypes: true })
+	return fs.readdirSync(dirPath, { withFileTypes: true })
 		.filter(dirent => dirent.isDirectory())
 		.map(dirent => {
 			const section = dirent.name;
@@ -29,16 +29,15 @@ function buildJsonFromFileStructure(dirPath) {
 
 			return { section, categories };
 		});
-
-	return sections;
 }
 
-function writeDirectory(contentDir, outputFile) {
-	const data = buildJsonFromFileStructure(contentDir);
-	const formatedData = JSON.stringify(data, null, 2);
-	fs.writeFileSync(outputFile, formatedData);
+function generateJsFile(contentDir, outputFile) {
+	const menuStructure = buildJsonFromFileStructure(contentDir);
+	const formatedData = JSON.stringify(menuStructure, null, 2);
+	const jsContent = `export const sidebarData = ${ formatedData }`;
+	fs.writeFileSync(outputFile, jsContent);
 }
 
 console.log(contentDir);
 console.log(JSON.stringify(buildJsonFromFileStructure(contentDir)));
-writeDirectory(contentDir, outputFile);
+generateJsFile(contentDir, outputFile);
