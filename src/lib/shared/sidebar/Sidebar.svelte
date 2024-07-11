@@ -2,8 +2,6 @@
 	import MenuRail from '$lib/shared/sidebar/MenuRail.svelte';
 	import { currentTile } from '$lib/shared/sidebar/sidebar-service.js';
 	import { sidebarData } from '$lib/data/sidebar-data.js';
-
-	$: console.log($currentTile);
 </script>
 
 <aside class="grid grid-cols-[auto_1fr] h-full w-[360px] border-r border-gray-500 border-opacity-20 sticky">
