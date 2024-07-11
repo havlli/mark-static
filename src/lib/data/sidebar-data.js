@@ -1,6 +1,6 @@
 export const sidebarData = [
 	{
-		type: 'export', categories: [
+		section: 'export', categories: [
 			{
 				title: 'Category', subcategories: [
 					{ title: 'Subcategory', path: '' },
@@ -28,7 +28,7 @@ export const sidebarData = [
 		]
 	},
 	{
-		type: 'import', categories: [
+		section: 'import', categories: [
 			{
 				title: 'Category', subcategories: [
 					{ title: 'Subcategory', path: '' },
@@ -48,7 +48,7 @@ export const sidebarData = [
 		]
 	},
 	{
-		type: 'other', categories: [
+		section: 'other', categories: [
 			{
 				title: 'Category', subcategories: [
 					{ title: 'Subcategory', path: '' },

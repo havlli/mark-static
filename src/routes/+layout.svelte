@@ -7,7 +7,7 @@
 <Header />
 <div id="content" class="flex-auto w-full h-full pt-[74px] flex overflow-hidden">
 	<SidebarLeft />
-	<main>
+	<main class="overflow-y-auto">
 		<slot />
 	</main>
 </div>
