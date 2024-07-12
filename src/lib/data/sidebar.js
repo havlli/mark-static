@@ -44,7 +44,12 @@ export const sidebarData = [
       },
       {
         "title": "category2",
-        "subcategories": []
+        "subcategories": [
+          {
+            "title": "RANdomCapitalLeters",
+            "path": "/section2/category2/RANdomCapitalLeters"
+          }
+        ]
       }
     ]
   }

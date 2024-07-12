@@ -4,5 +4,6 @@ import { defineConfig } from 'vite';
 import dataGenerator from './vite-plugin-generate-data.js';
 
 export default defineConfig({
-	plugins: [sveltekit(), purgeCss(), dataGenerator()]
+	plugins: [sveltekit(), purgeCss(), dataGenerator()],
+	server: { fs: { allow: ['..'] } }
 });
