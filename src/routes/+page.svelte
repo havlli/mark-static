@@ -1,10 +1,5 @@
 <script>
 	import { sidebarData } from '$lib/data/sidebar.js';
-	import { onMount } from 'svelte';
-
-	onMount(() => {
-		console.log(sidebarData);
-	})
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
