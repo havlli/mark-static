@@ -12,6 +12,10 @@ export const sidebarData = [
           {
             "title": "subcategory2",
             "path": "/section1/category1-main/subcategory2"
+          },
+          {
+            "title": "Test-Topic",
+            "path": "/section1/category1-main/Test-Topic"
           }
         ]
       },
