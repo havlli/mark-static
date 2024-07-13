@@ -34,20 +34,20 @@ export const sidebarData = [
     "section": "section2",
     "categories": [
       {
-        "title": "category1",
+        "title": "Category-2",
         "subcategories": [
           {
-            "title": "subcategory1",
-            "path": "/section2/category1/subcategory1"
+            "title": "RANdomCapitalLeters",
+            "path": "/section2/Category-2/RANdomCapitalLeters"
           }
         ]
       },
       {
-        "title": "category2",
+        "title": "category1",
         "subcategories": [
           {
-            "title": "RANdomCapitalLeters",
-            "path": "/section2/category2/RANdomCapitalLeters"
+            "title": "Random-Long-Name-That-Should-Not-Fit",
+            "path": "/section2/category1/Random-Long-Name-That-Should-Not-Fit"
           }
         ]
       }

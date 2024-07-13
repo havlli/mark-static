@@ -1,13 +1,14 @@
 <script>
 	import { AppRail, AppRailTile } from '@skeletonlabs/skeleton';
-	import { currentTile, formatFirstCharUppercase } from './sidebar-service.js';
+	import { currentTile } from './sidebar-store.js';
 	import { sidebarData } from '$lib/data/sidebar.js';
+	import { formatFirstCharUppercase } from '$lib/text-utils.js';
 
 	let selectedTile = $currentTile;
 	$: $currentTile = selectedTile;
 </script>
 
-<div class="border-r border-gray-500 border-opacity-20">
+<div class="border-r border-gray-500 border-opacity-20 w-20">
 	<AppRail background="transparent" >
 		{#each sidebarData as tile}
 			<AppRailTile bind:group={selectedTile} name={tile.section} value={tile.section} title={tile.section}>
