@@ -5,7 +5,7 @@
 	import { formatTitle } from '$lib/text-utils.js';
 </script>
 
-<aside class="grid grid-cols-[auto_1fr] w-[360px] h-full border-r border-gray-500 border-opacity-20 sticky gap-0">
+<div class="grid grid-cols-[auto_1fr] w-[360px] h-full border-r border-gray-500 border-opacity-20 sticky gap-0">
 	<MenuRail />
 	<section class="p-4 pb-20 space-y-4 overflow-y-auto h-full">
 		{#each sidebarData as sidebarSection}
@@ -28,4 +28,4 @@
 			{/if}
 		{/each}
 	</section>
-</aside>
+</div>
