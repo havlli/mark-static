@@ -8,8 +8,6 @@ export async function load({ params, fetch }) {
 
 	console.log(markdown);
 	return {
-			title: subcategory,
-			content: html,
-			test: "text"
+			content: html
 	};
 }

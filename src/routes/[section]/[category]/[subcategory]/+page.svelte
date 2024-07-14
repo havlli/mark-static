@@ -1,11 +1,10 @@
 <script>
-	export let data;
+		export let data;
 </script>
 
-<article>
-	<h1>{data.title}</h1>
-	{@html data.content}
-</article>
+<section>
+		{@html data.content}
+</section>
 
 <style lang="postcss">
 	h1 {
