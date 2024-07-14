@@ -5,7 +5,7 @@
 </script>
 
 <Header />
-<div id="content" class="flex-auto w-full h-full pt-[74px] flex overflow-hidden">
+<div class="flex-auto w-full h-full pt-[74px] flex overflow-hidden">
 	<aside class="w-auto h-full">
 		<SidebarLeft />
 	</aside>
