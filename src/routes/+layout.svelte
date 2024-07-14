@@ -9,7 +9,7 @@
 	<aside class="w-auto h-full">
 		<SidebarLeft />
 	</aside>
-	<main class="overflow-y-auto flex-auto w-full">
+	<main id="page" class="overflow-y-auto flex-auto w-full scroll-smooth">
 		<slot />
 	</main>
 </div>
