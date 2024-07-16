@@ -86,4 +86,16 @@
     :global(.page-content tbody > tr:hover) {
         @apply bg-gray-500 bg-opacity-10;
     }
+
+		:global(.page-content a) {
+				@apply text-primary-500 hover:underline;
+		}
+
+    :global(.page-content a:visited) {
+        @apply text-secondary-500;
+    }
+
+    :global(.page-content a:focus) {
+        @apply outline-none ring-2 ring-primary-300;
+    }
 </style>
