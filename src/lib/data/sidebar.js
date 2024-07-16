@@ -16,6 +16,10 @@ export const sidebarData = [
           {
             "title": "Test-Topic",
             "path": "/section1/category1-main/Test-Topic"
+          },
+          {
+            "title": "Test",
+            "path": "/section1/category1-main/Test"
           }
         ]
       },
@@ -52,6 +56,20 @@ export const sidebarData = [
           {
             "title": "Random-Long-Name-That-Should-Not-Fit",
             "path": "/section2/category1/Random-Long-Name-That-Should-Not-Fit"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "section3",
+    "categories": [
+      {
+        "title": "category",
+        "subcategories": [
+          {
+            "title": "Test-Topic",
+            "path": "/section3/category/Test-Topic"
           }
         ]
       }
