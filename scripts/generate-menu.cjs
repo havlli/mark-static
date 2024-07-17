@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require("path");
 
-const contentDir = path.resolve('content');
+const contentDir = path.resolve('static/content');
 const outputFile = path.resolve('src/lib/data/sidebar.js');
 
 function buildJsonFromFileStructure(dirPath) {

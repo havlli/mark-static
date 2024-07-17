@@ -3,7 +3,8 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
-const contentPath = path.resolve(dirname, 'content');
+const contentDir = 'static/content';
+const contentPath = path.resolve(dirname, contentDir);
 
 function runScriptWithNode() {
 	const scriptPath = path.resolve(dirname, 'scripts/generate-menu.cjs');
