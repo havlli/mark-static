@@ -1,19 +1,40 @@
 <script>
 	import { onMount } from 'svelte';
+	import ImageModal from './ImageModal.svelte';
+	import { beforeNavigate } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	export let data;
+	let imageModal;
+	let mounted;
 
 	const handleImageClicked = (event) => {
-		const image = event.target;
-		image.classList.toggle('fullscreen');
-	}
+		imageModal.handleImage(event.target);
+	};
 
-	onMount(() => {
+	const addClickHandlerForParsedImages = () => {
 		const parsedImages = document.querySelectorAll('.page-content img');
 		parsedImages.forEach(image => image.addEventListener('click', handleImageClicked));
+		console.log('registered listeners')
+	};
+
+	onMount(() => {
+		addClickHandlerForParsedImages();
+		mounted = true;
+	});
+
+	// Unregister listeners
+	beforeNavigate(() => { mounted = false; });
+
+	$: console.log(mounted);
+
+	// Try to find better way to cause onMount function run on page change
+	page.subscribe(() => {
+		addClickHandlerForParsedImages();
 	})
 </script>
 
+<ImageModal bind:this={imageModal}/>
 <section class="page-content">
 	{@html data.content}
 </section>
@@ -109,25 +130,5 @@
 
     :global(.page-content a:focus) {
         @apply outline-none ring-2 ring-primary-300;
-    }
-
-    :global(.fullscreen) {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 9999;
-        cursor: zoom-out; /* Change cursor on fullscreen */
-        object-fit: contain; /* Ensure image fits within the viewport */
-        background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-        transition: transform 0.3s ease;
-    }
-
-    :global(.fullscreen img) {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        cursor: zoom-out; /* Change cursor on fullscreen */
     }
 </style>
