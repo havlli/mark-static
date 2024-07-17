@@ -1,7 +1,7 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
-	import ImageModal from './ImageModal.svelte';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import ImageModal from './ImageModal.svelte';
 
 	export let data;
 
@@ -128,5 +128,9 @@
 
     :global(.page-content a:focus) {
         @apply outline-none ring-2 ring-primary-300;
+    }
+
+    :global(.page-content img) {
+        @apply cursor-zoom-in;
     }
 </style>
