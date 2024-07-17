@@ -30,6 +30,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@sveltejs/adapter-static": "^3.0.2",
     "marked": "^13.0.2"
   }
 }
