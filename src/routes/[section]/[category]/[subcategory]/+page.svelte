@@ -1,37 +1,35 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import ImageModal from './ImageModal.svelte';
-	import { beforeNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 
 	export let data;
+
 	let imageModal;
-	let mounted;
+	const handleImageClicked = (event) => imageModal.handleImage(event.target);
 
-	const handleImageClicked = (event) => {
-		imageModal.handleImage(event.target);
-	};
+	let imageListeners = [];
 
-	const addClickHandlerForParsedImages = () => {
+	const registerImageListeners = () => {
 		const parsedImages = document.querySelectorAll('.page-content img');
-		parsedImages.forEach(image => image.addEventListener('click', handleImageClicked));
-		console.log('registered listeners')
+		parsedImages.forEach(image => {
+			const listener = handleImageClicked.bind(null);
+			image.addEventListener('click', listener);
+			imageListeners.push({ element: image, listener});
+		});
 	};
 
-	onMount(() => {
-		addClickHandlerForParsedImages();
-		mounted = true;
-	});
+	const unregisterImageListeners = () => {
+		imageListeners.forEach(({ element, listener }) => {
+			element.removeEventListener('click', listener);
+		});
+		imageListeners = [];
+	}
 
-	// Unregister listeners
-	beforeNavigate(() => { mounted = false; });
-
-	$: console.log(mounted);
-
-	// Try to find better way to cause onMount function run on page change
-	page.subscribe(() => {
-		addClickHandlerForParsedImages();
-	})
+	onMount(() => registerImageListeners());
+	afterNavigate(() => registerImageListeners());
+	onDestroy(() => unregisterImageListeners());
+	beforeNavigate(() => unregisterImageListeners());
 </script>
 
 <ImageModal bind:this={imageModal}/>
