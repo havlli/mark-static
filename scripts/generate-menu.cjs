@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = require("path");
+const path = require('path');
 
 const contentDir = path.resolve('static/content');
 const outputFile = path.resolve('src/lib/data/sidebar.js');
@@ -34,10 +34,10 @@ function buildJsonFromFileStructure(dirPath) {
 function generateJsFile(contentDir, outputFile) {
 	const menuStructure = buildJsonFromFileStructure(contentDir);
 	const formatedData = JSON.stringify(menuStructure, null, 2);
-	const jsContent = `export const sidebarData = ${ formatedData }`;
+	const jsContent = `export const sidebarData = ${formatedData}`;
 	fs.writeFileSync(outputFile, jsContent);
 }
 
-console.log(contentDir);
-console.log(JSON.stringify(buildJsonFromFileStructure(contentDir)));
+console.log(`Generating sidebar data from ${contentDir}\n\tinto ${outputFile}`);
 generateJsFile(contentDir, outputFile);
+console.log('Sidebar data file generated successfully!\n');

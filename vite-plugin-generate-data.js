@@ -6,14 +6,16 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 const contentDir = 'static/content';
 const contentPath = path.resolve(dirname, contentDir);
 
-function runScriptWithNode() {
-	const scriptPath = path.resolve(dirname, 'scripts/generate-menu.cjs');
-	execSync(`node ${scriptPath}`, { stdio: 'inherit' });
+function runScriptsWithNode() {
+	const generateMenuPath = path.resolve(dirname, 'scripts/generate-menu.cjs');
+	const generateSearchIndexPath = path.resolve(dirname, 'scripts/generate-search-index.cjs');
+	execSync(`node ${generateMenuPath}`, { stdio: 'inherit' });
+	execSync(`node ${generateSearchIndexPath}`, { stdio: 'inherit' });
 }
 
 function handleChanges(filePath) {
 	if (filePath.startsWith(contentPath)) {
-		runScriptWithNode();
+		runScriptsWithNode();
 	}
 }
 
@@ -21,7 +23,7 @@ export default function generateDataPlugin() {
 	return {
 		name: 'vite-plugin-generate-data',
 		buildStart() {
-			runScriptWithNode();
+			runScriptsWithNode();
 		},
 		configureServer(server) {
 			server.watcher.add(contentPath);
