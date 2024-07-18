@@ -8,7 +8,6 @@ const searchIndexOutputPath = path.resolve('src/lib/data/search-index.js');
 async function generateSearchIndex() {
 
 	const { sidebarData } = await import(sidebarDataURL);
-
 	if (!sidebarData) {
 		throw new Error('imported data from generated sidebar data file is undefined');
 	}
@@ -29,7 +28,7 @@ async function generateSearchIndex() {
 	});
 
 	const formatedData = JSON.stringify(searchIndex, null, 2);
-	const jsContent = `const searchIndex = ${ formatedData };\nexport default searchIndex;`;
+	const jsContent = `export const searchIndex = ${ formatedData };`;
 
 	console.log(`Generating search index into ${searchIndexOutputPath}`);
 	fs.writeFileSync(searchIndexOutputPath, jsContent);

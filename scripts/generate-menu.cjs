@@ -34,7 +34,7 @@ function buildJsonFromFileStructure(dirPath) {
 function generateJsFile(contentDir, outputFile) {
 	const menuStructure = buildJsonFromFileStructure(contentDir);
 	const formatedData = JSON.stringify(menuStructure, null, 2);
-	const jsContent = `export const sidebarData = ${formatedData}`;
+	const jsContent = `export const sidebarData = ${formatedData};`;
 	fs.writeFileSync(outputFile, jsContent);
 }
 

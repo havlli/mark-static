@@ -1,4 +1,4 @@
-const searchIndex = [
+export const searchIndex = [
   {
     "subcategory": "subcategory1",
     "path": "/section1/category1-main/subcategory1"
@@ -36,4 +36,3 @@ const searchIndex = [
     "path": "/section3/category/Test-Topic"
   }
 ];
-export default searchIndex;
