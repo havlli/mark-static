@@ -5,7 +5,20 @@
 	<nav class="flex gap-1">
 		<button class="btn hover:variant-soft-primary">Menu Item</button>
 		<button class="btn hover:variant-soft-primary">Menu Item</button>
-		<button class="btn hover:variant-soft-primary">Menu Item</button>
-		<button class="btn hover:variant-soft-primary">Menu Item</button>
+		<div class="md:inline md:ml-4">
+			<button class="btn space-x-4 variant-soft hover:variant-soft-primary">
+				<i class="fa-solid fa-magnifying-glass text-sm"></i>
+				<small class="hidden md:inline-block">Ctrl+K</small>
+			</button>
+		</div>
+		<section class="hidden sm:inline-flex space-x-1">
+			<a href="/" class="btn-icon hover:variant-soft-primary">
+				<i class="fa-brands fa-github text-lg"></i>
+			</a>
+		</section>
 	</nav>
 </header>
+
+<style>
+
+</style>
