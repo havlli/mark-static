@@ -18,8 +18,8 @@ async function generateSearchIndex() {
 		section.categories.forEach(category => {
 			category.subcategories.forEach(subcategory => {
 				searchIndex.push({
-					section: sidebarData.section,
-					category: category.time,
+					section: section.section,
+					category: category.title,
 					subcategory: subcategory.title,
 					path: subcategory.path
 				});

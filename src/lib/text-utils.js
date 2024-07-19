@@ -9,3 +9,7 @@ export const formatFirstCharUppercase = (value) => {
 export const formatTitle = (title) => {
 	return removeDashes(title);
 };
+
+export const toLowerCaseNoDashes = (value) => {
+	return removeDashes(value.toLowerCase());
+}
