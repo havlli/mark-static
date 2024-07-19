@@ -1,6 +1,8 @@
 <script>
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import SearchModal from './SearchModal.svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { browser } from '$app/environment';
 
 	const modalStore = getModalStore();
 
@@ -10,15 +12,29 @@
 		type: 'component',
 		component: searchModalComponent,
 	};
+
+	const handleKeydown = (event) => {
+		if (event.ctrlKey && event.key === 'k') {
+			event.preventDefault();
+			modalStore.clear();
+			handleSearchClick();
+		}
+	};
+	const handleSearchClick = () => modalStore.trigger(modalSettings);
+
+	if (browser) {
+		onMount(() => document.addEventListener('keydown', handleKeydown));
+		onDestroy(() => document.removeEventListener('keydown', handleKeydown));
+	}
 </script>
 
 <header class="fixed z-50 flex w-full h-[74px] justify-between p-4 items-center border-b border-gray-500 border-opacity-20">
-	<span class="h3 ">Tprocedures</span>
+	<a class="h3" href="/">Tprocedures</a>
 	<nav class="flex gap-1">
-		<button class="btn hover:variant-soft-primary">Menu Item</button>
-		<button class="btn hover:variant-soft-primary">Menu Item</button>
+		<a class="btn hover:variant-soft-primary" href="/instructions">Instructions</a>
+		<a class="btn hover:variant-soft-primary" href="/">About</a>
 		<div class="md:inline md:ml-4">
-			<button class="btn space-x-4 variant-soft hover:variant-soft-primary" on:click={() => modalStore.trigger(modalSettings)}>
+			<button class="btn space-x-4 variant-soft hover:variant-soft-primary" on:click={handleSearchClick}>
 				<i class="fa-solid fa-magnifying-glass text-sm"></i>
 				<small class="hidden md:inline-block">Ctrl+K</small>
 			</button>
