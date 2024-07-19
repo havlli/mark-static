@@ -21,7 +21,7 @@ function buildJsonFromFileStructure(dirPath) {
 						.filter(dirent => dirent.isFile() && dirent.name.endsWith('.md'))
 						.map(file => ({
 							title: path.basename(file.name, '.md'),
-							path: `/${section}/${category}/${path.basename(file.name, '.md')}`
+							path: `/instructions/${section}/${category}/${path.basename(file.name, '.md')}`
 						}));
 
 					return { title: category, subcategories };

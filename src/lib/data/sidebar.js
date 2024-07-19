@@ -7,19 +7,19 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "subcategory1",
-            "path": "/section1/category1-main/subcategory1"
+            "path": "/instructions/section1/category1-main/subcategory1"
           },
           {
             "title": "subcategory2",
-            "path": "/section1/category1-main/subcategory2"
+            "path": "/instructions/section1/category1-main/subcategory2"
           },
           {
             "title": "Test-Topic",
-            "path": "/section1/category1-main/Test-Topic"
+            "path": "/instructions/section1/category1-main/Test-Topic"
           },
           {
             "title": "Test",
-            "path": "/section1/category1-main/Test"
+            "path": "/instructions/section1/category1-main/Test"
           }
         ]
       },
@@ -28,11 +28,11 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "subcategory1",
-            "path": "/section1/category2/subcategory1"
+            "path": "/instructions/section1/category2/subcategory1"
           },
           {
             "title": "subcategory2",
-            "path": "/section1/category2/subcategory2"
+            "path": "/instructions/section1/category2/subcategory2"
           }
         ]
       }
@@ -46,7 +46,7 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "RANdomCapitalLeters",
-            "path": "/section2/Category-2/RANdomCapitalLeters"
+            "path": "/instructions/section2/Category-2/RANdomCapitalLeters"
           }
         ]
       },
@@ -55,7 +55,7 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "Random-Long-Name-That-Should-Not-Fit",
-            "path": "/section2/category1/Random-Long-Name-That-Should-Not-Fit"
+            "path": "/instructions/section2/category1/Random-Long-Name-That-Should-Not-Fit"
           }
         ]
       }
@@ -69,7 +69,7 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "Test-Topic",
-            "path": "/section3/category/Test-Topic"
+            "path": "/instructions/section3/category/Test-Topic"
           }
         ]
       }

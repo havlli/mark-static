@@ -1,7 +1,3 @@
-<script>
-	import { sidebarData } from '$lib/data/sidebar.js';
-</script>
-
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-5">
 		<h1 class="h1">Let's get cracking bones!</h1>
@@ -14,7 +10,4 @@
 			</li>
 		</ul>
 	</div>
-	<pre>
-		{JSON.stringify(sidebarData, null, 2)}
-	</pre>
 </div>

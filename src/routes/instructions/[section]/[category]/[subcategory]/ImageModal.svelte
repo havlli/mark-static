@@ -10,7 +10,6 @@
 		alt = image.alt;
 		isVisible = true;
 	}
-
 </script>
 
 {#if isVisible}
