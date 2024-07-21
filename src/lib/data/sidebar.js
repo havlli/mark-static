@@ -54,6 +54,10 @@ export const sidebarData = [
         "title": "category1",
         "subcategories": [
           {
+            "title": "Content-With-Images",
+            "path": "/instructions/section2/category1/Content-With-Images"
+          },
+          {
             "title": "Random-Long-Name-That-Should-Not-Fit",
             "path": "/instructions/section2/category1/Random-Long-Name-That-Should-Not-Fit"
           }

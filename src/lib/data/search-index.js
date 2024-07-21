@@ -44,6 +44,12 @@ export const searchIndex = [
   {
     "section": "section2",
     "category": "category1",
+    "subcategory": "Content-With-Images",
+    "path": "/instructions/section2/category1/Content-With-Images"
+  },
+  {
+    "section": "section2",
+    "category": "category1",
     "subcategory": "Random-Long-Name-That-Should-Not-Fit",
     "path": "/instructions/section2/category1/Random-Long-Name-That-Should-Not-Fit"
   },
