@@ -2,20 +2,14 @@ export const searchIndex = [
   {
     "section": "section1",
     "category": "category1-main",
-    "subcategory": "subcategory1",
-    "path": "/instructions/section1/category1-main/subcategory1"
+    "subcategory": "subcategory-1",
+    "path": "/instructions/section1/category1-main/subcategory-1"
   },
   {
     "section": "section1",
     "category": "category1-main",
-    "subcategory": "subcategory2",
-    "path": "/instructions/section1/category1-main/subcategory2"
-  },
-  {
-    "section": "section1",
-    "category": "category1-main",
-    "subcategory": "Test-Topic",
-    "path": "/instructions/section1/category1-main/Test-Topic"
+    "subcategory": "subcategory-2",
+    "path": "/instructions/section1/category1-main/subcategory-2"
   },
   {
     "section": "section1",
@@ -25,15 +19,21 @@ export const searchIndex = [
   },
   {
     "section": "section1",
-    "category": "category2",
-    "subcategory": "subcategory1",
-    "path": "/instructions/section1/category2/subcategory1"
+    "category": "category1-main",
+    "subcategory": "Test-Topic",
+    "path": "/instructions/section1/category1-main/Test-Topic"
   },
   {
     "section": "section1",
     "category": "category2",
-    "subcategory": "subcategory2",
-    "path": "/instructions/section1/category2/subcategory2"
+    "subcategory": "subcategory-1",
+    "path": "/instructions/section1/category2/subcategory-1"
+  },
+  {
+    "section": "section1",
+    "category": "category2",
+    "subcategory": "subcategory-2",
+    "path": "/instructions/section1/category2/subcategory-2"
   },
   {
     "section": "section2",

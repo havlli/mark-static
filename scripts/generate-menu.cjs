@@ -1,43 +1,46 @@
 const fs = require('fs');
 const path = require('path');
 
-const contentDir = path.resolve('static/content');
-const outputFile = path.resolve('src/lib/data/sidebar.js');
-
-function buildJsonFromFileStructure(dirPath) {
-	return fs.readdirSync(dirPath, { withFileTypes: true })
+const getDirectories = (srcPath) => {
+	return fs.readdirSync(srcPath, { withFileTypes: true })
 		.filter(dirent => dirent.isDirectory())
-		.map(dirent => {
-			const section = dirent.name;
-			const sectionPath = path.join(dirPath, section);
+		.map(dirent => dirent.name);
+};
 
-			const categories = fs.readdirSync(sectionPath, { withFileTypes: true })
-				.filter(dirent => dirent.isDirectory())
-				.map(dirent => {
-					const category = dirent.name;
-					const categoryPath = path.join(sectionPath, category);
+const getSubcategories = (section, category, categoryPath) => {
+	return getDirectories(categoryPath).map(subcategory => ({
+		title: subcategory,
+		path: `/instructions/${section}/${category}/${subcategory}`
+	}));
+};
 
-					const subcategories = fs.readdirSync(categoryPath, { withFileTypes: true })
-						.filter(dirent => dirent.isFile() && dirent.name.endsWith('.md'))
-						.map(file => ({
-							title: path.basename(file.name, '.md'),
-							path: `/instructions/${section}/${category}/${path.basename(file.name, '.md')}`
-						}));
+const getCategories = (section, sectionPath) => {
+	return getDirectories(sectionPath).map(category => {
+		const categoryPath = path.join(sectionPath, category);
+		const subcategories = getSubcategories(section, category, categoryPath);
+		return { title: category, subcategories };
+	});
+};
 
-					return { title: category, subcategories };
-				});
+const buildJsonFromFolderStructure = (dirPath) => {
+	return getDirectories(dirPath).map(section => {
+		const sectionPath = path.join(dirPath, section);
+		const categories = getCategories(section, sectionPath);
+		return { section, categories };
+	});
+};
 
-			return { section, categories };
-		});
-}
-
-function generateJsFile(contentDir, outputFile) {
-	const menuStructure = buildJsonFromFileStructure(contentDir);
-	const formatedData = JSON.stringify(menuStructure, null, 2);
+const generateDataToJsFile = (contentDir, outputFile) => {
+	const generatedData = buildJsonFromFolderStructure(contentDir);
+	const formatedData = JSON.stringify(generatedData, null, 2);
 	const jsContent = `export const sidebarData = ${formatedData};`;
+
 	fs.writeFileSync(outputFile, jsContent);
 }
 
+const contentDir = path.resolve('static/content');
+const outputFile = path.resolve('src/lib/data/sidebar.js');
+
 console.log(`Generating sidebar data from ${contentDir}\n\tinto ${outputFile}`);
-generateJsFile(contentDir, outputFile);
+generateDataToJsFile(contentDir, outputFile);
 console.log('Sidebar data file generated successfully!\n');

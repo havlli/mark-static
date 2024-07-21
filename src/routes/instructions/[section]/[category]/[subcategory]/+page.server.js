@@ -3,7 +3,7 @@ import { sidebarData } from '$lib/data/sidebar.js';
 
 export async function load({ params, fetch }) {
 	const { section, category, subcategory } = params;
-	const response = await fetch(`/content/${section}/${category}/${subcategory}.md`);
+	const response = await fetch(`/content/${section}/${category}/${subcategory}/content.md`);
 	const markdown = await response.text();
 	const html = marked(markdown);
 

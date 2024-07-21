@@ -6,20 +6,20 @@ export const sidebarData = [
         "title": "category1-main",
         "subcategories": [
           {
-            "title": "subcategory1",
-            "path": "/instructions/section1/category1-main/subcategory1"
+            "title": "subcategory-1",
+            "path": "/instructions/section1/category1-main/subcategory-1"
           },
           {
-            "title": "subcategory2",
-            "path": "/instructions/section1/category1-main/subcategory2"
-          },
-          {
-            "title": "Test-Topic",
-            "path": "/instructions/section1/category1-main/Test-Topic"
+            "title": "subcategory-2",
+            "path": "/instructions/section1/category1-main/subcategory-2"
           },
           {
             "title": "Test",
             "path": "/instructions/section1/category1-main/Test"
+          },
+          {
+            "title": "Test-Topic",
+            "path": "/instructions/section1/category1-main/Test-Topic"
           }
         ]
       },
@@ -27,12 +27,12 @@ export const sidebarData = [
         "title": "category2",
         "subcategories": [
           {
-            "title": "subcategory1",
-            "path": "/instructions/section1/category2/subcategory1"
+            "title": "subcategory-1",
+            "path": "/instructions/section1/category2/subcategory-1"
           },
           {
-            "title": "subcategory2",
-            "path": "/instructions/section1/category2/subcategory2"
+            "title": "subcategory-2",
+            "path": "/instructions/section1/category2/subcategory-2"
           }
         ]
       }
