@@ -3,6 +3,7 @@
 	import { currentTile } from '$lib/shared/sidebar/sidebar-store.js';
 	import { sidebarData } from '$lib/data/sidebar.js';
 	import { formatTitle } from '$lib/text-utils.js';
+	import { page } from '$app/stores';
 </script>
 
 <div class="grid grid-cols-[auto_1fr] w-[360px] h-full border-r border-gray-500 border-opacity-20 sticky gap-0">
@@ -16,7 +17,7 @@
 						<ul>
 							{#each category.subcategories as subcategory}
 							<li>
-								<a href={subcategory.path}>{formatTitle(subcategory.title)}</a>
+								<a href={subcategory.path} class:bg-primary-active-token={$page.url.pathname.endsWith(subcategory.path)}>{formatTitle(subcategory.title)}</a>
 							</li>
 							{/each}
 						</ul>
