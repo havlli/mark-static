@@ -1,5 +1,5 @@
 <script>
-	import { getModalStore } from '@skeletonlabs/skeleton';
+	import { getModalStore, LightSwitch } from '@skeletonlabs/skeleton';
 	import SearchModal from './SearchModal.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import { browser } from '$app/environment';
@@ -30,7 +30,7 @@
 
 <header class="fixed z-50 flex w-full h-[74px] justify-between p-4 items-center border-b border-gray-500 border-opacity-20">
 	<a class="h3" href="/">Tprocedures</a>
-	<nav class="flex gap-1">
+	<nav class="flex gap-2">
 		<a class="btn hover:variant-soft-primary" href="/instructions">Instructions</a>
 		<a class="btn hover:variant-soft-primary" href="/">About</a>
 		<div class="md:inline md:ml-4">
@@ -39,10 +39,13 @@
 				<small class="hidden md:inline-block">Ctrl+K</small>
 			</button>
 		</div>
-		<section class="hidden sm:inline-flex space-x-1">
+		<section class="hidden sm:inline-flex space-x-4">
 			<a href="/" class="btn-icon hover:variant-soft-primary">
 				<i class="fa-brands fa-github text-lg"></i>
 			</a>
+		</section>
+		<section class="inline-flex items-center pb-1">
+			<LightSwitch/>
 		</section>
 	</nav>
 </header>
