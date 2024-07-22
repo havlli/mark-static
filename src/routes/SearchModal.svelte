@@ -55,7 +55,7 @@
 							 href={subcategory.path}
 							 on:click={() => modal.close()}>
 							<div class="flex items-center gap-4">
-								<i class="fa-regular fa-file"></i>
+								<i class="fa-solid fa-file"></i>
 								<span class="flex-auto font-bold opacity-75">{removeDashes(subcategory.subcategory)}</span>
 							</div>
 							<span class="hidden md:block text-xs opacity-50">{subcategory.path}</span>
