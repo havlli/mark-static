@@ -7,19 +7,19 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "subcategory-1",
-            "path": "/instructions/section1/category1-main/subcategory-1"
+            "path": "/content/section1/category1-main/subcategory-1"
           },
           {
             "title": "subcategory-2",
-            "path": "/instructions/section1/category1-main/subcategory-2"
+            "path": "/content/section1/category1-main/subcategory-2"
           },
           {
             "title": "Test",
-            "path": "/instructions/section1/category1-main/Test"
+            "path": "/content/section1/category1-main/Test"
           },
           {
             "title": "Test-Topic",
-            "path": "/instructions/section1/category1-main/Test-Topic"
+            "path": "/content/section1/category1-main/Test-Topic"
           }
         ]
       },
@@ -28,11 +28,11 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "subcategory-1",
-            "path": "/instructions/section1/category2/subcategory-1"
+            "path": "/content/section1/category2/subcategory-1"
           },
           {
             "title": "subcategory-2",
-            "path": "/instructions/section1/category2/subcategory-2"
+            "path": "/content/section1/category2/subcategory-2"
           }
         ]
       }
@@ -46,7 +46,7 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "RANdomCapitalLeters",
-            "path": "/instructions/section2/Category-2/RANdomCapitalLeters"
+            "path": "/content/section2/Category-2/RANdomCapitalLeters"
           }
         ]
       },
@@ -55,11 +55,11 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "Content-With-Images",
-            "path": "/instructions/section2/category1/Content-With-Images"
+            "path": "/content/section2/category1/Content-With-Images"
           },
           {
             "title": "Random-Long-Name-That-Should-Not-Fit",
-            "path": "/instructions/section2/category1/Random-Long-Name-That-Should-Not-Fit"
+            "path": "/content/section2/category1/Random-Long-Name-That-Should-Not-Fit"
           }
         ]
       }
@@ -73,7 +73,7 @@ export const sidebarData = [
         "subcategories": [
           {
             "title": "Test-Topic",
-            "path": "/instructions/section3/category/Test-Topic"
+            "path": "/content/section3/category/Test-Topic"
           }
         ]
       }

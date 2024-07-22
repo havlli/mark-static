@@ -29,9 +29,9 @@
 </script>
 
 <header class="fixed z-50 flex w-full h-[74px] justify-between p-4 items-center border-b border-gray-500 border-opacity-20">
-	<a class="h3" href="/">Tprocedures</a>
-	<nav class="flex gap-2">
-		<a class="btn hover:variant-soft-primary" href="/instructions">Instructions</a>
+	<a class="h3 font-bold underline decoration-double decoration-1 decoration-primary-500" href="/">mark-static</a>
+	<nav class="flex gap-1.5">
+		<a class="btn hover:variant-soft-primary" href="/content">Documentation</a>
 		<a class="btn hover:variant-soft-primary" href="/">About</a>
 		<div class="md:inline md:ml-4">
 			<button class="btn space-x-4 variant-soft hover:variant-soft-primary" on:click={handleSearchClick}>

@@ -10,7 +10,7 @@ const getDirectories = (srcPath) => {
 const getSubcategories = (section, category, categoryPath) => {
 	return getDirectories(categoryPath).map(subcategory => ({
 		title: subcategory,
-		path: `/instructions/${section}/${category}/${subcategory}`
+		path: `/content/${section}/${category}/${subcategory}`
 	}));
 };
 
