@@ -38,14 +38,13 @@
 	$: $searchResults = search(query);
 </script>
 
-<div
-	class="card bg-surface-100/60 dark:bg-surface-500/30 backdrop-blur-lg overflow-hidden w-full max-w-[800px] shadow-xl mt-8 mb-auto">
+<div class="card !bg-surface-100/60 dark:!bg-surface-500/30 backdrop-blur-lg overflow-hidden w-full max-w-[800px] shadow-xl mt-8 mb-auto">
 	<header class="bg-surface-300-600-token flex items-center">
 		<i class="fa-solid fa-magnifying-glass text-xl ml-4"></i>
 		<input type="search" placeholder="Search..." bind:value={query}
 					 class="bg-transparent border-0 ring-0 focus:ring-0 w-full m-2 ml-4 text-lg px-3 py-2">
 	</header>
-	<nav class="list-nav overflow-x-auto max-h-[480px] hide-scrollbar">
+	<nav class="list-nav overflow-x-auto max-h-[480px] hide-scrollbar bg-transparent">
 		{#each $searchResults as groupedSearchResults}
 			<div class="text-sm font-bold p-4">{removeDashes(groupedSearchResults.category)}</div>
 			<ul>

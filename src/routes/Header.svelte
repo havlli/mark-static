@@ -29,11 +29,16 @@
 </script>
 
 <header class="fixed z-50 flex w-full h-[74px] justify-between p-4 items-center border-b border-gray-500 border-opacity-20">
-	<a class="h3 font-bold underline decoration-double decoration-1 decoration-primary-500" href="/">mark-static</a>
+	<section class="flex space-x-6">
+		<button class="lg:hidden">
+			<i class="fa-solid fa-bars text-xl mt-1 pl-1"></i>
+		</button>
+		<a class="h3 font-bold underline decoration-double decoration-1 decoration-primary-500" href="/">mark-static</a>
+	</section>
 	<nav class="flex gap-1.5">
 		<a class="btn hover:variant-soft-primary" href="/content">Documentation</a>
 		<a class="btn hover:variant-soft-primary" href="/">About</a>
-		<div class="md:inline md:ml-4">
+		<div class="md:inline md:ml-2">
 			<button class="btn space-x-4 variant-soft hover:variant-soft-primary" on:click={handleSearchClick}>
 				<i class="fa-solid fa-magnifying-glass text-sm"></i>
 				<small class="hidden md:inline-block">Ctrl+K</small>
@@ -41,11 +46,11 @@
 		</div>
 		<section class="hidden sm:inline-flex space-x-4">
 			<a href="/" class="btn-icon hover:variant-soft-primary">
-				<i class="fa-brands fa-github text-lg"></i>
+				<i class="fa-brands fa-github text-lg pt-0.5"></i>
 			</a>
 		</section>
-		<section class="inline-flex items-center pb-1">
-			<LightSwitch/>
+		<section class="inline-flex items-center">
+			<LightSwitch />
 		</section>
 	</nav>
 </header>

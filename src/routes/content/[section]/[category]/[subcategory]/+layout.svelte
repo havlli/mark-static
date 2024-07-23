@@ -17,7 +17,7 @@
 			<slot/>
 		</div>
 	</section>
-	<aside class="sticky top-10 z-50 h-fit w-72">
+	<aside class="sticky top-10 z-50 h-fit w-72 hidden xl:block space-y-4">
 			<TableOfContents>
 				<h1>On this page</h1>
 			</TableOfContents>
