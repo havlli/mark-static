@@ -33,11 +33,17 @@
 		<button class="lg:hidden">
 			<i class="fa-solid fa-bars text-xl mt-1 pl-1"></i>
 		</button>
-		<a class="h3 font-bold underline decoration-double decoration-1 decoration-primary-500" href="/">mark-static</a>
+		<a class="text-2xl font-heading-token font-bold underline decoration-double decoration-1 decoration-primary-500" href="/">mark-static</a>
 	</section>
-	<nav class="flex gap-1.5">
-		<a class="btn hover:variant-soft-primary" href="/content">Documentation</a>
-		<a class="btn hover:variant-soft-primary" href="/">About</a>
+	<nav class="flex gap-1.5 items-center">
+		<a class="btn hover:variant-soft-primary flex justify-center" href="/content">
+			<span class="hidden sm:inline">Documentation</span>
+			<i class="fa-solid fa-book sm:!hidden !m-0"></i>
+		</a>
+		<a class="btn hover:variant-soft-primary" href="/">
+			<span class="hidden sm:inline">About</span>
+			<i class="fa-solid fa-book sm:!hidden !m-0"></i>
+		</a>
 		<div class="md:inline md:ml-2">
 			<button class="btn space-x-4 variant-soft hover:variant-soft-primary" on:click={handleSearchClick}>
 				<i class="fa-solid fa-magnifying-glass text-sm"></i>
@@ -49,8 +55,8 @@
 				<i class="fa-brands fa-github text-lg pt-0.5"></i>
 			</a>
 		</section>
-		<section class="inline-flex items-center">
-			<LightSwitch />
+		<section class="inline-flex items-center px-2">
+			<LightSwitch width="w-10" height="h-5" />
 		</section>
 	</nav>
 </header>
