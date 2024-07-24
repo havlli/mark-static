@@ -98,6 +98,16 @@
         @apply bg-gray-800 bg-opacity-50 text-gray-200 border-gray-400 border border-opacity-25 p-4 rounded-lg overflow-auto;
     }
 
+    :global(.page-content code:not(pre code)) {
+        @apply dark:text-primary-400 !important;
+				@apply code;
+				@apply relative -top-0.5;
+    }
+
+    :global(.page-content code:not(pre code)) {
+        @apply code;
+    }
+
     :global(.page-content table) {
         @apply min-w-full rounded overflow-hidden;
     }
