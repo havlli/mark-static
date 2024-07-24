@@ -4,9 +4,18 @@
 	import { sidebarData } from '$lib/data/sidebar.js';
 	import { formatTitle } from '$lib/text-utils.js';
 	import { page } from '$app/stores';
+	import { getDrawerStore } from '@skeletonlabs/skeleton';
+
+	const drawerStore = getDrawerStore();
+
+	const closeDrawer = () => {
+		if ($drawerStore.open) {
+			drawerStore.close();
+		}
+	};
 </script>
 
-<div class="grid grid-cols-[auto_1fr] w-[360px] h-full border-r border-gray-500 border-opacity-20 sticky gap-0">
+<div class="grid grid-cols-[auto_1fr] lg:w-[360px] h-full border-r border-gray-500 border-opacity-20 sticky gap-0">
 	<MenuRail />
 	<section class="p-4 pb-20 space-y-4 overflow-y-auto h-full">
 		{#each sidebarData as sidebarSection}
@@ -17,7 +26,12 @@
 						<ul>
 							{#each category.subcategories as subcategory}
 							<li>
-								<a href={subcategory.path} class:bg-primary-active-token={$page.url.pathname.endsWith(subcategory.path)}>{formatTitle(subcategory.title)}</a>
+								<a href={subcategory.path}
+									 class:bg-primary-active-token={$page.url.pathname.endsWith(subcategory.path)}
+									 on:click={closeDrawer}
+								>
+									{formatTitle(subcategory.title)}
+								</a>
 							</li>
 							{/each}
 						</ul>

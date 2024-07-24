@@ -1,8 +1,10 @@
 <script>
-	import { getModalStore, LightSwitch } from '@skeletonlabs/skeleton';
+	import { getDrawerStore, getModalStore, LightSwitch } from '@skeletonlabs/skeleton';
 	import SearchModal from './SearchModal.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import { browser } from '$app/environment';
+
+	const drawerStore = getDrawerStore();
 
 	const modalStore = getModalStore();
 
@@ -28,10 +30,10 @@
 	}
 </script>
 
-<header class="fixed z-50 flex w-full h-[74px] justify-between p-4 items-center border-b border-gray-500 border-opacity-20">
-	<section class="flex space-x-6">
-		<button class="lg:hidden">
-			<i class="fa-solid fa-bars text-xl mt-1 pl-1"></i>
+<header class="fixed z-39 flex w-full h-[74px] justify-between p-4 items-center border-b border-gray-500 border-opacity-20">
+	<section class="flex gap-6 pl-2">
+		<button class="lg:hidden" on:click={() => drawerStore.open()}>
+			<i class="fa-solid fa-bars text-base mt-1 pl-1"></i>
 		</button>
 		<a class="text-2xl font-heading-token font-bold underline decoration-double decoration-1 decoration-primary-500" href="/">mark-static</a>
 	</section>
