@@ -71,23 +71,23 @@
     }
 
     :global(.page-content ul) {
-        list-style-type: disc; /* Classic bullet points */
-        margin-left: 2rem; /* Indent the list */
-        padding-left: 0; /* Remove default padding */
-        font-family: sans-serif; /* A clean, readable font */
-        line-height: 1.6; /* Improve readability */
+        list-style-type: disc;
+        margin-left: 2rem;
+        padding-left: 0;
+        font-family: sans-serif;
+        line-height: 1.6;
     }
 
     :global(.page-content ol) {
-        list-style-type: decimal; /* Classic bullet points */
-        margin-left: 2rem; /* Indent the list */
-        padding-left: 0; /* Remove default padding */
-        font-family: sans-serif; /* A clean, readable font */
-        line-height: 1.6; /* Improve readability */
+        list-style-type: decimal;
+        margin-left: 2rem;
+        padding-left: 0;
+        font-family: sans-serif;
+        line-height: 1.6;
     }
 
     :global(.page-content li) {
-        margin-bottom: 0.5rem; /* Space between items */
+        margin-bottom: 0.5rem;
     }
 
     :global(.page-content blockquote) {
