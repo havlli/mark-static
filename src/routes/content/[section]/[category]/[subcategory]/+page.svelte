@@ -90,7 +90,7 @@
 
 	:global(.page-content hr) {
 		border-width: 0.15em !important;
-		@apply border-b border-b-surface-900 border-opacity-20;
+		@apply border-b border-b-surface-900 border-opacity-20 !important;
 		@apply dark:border-b-surface-50 dark:border-opacity-20;
 	}
 
@@ -118,7 +118,8 @@
 	}
 
 	:global(.page-content pre) {
-		@apply bg-gray-800 bg-opacity-50 text-gray-200 border-gray-400 border border-opacity-25 p-4 rounded-lg overflow-auto mb-4;
+		@apply pre bg-gray-500 bg-opacity-15 text-gray-200 border-gray-400 border border-opacity-25 p-4 rounded-lg mb-4 overflow-x-auto;
+			@apply text-gray-950 dark:text-gray-200;
 		font-size: 0.85em;
 	}
 
