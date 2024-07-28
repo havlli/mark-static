@@ -15,7 +15,9 @@
 	};
 </script>
 
-<div class="grid grid-cols-[auto_1fr] lg:w-[360px] h-full border-r border-gray-500 border-opacity-20 sticky gap-0">
+<div
+	class="grid grid-cols-[auto_1fr] lg:w-[360px] h-full border-r border-gray-500 border-opacity-20 sticky gap-0"
+>
 	<MenuRail />
 	<section class="p-4 pb-20 space-y-4 overflow-y-auto h-full">
 		{#each sidebarData as sidebarSection}
@@ -25,19 +27,20 @@
 					<nav class="list-nav">
 						<ul>
 							{#each category.subcategories as subcategory}
-							<li>
-								<a href={subcategory.path}
-									 class:bg-primary-active-token={$page.url.pathname.endsWith(subcategory.path)}
-									 on:click={closeDrawer}
-								>
-									{formatTitle(subcategory.title)}
-								</a>
-							</li>
+								<li>
+									<a
+										href={subcategory.path}
+										class:bg-primary-active-token={$page.url.pathname.endsWith(subcategory.path)}
+										on:click={closeDrawer}
+									>
+										{formatTitle(subcategory.title)}
+									</a>
+								</li>
 							{/each}
 						</ul>
 					</nav>
 					{#if sidebarSection.categories.length - 1 !== categoryIndex}
-						<hr class="!my-6 opacity-50">
+						<hr class="!my-6 opacity-50" />
 					{/if}
 				{/each}
 			{/if}

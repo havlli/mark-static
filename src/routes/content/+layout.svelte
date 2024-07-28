@@ -1,5 +1,5 @@
 <script>
-import SidebarLeft from '$lib/shared/sidebar/Sidebar.svelte';
+	import SidebarLeft from '$lib/shared/sidebar/Sidebar.svelte';
 </script>
 
 <aside class="w-auto h-full hidden lg:block">

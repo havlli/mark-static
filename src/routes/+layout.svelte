@@ -9,7 +9,7 @@
 
 <Modal />
 <Drawer zIndex="z-50" rounded="rounded-none" width="w-[80%]">
-	<SidebarLeft/>
+	<SidebarLeft />
 </Drawer>
 <Header />
 <div class="flex-auto w-full h-full pt-[74px] flex overflow-hidden">

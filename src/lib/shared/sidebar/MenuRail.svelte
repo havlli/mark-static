@@ -10,9 +10,14 @@
 </script>
 
 <div class="border-r border-gray-500 border-opacity-20 w-20">
-	<AppRail background="transparent" >
+	<AppRail background="transparent">
 		{#each sidebarData as tile}
-			<AppRailTile bind:group={selectedTile} name={tile.section} value={tile.section} title={tile.section}>
+			<AppRailTile
+				bind:group={selectedTile}
+				name={tile.section}
+				value={tile.section}
+				title={tile.section}
+			>
 				<svelte:fragment slot="lead">
 					<i class={mapSectionNameToIcon(tile.section)}></i>
 				</svelte:fragment>
