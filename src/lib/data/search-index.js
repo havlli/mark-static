@@ -7,33 +7,57 @@ export const searchIndex = [
   },
   {
     "section": "Info",
-    "category": "About-Project",
-    "subcategory": "subcategory-2",
-    "path": "/content/Info/About-Project/subcategory-2"
+    "category": "Dependencies",
+    "subcategory": "DOMUtils",
+    "path": "/content/Info/Dependencies/DOMUtils"
   },
   {
     "section": "Info",
-    "category": "About-Project",
-    "subcategory": "Test",
-    "path": "/content/Info/About-Project/Test"
+    "category": "Dependencies",
+    "subcategory": "Font-Awesome",
+    "path": "/content/Info/Dependencies/Font-Awesome"
   },
   {
     "section": "Info",
-    "category": "About-Project",
-    "subcategory": "Test-Topic",
-    "path": "/content/Info/About-Project/Test-Topic"
+    "category": "Dependencies",
+    "subcategory": "HTMLParser2",
+    "path": "/content/Info/Dependencies/HTMLParser2"
   },
   {
     "section": "Info",
-    "category": "category2",
-    "subcategory": "subcategory-1",
-    "path": "/content/Info/category2/subcategory-1"
+    "category": "Dependencies",
+    "subcategory": "Marked",
+    "path": "/content/Info/Dependencies/Marked"
   },
   {
     "section": "Info",
-    "category": "category2",
-    "subcategory": "subcategory-2",
-    "path": "/content/Info/category2/subcategory-2"
+    "category": "Dev-Dependencies",
+    "subcategory": "ESLint",
+    "path": "/content/Info/Dev-Dependencies/ESLint"
+  },
+  {
+    "section": "Info",
+    "category": "Dev-Dependencies",
+    "subcategory": "Skeleton-UI",
+    "path": "/content/Info/Dev-Dependencies/Skeleton-UI"
+  },
+  {
+    "section": "Info",
+    "category": "Dev-Dependencies",
+    "subcategory": "svelte-static-adapter",
+    "path": "/content/Info/Dev-Dependencies/svelte-static-adapter"
+  },
+  {
+    "section": "Info",
+    "category": "Dev-Dependencies",
+    "subcategory": "SvelteKit",
+    "path": "/content/Info/Dev-Dependencies/SvelteKit"
+  },
+  {
+    "section": "Info",
+    "category": "Dev-Dependencies",
+    "subcategory": "TailwindCSS",
+    "path": "/content/Info/Dev-Dependencies/TailwindCSS"
   },
   {
     "section": "section2",

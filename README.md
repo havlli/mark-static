@@ -47,80 +47,86 @@ static/
 ## Installation
 
 1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/yourusername/tango-procedures.git
-    cd tango-procedures
-    ```
+
+   ```bash
+   git clone https://github.com/yourusername/tango-procedures.git
+   cd tango-procedures
+   ```
 
 2. **Install dependencies**:
-    ```bash
-    npm install
-    ```
+
+   ```bash
+   npm install
+   ```
 
 3. **Run the development server**:
-    ```bash
-    npm run dev
-    ```
+
+   ```bash
+   npm run dev
+   ```
 
 4. **Build for production**:
-    ```bash
-    npm run build
-    ```
+
+   ```bash
+   npm run build
+   ```
 
 5. **Preview the production build**:
-    ```bash
-    npm run preview
-    ```
+   ```bash
+   npm run preview
+   ```
 
 ## Development
 
 The development workflow includes:
 
 - **Linting and Formatting**:
-    ```bash
-    npm run lint
-    npm run format
-    ```
+
+  ```bash
+  npm run lint
+  npm run format
+  ```
 
 - **Custom Vite Plugin**:
   The `vite-plugin-generate-data.js` plugin handles content updates and script execution during build and development:
-    ```js
-    import { execSync } from 'child_process';
-    import { fileURLToPath } from 'url';
-    import path from 'path';
 
-    const dirname = path.dirname(fileURLToPath(import.meta.url));
-    const contentDir = 'static/content';
-    const contentPath = path.resolve(dirname, contentDir);
+  ```js
+  import { execSync } from 'child_process';
+  import { fileURLToPath } from 'url';
+  import path from 'path';
 
-    function runScriptsWithNode() {
-        const generateMenuPath = path.resolve(dirname, 'scripts/generate-menu.cjs');
-        const generateSearchIndexPath = path.resolve(dirname, 'scripts/generate-search-index.cjs');
-        execSync(`node ${generateMenuPath}`, { stdio: 'inherit' });
-        execSync(`node ${generateSearchIndexPath}`, { stdio: 'inherit' });
-    }
+  const dirname = path.dirname(fileURLToPath(import.meta.url));
+  const contentDir = 'static/content';
+  const contentPath = path.resolve(dirname, contentDir);
 
-    function handleChanges(filePath) {
-        if (filePath.startsWith(contentPath)) {
-            runScriptsWithNode();
-        }
-    }
+  function runScriptsWithNode() {
+  	const generateMenuPath = path.resolve(dirname, 'scripts/generate-menu.cjs');
+  	const generateSearchIndexPath = path.resolve(dirname, 'scripts/generate-search-index.cjs');
+  	execSync(`node ${generateMenuPath}`, { stdio: 'inherit' });
+  	execSync(`node ${generateSearchIndexPath}`, { stdio: 'inherit' });
+  }
 
-    export default function generateDataPlugin() {
-        return {
-            name: 'vite-plugin-generate-data',
-            buildStart() {
-                runScriptsWithNode();
-            },
-            configureServer(server) {
-                server.watcher.add(contentPath);
-                server.watcher.on('add', handleChanges);
-                server.watcher.on('unlink', handleChanges);
-                server.watcher.on('change', handleChanges);
-            }
-        };
-    }
-    ```
+  function handleChanges(filePath) {
+  	if (filePath.startsWith(contentPath)) {
+  		runScriptsWithNode();
+  	}
+  }
+
+  export default function generateDataPlugin() {
+  	return {
+  		name: 'vite-plugin-generate-data',
+  		buildStart() {
+  			runScriptsWithNode();
+  		},
+  		configureServer(server) {
+  			server.watcher.add(contentPath);
+  			server.watcher.on('add', handleChanges);
+  			server.watcher.on('unlink', handleChanges);
+  			server.watcher.on('change', handleChanges);
+  		}
+  	};
+  }
+  ```
 
 ## Dependencies
 

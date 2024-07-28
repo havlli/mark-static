@@ -42,65 +42,62 @@
 		@apply mb-4;
 	}
 
-  :global(.page-content strong) {
-      @apply font-semibold;
-  }
+	:global(.page-content strong) {
+		@apply font-semibold;
+	}
 
-  :global(.page-content h1,h2,h3,h4,h5,h6) {
-			@apply pb-1.5;
-			@apply font-semibold !important;
-			@apply mb-4 mt-6 !important;
-  }
+	:global(.page-content h1, h2, h3, h4, h5, h6) {
+		@apply pb-1.5;
+		@apply font-semibold !important;
+		@apply mb-4 mt-6 !important;
+	}
 
 	:global(.page-content h1) {
 		@apply h1;
-      @apply border-b border-b-surface-900 border-opacity-20;
-      @apply dark:border-b-surface-50 dark:border-opacity-20;
+		@apply border-b border-b-surface-900 border-opacity-20;
+		@apply dark:border-b-surface-50 dark:border-opacity-20;
 	}
 
 	:global(.page-content h2) {
 		@apply h2;
-      @apply border-b border-b-surface-900 border-opacity-20;
-      @apply dark:border-b-surface-50 dark:border-opacity-20;
+		@apply border-b border-b-surface-900 border-opacity-20;
+		@apply dark:border-b-surface-50 dark:border-opacity-20;
 	}
 
 	:global(.page-content h3) {
 		@apply h3;
-      @apply border-b border-b-surface-900 border-opacity-20;
-      @apply dark:border-b-surface-50 dark:border-opacity-20;
+		@apply border-b border-b-surface-900 border-opacity-20;
+		@apply dark:border-b-surface-50 dark:border-opacity-20;
 	}
 
 	:global(.page-content h4) {
 		@apply h4;
-      @apply border-b border-b-surface-900 border-opacity-20;
-      @apply dark:border-b-surface-50 dark:border-opacity-20;
+		@apply border-b border-b-surface-900 border-opacity-20;
+		@apply dark:border-b-surface-50 dark:border-opacity-20;
 	}
 
 	:global(.page-content h5) {
 		@apply h5;
-      @apply border-b border-b-surface-900 border-opacity-20;
-      @apply dark:border-b-surface-50 dark:border-opacity-20;
+		@apply border-b border-b-surface-900 border-opacity-20;
+		@apply dark:border-b-surface-50 dark:border-opacity-20;
 	}
 
 	:global(.page-content h6) {
 		@apply h6;
-      @apply border-b border-b-surface-900 border-opacity-20;
-      @apply dark:border-b-surface-50 dark:border-opacity-20;
+		@apply border-b border-b-surface-900 border-opacity-20;
+		@apply dark:border-b-surface-50 dark:border-opacity-20;
 	}
 
 	:global(.page-content hr) {
-
-			border-width: .15em !important;
-      @apply border-b border-b-surface-900 border-opacity-20;
-      @apply dark:border-b-surface-50 dark:border-opacity-20;
+		border-width: 0.15em !important;
+		@apply border-b border-b-surface-900 border-opacity-20;
+		@apply dark:border-b-surface-50 dark:border-opacity-20;
 	}
 
 	:global(.page-content ul) {
 		list-style-type: disc;
 		margin-left: 2rem;
 		padding-left: 0;
-		font-family: sans-serif;
-		line-height: 1.6;
 	}
 
 	:global(.page-content ol) {
@@ -113,7 +110,7 @@
 
 	:global(.page-content li) {
 		margin-top: 0.25rem;
-			margin-bottom: 0;
+		margin-bottom: 0;
 	}
 
 	:global(.page-content blockquote) {
@@ -122,13 +119,14 @@
 
 	:global(.page-content pre) {
 		@apply bg-gray-800 bg-opacity-50 text-gray-200 border-gray-400 border border-opacity-25 p-4 rounded-lg overflow-auto mb-4;
+		font-size: 0.85em;
 	}
 
 	:global(.page-content code:not(pre code)) {
 		@apply dark:text-primary-400 !important;
 		@apply code whitespace-break-spaces;
 		@apply relative -top-[1px];
-			font-size: 0.85rem !important;
+		font-size: 0.85rem !important;
 	}
 
 	:global(.page-content code:not(pre code)) {

@@ -8,31 +8,52 @@ export const sidebarData = [
           {
             "title": "Overview",
             "path": "/content/Info/About-Project/Overview"
-          },
-          {
-            "title": "subcategory-2",
-            "path": "/content/Info/About-Project/subcategory-2"
-          },
-          {
-            "title": "Test",
-            "path": "/content/Info/About-Project/Test"
-          },
-          {
-            "title": "Test-Topic",
-            "path": "/content/Info/About-Project/Test-Topic"
           }
         ]
       },
       {
-        "title": "category2",
+        "title": "Dependencies",
         "subcategories": [
           {
-            "title": "subcategory-1",
-            "path": "/content/Info/category2/subcategory-1"
+            "title": "DOMUtils",
+            "path": "/content/Info/Dependencies/DOMUtils"
           },
           {
-            "title": "subcategory-2",
-            "path": "/content/Info/category2/subcategory-2"
+            "title": "Font-Awesome",
+            "path": "/content/Info/Dependencies/Font-Awesome"
+          },
+          {
+            "title": "HTMLParser2",
+            "path": "/content/Info/Dependencies/HTMLParser2"
+          },
+          {
+            "title": "Marked",
+            "path": "/content/Info/Dependencies/Marked"
+          }
+        ]
+      },
+      {
+        "title": "Dev-Dependencies",
+        "subcategories": [
+          {
+            "title": "ESLint",
+            "path": "/content/Info/Dev-Dependencies/ESLint"
+          },
+          {
+            "title": "Skeleton-UI",
+            "path": "/content/Info/Dev-Dependencies/Skeleton-UI"
+          },
+          {
+            "title": "svelte-static-adapter",
+            "path": "/content/Info/Dev-Dependencies/svelte-static-adapter"
+          },
+          {
+            "title": "SvelteKit",
+            "path": "/content/Info/Dev-Dependencies/SvelteKit"
+          },
+          {
+            "title": "TailwindCSS",
+            "path": "/content/Info/Dev-Dependencies/TailwindCSS"
           }
         ]
       }
