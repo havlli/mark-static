@@ -10,7 +10,7 @@
 </script>
 
 <div class="border-r border-gray-500 border-opacity-20 w-20">
-	<AppRail background="transparent">
+	<AppRail background="transparent" active="bg-primary-300-600-token">
 		{#each sidebarData as tile}
 			<AppRailTile
 				bind:group={selectedTile}

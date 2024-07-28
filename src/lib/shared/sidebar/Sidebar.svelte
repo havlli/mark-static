@@ -30,7 +30,7 @@
 								<li>
 									<a
 										href={subcategory.path}
-										class:bg-primary-active-token={$page.url.pathname.endsWith(subcategory.path)}
+										class:bg-primary-300-600-token={$page.url.pathname.endsWith(subcategory.path)}
 										on:click={closeDrawer}
 									>
 										{formatTitle(subcategory.title)}
