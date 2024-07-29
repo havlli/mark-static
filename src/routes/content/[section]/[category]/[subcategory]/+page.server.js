@@ -18,16 +18,38 @@ const prependPathToStaticImages = (html, path) => {
 	return render(document);
 };
 
+const findContentPath = (route) => {
+	const section = sidebarData.find(section =>
+		section.categories.some(category =>
+			category.subcategories.some(subcategory => subcategory.route === route)
+		)
+	);
+
+	if (!section) return null;
+
+	const category = section.categories.find(category =>
+		category.subcategories.some(subcategory => subcategory.route === route)
+	);
+
+	if (!category) return null;
+
+	const subcategory = category.subcategories.find(subcategory => subcategory.route === route);
+
+	return subcategory ? { categoryTitle: category.title, contentPath: subcategory.contentPath } : null;
+}
+
 export async function load({ params, fetch }) {
 	const { section, category, subcategory } = params;
-	let subcategoryPath = `/content/${section}/${category}/${subcategory}`;
-	const response = await fetch(`${subcategoryPath}/content.md`);
+	let paramRoute = `/content/${section}/${category}/${subcategory}`;
+	const { categoryTitle, contentPath } = findContentPath(paramRoute)
+	const response = await fetch(`${contentPath}/content.md`);
 	const markdown = await response.text();
 	const html = await marked(markdown);
-	const updatedHtml = prependPathToStaticImages(html, subcategoryPath);
+	const updatedHtml = prependPathToStaticImages(html, contentPath);
 
 	return {
-		content: updatedHtml
+		content: updatedHtml,
+		category: categoryTitle
 	};
 }
 

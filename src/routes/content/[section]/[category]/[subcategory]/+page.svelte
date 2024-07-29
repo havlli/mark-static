@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import ImageModal from './ImageModal.svelte';
+	import { formatTitle } from '$lib/text-utils.js';
 
 	export let data;
 
@@ -33,6 +34,7 @@
 </script>
 
 <ImageModal bind:this={imageModal} />
+<span class="badge variant-soft translate-y-1">{formatTitle(data.category)}</span>
 <section class="page-content">
 	{@html data.content}
 </section>
@@ -48,14 +50,15 @@
 
 	:global(.page-content h1, h2, h3, h4, h5, h6) {
 		@apply pb-1.5;
-		@apply font-semibold !important;
 		@apply mb-4 mt-6 !important;
 	}
 
+  :global(.page-content h2, h3, h4, h5, h6) {
+      @apply font-semibold !important;
+  }
+
 	:global(.page-content h1) {
 		@apply h1;
-		@apply border-b border-b-surface-900 border-opacity-20;
-		@apply dark:border-b-surface-50 dark:border-opacity-20;
 	}
 
 	:global(.page-content h2) {

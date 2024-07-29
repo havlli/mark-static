@@ -1,6 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
+const removeOrdering = (value) => {
+	const parts = value.split(".");
+	if (parts.length > 1) {
+		return parts.slice(1).join('.').trim();
+	}
+	return value;
+}
+
 const getDirectories = (srcPath) => {
 	return fs
 		.readdirSync(srcPath, { withFileTypes: true })
@@ -9,17 +17,23 @@ const getDirectories = (srcPath) => {
 };
 
 const getSubcategories = (section, category, categoryPath) => {
-	return getDirectories(categoryPath).map((subcategory) => ({
-		title: subcategory,
-		path: `/content/${section}/${category}/${subcategory}`
-	}));
+	return getDirectories(categoryPath).map((subcategory) => {
+		const subcategoryTitle = removeOrdering(subcategory)
+		const route = `/content/${removeOrdering(section)}/${removeOrdering(category)}/${subcategoryTitle}`;
+		return ({
+			title: subcategoryTitle,
+			route: route.toLowerCase(),
+			contentPath: `/content/${section}/${category}/${subcategory}`
+		});
+	});
 };
 
 const getCategories = (section, sectionPath) => {
 	return getDirectories(sectionPath).map((category) => {
 		const categoryPath = path.join(sectionPath, category);
 		const subcategories = getSubcategories(section, category, categoryPath);
-		return { title: category, subcategories };
+		const categoryTitle = removeOrdering(category);
+		return { title: categoryTitle, subcategories };
 	});
 };
 
@@ -27,7 +41,8 @@ const buildJsonFromFolderStructure = (dirPath) => {
 	return getDirectories(dirPath).map((section) => {
 		const sectionPath = path.join(dirPath, section);
 		const categories = getCategories(section, sectionPath);
-		return { section, categories };
+		const sectionTitle = removeOrdering(section);
+		return { section: sectionTitle, categories };
 	});
 };
 

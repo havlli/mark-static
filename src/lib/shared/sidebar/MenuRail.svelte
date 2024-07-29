@@ -3,7 +3,7 @@
 	import { currentTile } from './sidebar-store.js';
 	import { sidebarData } from '$lib/data/sidebar.js';
 	import { formatFirstCharUppercase } from '$lib/text-utils.js';
-	import { mapSectionNameToIcon } from '$lib/shared/sidebar/sidebar-icon-mapper.js';
+	import { mapSectionToIcon } from '$lib/shared/sidebar/sidebar-icon-mapper.js';
 
 	let selectedTile = $currentTile;
 	$: $currentTile = selectedTile;
@@ -19,7 +19,7 @@
 				title={tile.section}
 			>
 				<svelte:fragment slot="lead">
-					<i class={mapSectionNameToIcon(tile.section)}></i>
+					<i class={mapSectionToIcon(tile.section)}></i>
 				</svelte:fragment>
 				<span>{formatFirstCharUppercase(tile.section)}</span>
 			</AppRailTile>

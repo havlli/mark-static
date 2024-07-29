@@ -29,8 +29,8 @@
 							{#each category.subcategories as subcategory}
 								<li>
 									<a
-										href={subcategory.path}
-										class:bg-primary-300-600-token={$page.url.pathname.endsWith(subcategory.path)}
+										href={subcategory.route}
+										class:bg-primary-300-600-token={$page.url.pathname.endsWith(subcategory.route)}
 										on:click={closeDrawer}
 									>
 										{formatTitle(subcategory.title)}

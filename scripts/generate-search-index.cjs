@@ -20,7 +20,7 @@ async function generateSearchIndex() {
 					section: section.section,
 					category: category.title,
 					subcategory: subcategory.title,
-					path: subcategory.path
+					route: subcategory.route
 				});
 			});
 		});

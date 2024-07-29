@@ -3,84 +3,84 @@ export const searchIndex = [
     "section": "Info",
     "category": "About-Project",
     "subcategory": "Overview",
-    "path": "/content/Info/About-Project/Overview"
+    "route": "/content/info/about-project/overview"
   },
   {
     "section": "Info",
     "category": "Dependencies",
     "subcategory": "DOMUtils",
-    "path": "/content/Info/Dependencies/DOMUtils"
+    "route": "/content/info/dependencies/domutils"
   },
   {
     "section": "Info",
     "category": "Dependencies",
     "subcategory": "Font-Awesome",
-    "path": "/content/Info/Dependencies/Font-Awesome"
+    "route": "/content/info/dependencies/font-awesome"
   },
   {
     "section": "Info",
     "category": "Dependencies",
     "subcategory": "HTMLParser2",
-    "path": "/content/Info/Dependencies/HTMLParser2"
+    "route": "/content/info/dependencies/htmlparser2"
   },
   {
     "section": "Info",
     "category": "Dependencies",
     "subcategory": "Marked",
-    "path": "/content/Info/Dependencies/Marked"
-  },
-  {
-    "section": "Info",
-    "category": "Dev-Dependencies",
-    "subcategory": "ESLint",
-    "path": "/content/Info/Dev-Dependencies/ESLint"
-  },
-  {
-    "section": "Info",
-    "category": "Dev-Dependencies",
-    "subcategory": "Skeleton-UI",
-    "path": "/content/Info/Dev-Dependencies/Skeleton-UI"
-  },
-  {
-    "section": "Info",
-    "category": "Dev-Dependencies",
-    "subcategory": "svelte-static-adapter",
-    "path": "/content/Info/Dev-Dependencies/svelte-static-adapter"
+    "route": "/content/info/dependencies/marked"
   },
   {
     "section": "Info",
     "category": "Dev-Dependencies",
     "subcategory": "SvelteKit",
-    "path": "/content/Info/Dev-Dependencies/SvelteKit"
+    "route": "/content/info/dev-dependencies/sveltekit"
+  },
+  {
+    "section": "Info",
+    "category": "Dev-Dependencies",
+    "subcategory": "Svelte-static-adapter",
+    "route": "/content/info/dev-dependencies/svelte-static-adapter"
+  },
+  {
+    "section": "Info",
+    "category": "Dev-Dependencies",
+    "subcategory": "Skeleton-UI",
+    "route": "/content/info/dev-dependencies/skeleton-ui"
   },
   {
     "section": "Info",
     "category": "Dev-Dependencies",
     "subcategory": "TailwindCSS",
-    "path": "/content/Info/Dev-Dependencies/TailwindCSS"
+    "route": "/content/info/dev-dependencies/tailwindcss"
   },
   {
-    "section": "section2",
+    "section": "Info",
+    "category": "Dev-Dependencies",
+    "subcategory": "ESLint",
+    "route": "/content/info/dev-dependencies/eslint"
+  },
+  {
+    "section": "Guides",
     "category": "Category-2",
     "subcategory": "RANdomCapitalLeters",
-    "path": "/content/section2/Category-2/RANdomCapitalLeters"
+    "route": "/content/guides/category-2/randomcapitalleters"
   },
   {
-    "section": "section2",
-    "category": "category1",
-    "subcategory": "Content-With-Images",
-    "path": "/content/section2/category1/Content-With-Images"
+    "section": "Guides",
+    "category": "SvelteKit",
+    "subcategory": "Advanced-Techniques",
+    "route": "/content/guides/sveltekit/advanced-techniques"
   },
   {
-    "section": "section2",
-    "category": "category1",
-    "subcategory": "Random-Long-Name-That-Should-Not-Fit",
-    "path": "/content/section2/category1/Random-Long-Name-That-Should-Not-Fit"
+    "section": "Guides",
+    "category": "SvelteKit",
+    "subcategory": "Getting-Started",
+    "route": "/content/guides/sveltekit/getting-started"
   },
   {
     "section": "section3",
     "category": "category",
     "subcategory": "Test-Topic",
-    "path": "/content/section3/category/Test-Topic"
+    "route": "/content/section3/category/test-topic"
   }
 ];
