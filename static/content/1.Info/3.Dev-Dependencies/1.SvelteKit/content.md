@@ -1,3 +1,5 @@
+# SvelteKit
+
 SvelteKit is the framework used to build this project. It offers a rich set of features that make building modern web applications efficient and enjoyable.
 
 ## Why SvelteKit?

@@ -1,3 +1,5 @@
+# Marked
+
 Marked is a low-level markdown parser that allows for fast and efficient conversion of markdown content to HTML. It is used in this project to handle the parsing of markdown files.
 
 ## Why Marked?

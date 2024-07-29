@@ -1,3 +1,5 @@
+# Svelte Static Adapter
+
 @Sveltejs/adapter-static is a SvelteKit adapter that allows you to build static sites. This adapter converts your SvelteKit project into static files that can be served by any static hosting provider.
 
 ## Why @sveltejs/adapter-static?

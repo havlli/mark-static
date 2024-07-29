@@ -1,3 +1,5 @@
+# TailwindCSS
+
 TailwindCSS is a utility-first CSS framework that is used in this project to style the web application efficiently and with ease.
 
 ## Why TailwindCSS?

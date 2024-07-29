@@ -1,3 +1,5 @@
+# ESLint
+
 ESLint is a static code analysis tool for identifying and fixing problems in JavaScript code. It is used in this project to maintain code quality and consistency by enforcing coding standards and best practices.
 
 ## Why ESLint?

@@ -1,3 +1,5 @@
+# DOMUtils
+
 DOMUtils is a utility library for working with the DOM in Node.js. It provides a set of methods to manipulate and traverse DOM trees, making it easier to work with HTML content in server-side environments.
 
 ## Why DOMUtils?

@@ -1,3 +1,5 @@
+# HTMLParser2
+
 HTMLParser2 is a fast and forgiving HTML/XML parser. It is used in this project to parse and manipulate HTML content effectively.
 
 ## Why HTMLParser2?

@@ -1,6 +1,8 @@
+# Font Awesome
+
 Font Awesome Free is a popular icon library that provides a vast collection of icons for use in web applications. It includes both free and paid icons, and this project uses the free set.
 
-## Why Font Awesome Free?
+## Why Font Awesome?
 
 - **Comprehensive Library**: Provides a wide range of icons for different purposes.
 - **Ease of Use**: Simple integration with web projects using CSS classes.

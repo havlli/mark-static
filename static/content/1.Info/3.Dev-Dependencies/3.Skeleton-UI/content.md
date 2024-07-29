@@ -1,3 +1,5 @@
+# SkeletonUI
+
 Skeleton UI is a set of highly customizable UI components for TailwindCSS, used in this project to provide a cohesive and visually appealing design.
 
 ## Why Skeleton UI?
