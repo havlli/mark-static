@@ -18,7 +18,7 @@ const prependPathToStaticImages = (html, path) => {
 	return render(document);
 };
 
-const findContentPath = (route) => {
+const findContentInfo = (route) => {
 	const section = sidebarData.find(section =>
 		section.categories.some(category =>
 			category.subcategories.some(subcategory => subcategory.route === route)
@@ -40,8 +40,11 @@ const findContentPath = (route) => {
 
 export async function load({ params, fetch }) {
 	const { section, category, subcategory } = params;
-	let paramRoute = `/content/${section}/${category}/${subcategory}`;
-	const { categoryTitle, contentPath } = findContentPath(paramRoute)
+
+	let paramRoute = `/content/${section}/${category}/${subcategory}`.toLowerCase();
+	let contentInfo = findContentInfo(paramRoute);
+
+	const { categoryTitle, contentPath } = contentInfo;
 	const response = await fetch(`${contentPath}/content.md`);
 	const markdown = await response.text();
 	const html = await marked(markdown);
@@ -49,7 +52,7 @@ export async function load({ params, fetch }) {
 
 	return {
 		content: updatedHtml,
-		category: categoryTitle
+		categoryTitle
 	};
 }
 

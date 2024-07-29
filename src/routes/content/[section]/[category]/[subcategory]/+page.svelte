@@ -34,7 +34,7 @@
 </script>
 
 <ImageModal bind:this={imageModal} />
-<span class="badge variant-soft translate-y-1">{formatTitle(data.category)}</span>
+<span class="badge variant-soft translate-y-1">{formatTitle(data.categoryTitle)}</span>
 <section class="page-content">
 	{@html data.content}
 </section>
