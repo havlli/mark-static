@@ -3,10 +3,12 @@
 	import Header from './Header.svelte';
 	import { Drawer, initializeStores, Modal } from '@skeletonlabs/skeleton';
 	import SidebarLeft from '$lib/shared/sidebar/Sidebar.svelte';
+	import DarkModeResolver from './DarkModeResolver.svelte';
 
 	initializeStores();
 </script>
 
+<DarkModeResolver />
 <Modal />
 <Drawer zIndex="z-50" rounded="rounded-none" width="w-[80%]">
 	<SidebarLeft />

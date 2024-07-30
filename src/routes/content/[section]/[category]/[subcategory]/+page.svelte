@@ -53,9 +53,9 @@
 		@apply mb-4 mt-6 !important;
 	}
 
-  :global(.page-content h2, h3, h4, h5, h6) {
-      @apply font-semibold !important;
-  }
+	:global(.page-content h2, h3, h4, h5, h6) {
+		@apply font-semibold !important;
+	}
 
 	:global(.page-content h1) {
 		@apply h1;
@@ -122,8 +122,12 @@
 
 	:global(.page-content pre) {
 		@apply pre bg-gray-500 bg-opacity-15 text-gray-200 border-gray-400 border border-opacity-25 p-4 rounded-lg mb-4 overflow-x-auto;
-			@apply text-gray-950 dark:text-gray-200;
+		@apply text-gray-950 dark:text-gray-200;
 		font-size: 0.85em;
+	}
+
+	:global(.page-content pre code) {
+		@apply overflow-x-auto whitespace-pre;
 	}
 
 	:global(.page-content code:not(pre code)) {
@@ -171,5 +175,14 @@
 
 	:global(.page-content img) {
 		@apply cursor-zoom-in;
+	}
+
+	:global(.hljs) {
+		background-color: transparent !important;
+	}
+
+	:global(pre code.hljs) {
+		padding: 0 !important;
+		margin: 0 !important;
 	}
 </style>

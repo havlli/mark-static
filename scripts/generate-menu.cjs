@@ -2,12 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 const removeOrdering = (value) => {
-	const parts = value.split(".");
+	const parts = value.split('.');
 	if (parts.length > 1) {
 		return parts.slice(1).join('.').trim();
 	}
 	return value;
-}
+};
 
 const getDirectories = (srcPath) => {
 	return fs
@@ -18,13 +18,14 @@ const getDirectories = (srcPath) => {
 
 const getSubcategories = (section, category, categoryPath) => {
 	return getDirectories(categoryPath).map((subcategory) => {
-		const subcategoryTitle = removeOrdering(subcategory)
-		const route = `/content/${removeOrdering(section)}/${removeOrdering(category)}/${subcategoryTitle}`;
-		return ({
+		const subcategoryTitle = removeOrdering(subcategory);
+		const route =
+			`/content/${removeOrdering(section)}/${removeOrdering(category)}/${subcategoryTitle}`.toLowerCase();
+		return {
 			title: subcategoryTitle,
-			route: route.toLowerCase(),
+			route: route,
 			contentPath: `/content/${section}/${category}/${subcategory}`
-		});
+		};
 	});
 };
 
