@@ -11,22 +11,22 @@ Before you begin, make sure you have the following installed:
 
 1. **Create a new SvelteKit project**:
 
-    ```bash
-    npm init svelte@next my-svelte-project
-    cd my-svelte-project
-    ```
+   ```bash
+   npm init svelte@next my-svelte-project
+   cd my-svelte-project
+   ```
 
 2. **Install dependencies**:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 3. **Start the development server**:
 
-    ```bash
-    npm run dev -- --open
-    ```
+   ```bash
+   npm run dev -- --open
+   ```
 
 ## Project Structure
 
@@ -41,19 +41,19 @@ Your SvelteKit project will have the following structure:
 
 1. **Create a new file** `src/routes/index.svelte`:
 
-    ```svelte
-    <script>
-        let name = 'world';
-    </script>
+   ```svelte
+   <script>
+   	let name = 'world';
+   </script>
 
-    <style>
-        h1 {
-            color: purple;
-        }
-    </style>
+   <h1>Hello {name}!</h1>
 
-    <h1>Hello {name}!</h1>
-    ```
+   <style>
+   	h1 {
+   		color: purple;
+   	}
+   </style>
+   ```
 
 2. **Open your browser** and navigate to `http://localhost:3000`. You should see "Hello world!".
 

@@ -10,3 +10,4 @@ To enable SSR, configure your SvelteKit project to use a suitable adapter like `
 
 ```bash
 npm install @sveltejs/adapter-node
+```

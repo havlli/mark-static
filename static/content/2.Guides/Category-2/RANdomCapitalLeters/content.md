@@ -8,6 +8,7 @@ i18n with plurals support and easy syntax.
 
 You will like those projects!
 ---
+
 mark-static is a dynamic content-driven web application built using SvelteKit. This project dynamically generates routes, menus, categories, and subcategories from the folder structure and its content within the static directory. The folder structure follows this pattern: section/category/subcategory/content.md. Multiple sections, categories, and subcategories are supported, with routes dynamically built based on this structure. Content and images are also dynamically handled.
 
 # h1 Heading 8-)

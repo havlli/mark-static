@@ -27,7 +27,7 @@ npm install @fortawesome/fontawesome-free
 
 Here is an example of how to use Font Awesome icons in a Svelte component:
 
-```svelte
+```html
 <script>
 	import '@fortawesome/fontawesome-free/css/all.css';
 </script>
