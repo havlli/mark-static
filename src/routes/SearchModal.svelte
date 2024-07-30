@@ -6,6 +6,10 @@
 
 	const modal = getModalStore();
 
+	function removeStaticPath(route) {
+		return route.split('/').slice(2).join('/');
+	}
+
 	function groupByCategory(filteredData) {
 		const grouped = filteredData.reduce((acc, item) => {
 			if (!acc[item.category]) {
@@ -60,7 +64,7 @@
 					<li class="text-lg">
 						<a
 							class="!rounded-none justify-between hover:variant-soft focus:!variant-filled-primary outline-0"
-							href={subcategory.path}
+							href={subcategory.route}
 							on:click={() => modal.close()}
 						>
 							<div class="flex items-center gap-4">
@@ -69,7 +73,7 @@
 									>{removeDashes(subcategory.subcategory)}</span
 								>
 							</div>
-							<span class="hidden md:block text-xs opacity-50">{subcategory.path}</span>
+							<span class="hidden md:block text-xs opacity-50">{removeStaticPath(subcategory.route)}</span>
 						</a>
 					</li>
 				{/each}
