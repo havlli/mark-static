@@ -61,9 +61,9 @@ export const searchIndex = [
   },
   {
     "section": "Guides",
-    "category": "Category-2",
-    "subcategory": "RANdomCapitalLeters",
-    "route": "/content/guides/category-2/randomcapitalleters"
+    "category": "SvelteKit",
+    "subcategory": "Getting-Started",
+    "route": "/content/guides/sveltekit/getting-started"
   },
   {
     "section": "Guides",
@@ -73,9 +73,9 @@ export const searchIndex = [
   },
   {
     "section": "Guides",
-    "category": "SvelteKit",
-    "subcategory": "Getting-Started",
-    "route": "/content/guides/sveltekit/getting-started"
+    "category": "Category-2",
+    "subcategory": "RANdomCapitalLeters",
+    "route": "/content/guides/category-2/randomcapitalleters"
   },
   {
     "section": "section3",

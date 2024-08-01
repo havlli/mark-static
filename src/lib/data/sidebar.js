@@ -73,27 +73,27 @@ export const sidebarData = [
     "section": "Guides",
     "categories": [
       {
+        "title": "SvelteKit",
+        "subcategories": [
+          {
+            "title": "Getting-Started",
+            "route": "/content/guides/sveltekit/getting-started",
+            "contentPath": "/content/2.Guides/1.SvelteKit/1.Getting-Started"
+          },
+          {
+            "title": "Advanced-Techniques",
+            "route": "/content/guides/sveltekit/advanced-techniques",
+            "contentPath": "/content/2.Guides/1.SvelteKit/2.Advanced-Techniques"
+          }
+        ]
+      },
+      {
         "title": "Category-2",
         "subcategories": [
           {
             "title": "RANdomCapitalLeters",
             "route": "/content/guides/category-2/randomcapitalleters",
             "contentPath": "/content/2.Guides/Category-2/RANdomCapitalLeters"
-          }
-        ]
-      },
-      {
-        "title": "SvelteKit",
-        "subcategories": [
-          {
-            "title": "Advanced-Techniques",
-            "route": "/content/guides/sveltekit/advanced-techniques",
-            "contentPath": "/content/2.Guides/SvelteKit/Advanced-Techniques"
-          },
-          {
-            "title": "Getting-Started",
-            "route": "/content/guides/sveltekit/getting-started",
-            "contentPath": "/content/2.Guides/SvelteKit/Getting-Started"
           }
         ]
       }

@@ -4,9 +4,15 @@
 	import { sidebarData } from '$lib/data/sidebar.js';
 	import { formatFirstCharUppercase } from '$lib/text-utils.js';
 	import { mapSectionToIcon } from '$lib/shared/sidebar/sidebar-icon-mapper.js';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 
 	let selectedTile = $currentTile;
 	$: $currentTile = selectedTile;
+
+	onMount(() => {
+		$currentTile = sidebarData.find(({ section }) => $page.url.pathname.startsWith(`/content/${section.toLowerCase()}`))?.section || sidebarData[0].section;
+	});
 </script>
 
 <div class="border-r border-gray-500 border-opacity-20 w-20">

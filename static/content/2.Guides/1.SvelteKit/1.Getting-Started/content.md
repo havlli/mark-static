@@ -1,3 +1,5 @@
+# Getting Started
+
 Welcome to the SvelteKit guide! This guide will help you get started with building web applications using SvelteKit.
 
 ## Prerequisites
@@ -41,7 +43,7 @@ Your SvelteKit project will have the following structure:
 
 1. **Create a new file** `src/routes/index.svelte`:
 
-   ```svelte
+   ```html
    <script>
    	let name = 'world';
    </script>
