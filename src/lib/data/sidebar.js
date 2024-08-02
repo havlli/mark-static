@@ -84,6 +84,16 @@ export const sidebarData = [
             "title": "Advanced-Techniques",
             "route": "/content/guides/sveltekit/advanced-techniques",
             "contentPath": "/content/2.Guides/1.SvelteKit/2.Advanced-Techniques"
+          },
+          {
+            "title": "Styling-in-SvelteKit",
+            "route": "/content/guides/sveltekit/styling-in-sveltekit",
+            "contentPath": "/content/2.Guides/1.SvelteKit/3.Styling-in-SvelteKit"
+          },
+          {
+            "title": "Deploying-SvelteKit-Applications",
+            "route": "/content/guides/sveltekit/deploying-sveltekit-applications",
+            "contentPath": "/content/2.Guides/1.SvelteKit/4.Deploying-SvelteKit-Applications"
           }
         ]
       },

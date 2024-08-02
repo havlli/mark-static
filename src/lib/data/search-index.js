@@ -73,6 +73,18 @@ export const searchIndex = [
   },
   {
     "section": "Guides",
+    "category": "SvelteKit",
+    "subcategory": "Styling-in-SvelteKit",
+    "route": "/content/guides/sveltekit/styling-in-sveltekit"
+  },
+  {
+    "section": "Guides",
+    "category": "SvelteKit",
+    "subcategory": "Deploying-SvelteKit-Applications",
+    "route": "/content/guides/sveltekit/deploying-sveltekit-applications"
+  },
+  {
+    "section": "Guides",
     "category": "Category-2",
     "subcategory": "RANdomCapitalLeters",
     "route": "/content/guides/category-2/randomcapitalleters"

@@ -137,11 +137,3 @@ Key dependencies and devDependencies used in the project:
 - **HtmlParser2**: Library to modify parsed HTML elements and their attributes.
 
 For the full list of dependencies, refer to `package.json`.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
----
-
-Feel free to modify this README to suit your project's specific needs and details.
