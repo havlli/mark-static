@@ -45,15 +45,15 @@
 </script>
 
 <div
-	class="card !bg-surface-100/60 dark:!bg-surface-500/30 backdrop-blur-lg overflow-hidden w-full max-w-[800px] shadow-xl mt-8 mb-auto"
+	class="card bg-animated backdrop-blur-lg w-full max-w-[800px] shadow-xl mt-8 mb-auto"
 >
-	<header class="bg-surface-300-600-token flex items-center">
+	<header class="!bg-opacity-10 bg-white dark:bg-black flex items-center">
 		<i class="fa-solid fa-magnifying-glass text-xl ml-4"></i>
 		<input
 			type="search"
 			placeholder="Search..."
 			bind:value={query}
-			class="bg-transparent border-0 ring-0 focus:ring-0 w-full m-2 ml-4 text-lg px-3 py-2"
+			class="bg-transparent border-0 w-full m-2 ml-4 text-lg px-3 py-2 placeholder-surface-900 placeholder-opacity-50 dark:placeholder-surface-50 dark:placeholder-opacity-50 focus:ring-0 focus:outline-none focus:outline-0"
 		/>
 	</header>
 	<nav class="list-nav overflow-x-auto max-h-[480px] hide-scrollbar bg-transparent">
@@ -63,7 +63,7 @@
 				{#each groupedSearchResults.subcategories as subcategory}
 					<li class="text-lg">
 						<a
-							class="!rounded-none justify-between hover:variant-soft focus:!variant-filled-primary outline-0"
+							class="!rounded-none justify-between hover:variant-soft focus:variant-filled-primary focus:ring-0 focus:outline-none focus:outline-0"
 							href={subcategory.route}
 							on:click={() => modal.close()}
 						>
@@ -87,7 +87,7 @@
 			</div>
 		{/if}
 	</nav>
-	<footer class="hidden md:flex items-center gap-2 bg-surface-300-600-token p-4 text-xs font-bold">
+	<footer class="hidden md:flex items-center gap-2 !bg-opacity-10 bg-white dark:bg-black p-4 text-xs font-bold">
 		<div>
 			<kbd class="kbd">Esc</kbd> to Close
 		</div>
@@ -99,3 +99,23 @@
 		</div>
 	</footer>
 </div>
+
+<style>
+    .bg-animated {
+        background: linear-gradient(-45deg, rgba(var(--color-surface-700) / 0.15) 50%, rgba(var(--color-surface-200) / 0.15) 100%);
+        background-size: 500% 500%;
+        animation: gradient 5s ease infinite;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+</style>
