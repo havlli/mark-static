@@ -1,8 +1,6 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-const basePath = process.env.BASE_PATH || '';
-
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	extensions: ['.svelte'],
@@ -11,15 +9,10 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		prerender: {
-			handleMissingId: 'ignore',
-			handleHttpError: ({ status, path, referrer, referenceType }) => {
-				throw new Error(`${status} ${path} ${referenceType} from ${referrer}`);
-			}
+			handleMissingId: 'ignore'
 		},
-		trailingSlash: 'always',
 		paths: {
-			base: basePath,
-			relative: false
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
 		}
 	}
 };
