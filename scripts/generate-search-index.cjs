@@ -2,10 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const { pathToFileURL } = require('url');
 
-const sidebarDataURL = pathToFileURL(path.resolve('src/lib/data/sidebar.js'));
-const searchIndexOutputPath = path.resolve('src/lib/data/search-index.js');
-console.log('processCwd', process.cwd());
-console.log('processCwd joined', path.join(process.cwd(), 'src/lib/data/sidebar.js'));
+const sidebarDataURL = pathToFileURL(path.join(process.cwd(), 'src/lib/data/sidebar.js'));
+const searchIndexOutputPath = path.join(process.cwd(), 'src/lib/data/search-index.js');
 console.log('sidebarDataURL', sidebarDataURL);
 console.log('searchIndexOutputPath', searchIndexOutputPath);
 

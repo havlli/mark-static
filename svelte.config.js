@@ -16,6 +16,7 @@ const config = {
 				throw new Error(`${status} ${path} ${referenceType} from ${referrer}`);
 			}
 		},
+		trailingSlash: 'always',
 		paths: {
 			base: basePath,
 			relative: false
