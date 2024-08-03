@@ -103,7 +103,7 @@ export const sidebarData = [
           {
             "title": "RANdomCapitalLeters",
             "route": "/content/guides/category-2/randomcapitalleters",
-            "contentPath": "/content/2.Guides/Category-2/RANdomCapitalLeters"
+            "contentPath": "/content/2.Guides/2.Category-2/1.RANdomCapitalLeters"
           }
         ]
       }
@@ -118,7 +118,7 @@ export const sidebarData = [
           {
             "title": "Test-Topic",
             "route": "/content/section3/category/test-topic",
-            "contentPath": "/content/section3/category/Test-Topic"
+            "contentPath": "/content/3.section3/1.category/Test-Topic"
           }
         ]
       }
