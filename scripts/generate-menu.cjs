@@ -55,8 +55,8 @@ const generateDataToJsFile = (contentDir, outputFile) => {
 	fs.writeFileSync(outputFile, jsContent);
 };
 
-const contentDir = path.resolve('static/content');
-const outputFile = path.resolve('src/lib/data/sidebar.js');
+const contentDir = path.join(process.cwd(), 'static/content');
+const outputFile = path.join(process.cwd(), 'src/lib/data/sidebar.js');
 
 console.log(`Generating sidebar data from ${contentDir}\n\tinto ${outputFile}`);
 generateDataToJsFile(contentDir, outputFile);

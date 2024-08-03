@@ -11,7 +11,10 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		prerender: {
-			handleMissingId: 'ignore'
+			handleMissingId: 'ignore',
+			handleHttpError: ({ status, path, referrer, referenceType }) => {
+				throw new Error(`${status} ${path} ${referenceType} from ${referrer}`);
+			}
 		},
 		paths: {
 			base: basePath,
