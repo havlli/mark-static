@@ -19,7 +19,7 @@ const config = {
 		},
 		paths: {
 			base: basePath,
-			relative: false
+			relative: true
 		}
 	}
 };
