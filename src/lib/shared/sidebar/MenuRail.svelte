@@ -12,7 +12,10 @@
 	$: $currentTile = selectedTile;
 
 	onMount(() => {
-		$currentTile = sidebarData.find(({ section }) => $page.url.pathname.startsWith(`${base}/content/${section.toLowerCase()}`))?.section || sidebarData[0].section;
+		$currentTile =
+			sidebarData.find(({ section }) =>
+				$page.url.pathname.startsWith(`${base}/content/${section.toLowerCase()}`)
+			)?.section || sidebarData[0].section;
 	});
 </script>
 

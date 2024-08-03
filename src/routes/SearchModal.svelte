@@ -45,9 +45,7 @@
 	$: $searchResults = search(query);
 </script>
 
-<div
-	class="card bg-animated backdrop-blur-lg w-full max-w-[800px] shadow-xl mt-8 mb-auto"
->
+<div class="card bg-animated backdrop-blur-lg w-full max-w-[800px] shadow-xl mt-8 mb-auto">
 	<header class="!bg-opacity-10 bg-white dark:bg-black flex items-center">
 		<i class="fa-solid fa-magnifying-glass text-xl ml-4"></i>
 		<input
@@ -63,15 +61,20 @@
 			<ul>
 				{#each groupedSearchResults.subcategories as subcategory}
 					<li class="text-lg">
-						<BaseAnchor target={subcategory.route}
-												on:click={() => modal.close()}
-												classes="!rounded-none justify-between hover:variant-soft focus:variant-filled-primary focus:ring-0 focus:outline-none focus:outline-0"
+						<BaseAnchor
+							target={subcategory.route}
+							on:click={() => modal.close()}
+							classes="!rounded-none justify-between hover:variant-soft focus:variant-filled-primary focus:ring-0 focus:outline-none focus:outline-0"
 						>
 							<div class="flex items-center gap-4">
 								<i class="fa-solid fa-file"></i>
-								<span class="flex-auto font-bold opacity-75">{removeDashes(subcategory.subcategory)}</span>
+								<span class="flex-auto font-bold opacity-75"
+									>{removeDashes(subcategory.subcategory)}</span
+								>
 							</div>
-							<span class="hidden md:block text-xs opacity-50">{removeStaticPath(subcategory.route)}</span>
+							<span class="hidden md:block text-xs opacity-50"
+								>{removeStaticPath(subcategory.route)}</span
+							>
 						</BaseAnchor>
 					</li>
 				{/each}
@@ -85,7 +88,9 @@
 			</div>
 		{/if}
 	</nav>
-	<footer class="hidden md:flex items-center gap-2 !bg-opacity-10 bg-white dark:bg-black p-4 text-xs font-bold">
+	<footer
+		class="hidden md:flex items-center gap-2 !bg-opacity-10 bg-white dark:bg-black p-4 text-xs font-bold"
+	>
 		<div>
 			<kbd class="kbd">Esc</kbd> to Close
 		</div>
@@ -99,21 +104,25 @@
 </div>
 
 <style>
-    .bg-animated {
-        background: linear-gradient(-45deg, rgba(var(--color-surface-700) / 0.15) 50%, rgba(var(--color-surface-200) / 0.15) 100%);
-        background-size: 500% 500%;
-        animation: gradient 5s ease infinite;
-    }
+	.bg-animated {
+		background: linear-gradient(
+			-45deg,
+			rgba(var(--color-surface-700) / 0.15) 50%,
+			rgba(var(--color-surface-200) / 0.15) 100%
+		);
+		background-size: 500% 500%;
+		animation: gradient 5s ease infinite;
+	}
 
-    @keyframes gradient {
-        0% {
-            background-position: 0% 50%;
-        }
-        50% {
-            background-position: 100% 50%;
-        }
-        100% {
-            background-position: 0% 50%;
-        }
-    }
+	@keyframes gradient {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
 </style>

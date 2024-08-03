@@ -4,6 +4,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import BaseAnchor from '$lib/shared/BaseAnchor.svelte';
+	import { searchIndex } from '$lib/data/search-index.js';
 
 	const drawerStore = getDrawerStore();
 
@@ -38,17 +39,18 @@
 		<button class="lg:hidden" on:click={() => drawerStore.open()}>
 			<i class="fa-solid fa-bars text-base mt-1 pl-1"></i>
 		</button>
-		<BaseAnchor classes="text-2xl font-heading-token font-bold underline decoration-double decoration-1 decoration-primary-500">
+		<BaseAnchor
+			classes="text-2xl font-heading-token font-bold underline decoration-double decoration-1 decoration-primary-500"
+		>
 			mark-static
 		</BaseAnchor>
 	</section>
 	<nav class="flex gap-1.5 items-center">
-		<BaseAnchor classes="btn hover:variant-soft-primary flex justify-center" target="/content">
+		<BaseAnchor
+			classes="btn hover:variant-soft-primary flex justify-center"
+			target={searchIndex[0].route}
+		>
 			<span class="hidden sm:inline">Documentation</span>
-			<i class="fa-solid fa-book sm:!hidden !m-0"></i>
-		</BaseAnchor>
-		<BaseAnchor classes="btn hover:variant-soft-primary">
-			<span class="hidden sm:inline">About</span>
 			<i class="fa-solid fa-book sm:!hidden !m-0"></i>
 		</BaseAnchor>
 		<div class="md:inline md:ml-2">

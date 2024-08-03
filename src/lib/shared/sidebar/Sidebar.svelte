@@ -29,10 +29,11 @@
 						<ul>
 							{#each category.subcategories as subcategory}
 								<li>
-									<BaseAnchor target={subcategory.route}
-															activeClass="bg-primary-300-600-token"
-															isActive={$page.url.pathname.endsWith(subcategory.route)}
-															on:click={closeDrawer}
+									<BaseAnchor
+										target={subcategory.route}
+										activeClass="bg-primary-300-600-token"
+										isActive={$page.url.pathname.endsWith(subcategory.route)}
+										on:click={closeDrawer}
 									>
 										{formatTitle(subcategory.title)}
 									</BaseAnchor>

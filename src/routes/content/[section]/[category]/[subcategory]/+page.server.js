@@ -5,7 +5,6 @@ import { sidebarData } from '$lib/data/sidebar.js';
 import { parseDocument } from 'htmlparser2';
 import { findAll } from 'domutils';
 import { render } from 'dom-serializer';
-import { base } from '$app/paths';
 
 const prependPathToStaticImages = (html, path) => {
 	const document = parseDocument(html);

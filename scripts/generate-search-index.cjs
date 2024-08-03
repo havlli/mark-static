@@ -4,8 +4,6 @@ const { pathToFileURL } = require('url');
 
 const sidebarDataURL = pathToFileURL(path.join(process.cwd(), 'src/lib/data/sidebar.js'));
 const searchIndexOutputPath = path.join(process.cwd(), 'src/lib/data/search-index.js');
-console.log('sidebarDataURL', sidebarDataURL);
-console.log('searchIndexOutputPath', searchIndexOutputPath);
 
 async function generateSearchIndex() {
 	const { sidebarData } = await import(sidebarDataURL);

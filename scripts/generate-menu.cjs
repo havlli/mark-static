@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
+const contentDir = path.join(process.cwd(), 'static/content');
+const outputFile = path.join(process.cwd(), 'src/lib/data/sidebar.js');
+
 const removeOrdering = (value) => {
 	const parts = value.split('.');
 	if (parts.length > 1) {
@@ -54,9 +57,6 @@ const generateDataToJsFile = (contentDir, outputFile) => {
 
 	fs.writeFileSync(outputFile, jsContent);
 };
-
-const contentDir = path.join(process.cwd(), 'static/content');
-const outputFile = path.join(process.cwd(), 'src/lib/data/sidebar.js');
 
 console.log(`Generating sidebar data from ${contentDir}\n\tinto ${outputFile}`);
 generateDataToJsFile(contentDir, outputFile);
