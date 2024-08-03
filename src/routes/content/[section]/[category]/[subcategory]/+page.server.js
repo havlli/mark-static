@@ -5,6 +5,7 @@ import { sidebarData } from '$lib/data/sidebar.js';
 import { parseDocument } from 'htmlparser2';
 import { findAll } from 'domutils';
 import { render } from 'dom-serializer';
+import { base } from '$app/paths';
 
 const prependPathToStaticImages = (html, path) => {
 	const document = parseDocument(html);
@@ -59,7 +60,7 @@ export async function load({ params, fetch }) {
 	let contentInfo = findContentInfo(paramRoute);
 
 	const { categoryTitle, contentPath } = contentInfo;
-	const response = await fetch(`${contentPath}/content.md`);
+	const response = await fetch(`${base}/${contentPath}/content.md`);
 	const markdown = await response.text();
 	const html = await marked.parse(markdown);
 	const updatedHtml = prependPathToStaticImages(html, contentPath);
