@@ -3,6 +3,7 @@
 	import { writable } from 'svelte/store';
 	import { toLowerCaseNoDashes, removeDashes } from '$lib/text-utils.js';
 	import { getModalStore } from '@skeletonlabs/skeleton';
+	import BaseAnchor from '$lib/shared/BaseAnchor.svelte';
 
 	const modal = getModalStore();
 
@@ -62,19 +63,16 @@
 			<ul>
 				{#each groupedSearchResults.subcategories as subcategory}
 					<li class="text-lg">
-						<a
-							class="!rounded-none justify-between hover:variant-soft focus:variant-filled-primary focus:ring-0 focus:outline-none focus:outline-0"
-							href={subcategory.route}
-							on:click={() => modal.close()}
+						<BaseAnchor target={subcategory.route}
+												on:click={() => modal.close()}
+												classes="!rounded-none justify-between hover:variant-soft focus:variant-filled-primary focus:ring-0 focus:outline-none focus:outline-0"
 						>
 							<div class="flex items-center gap-4">
 								<i class="fa-solid fa-file"></i>
-								<span class="flex-auto font-bold opacity-75"
-									>{removeDashes(subcategory.subcategory)}</span
-								>
+								<span class="flex-auto font-bold opacity-75">{removeDashes(subcategory.subcategory)}</span>
 							</div>
 							<span class="hidden md:block text-xs opacity-50">{removeStaticPath(subcategory.route)}</span>
-						</a>
+						</BaseAnchor>
 					</li>
 				{/each}
 			</ul>

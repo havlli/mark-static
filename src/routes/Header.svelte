@@ -3,6 +3,7 @@
 	import SearchModal from './SearchModal.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import BaseAnchor from '$lib/shared/BaseAnchor.svelte';
 
 	const drawerStore = getDrawerStore();
 
@@ -43,10 +44,10 @@
 		>
 	</section>
 	<nav class="flex gap-1.5 items-center">
-		<a class="btn hover:variant-soft-primary flex justify-center" href="/content">
+		<BaseAnchor classes="btn hover:variant-soft-primary flex justify-center" target="/content">
 			<span class="hidden sm:inline">Documentation</span>
 			<i class="fa-solid fa-book sm:!hidden !m-0"></i>
-		</a>
+		</BaseAnchor>
 		<a class="btn hover:variant-soft-primary" href="/">
 			<span class="hidden sm:inline">About</span>
 			<i class="fa-solid fa-book sm:!hidden !m-0"></i>
