@@ -38,20 +38,19 @@
 		<button class="lg:hidden" on:click={() => drawerStore.open()}>
 			<i class="fa-solid fa-bars text-base mt-1 pl-1"></i>
 		</button>
-		<a
-			class="text-2xl font-heading-token font-bold underline decoration-double decoration-1 decoration-primary-500"
-			href="/">mark-static</a
-		>
+		<BaseAnchor classes="text-2xl font-heading-token font-bold underline decoration-double decoration-1 decoration-primary-500">
+			mark-static
+		</BaseAnchor>
 	</section>
 	<nav class="flex gap-1.5 items-center">
 		<BaseAnchor classes="btn hover:variant-soft-primary flex justify-center" target="/content">
 			<span class="hidden sm:inline">Documentation</span>
 			<i class="fa-solid fa-book sm:!hidden !m-0"></i>
 		</BaseAnchor>
-		<a class="btn hover:variant-soft-primary" href="/">
+		<BaseAnchor classes="btn hover:variant-soft-primary">
 			<span class="hidden sm:inline">About</span>
 			<i class="fa-solid fa-book sm:!hidden !m-0"></i>
-		</a>
+		</BaseAnchor>
 		<div class="md:inline md:ml-2">
 			<button
 				class="btn space-x-4 variant-soft hover:variant-soft-primary"
@@ -62,9 +61,9 @@
 			</button>
 		</div>
 		<section class="hidden sm:inline-flex space-x-4">
-			<a href="/" class="btn-icon hover:variant-soft-primary">
+			<BaseAnchor class="btn-icon hover:variant-soft-primary">
 				<i class="fa-brands fa-github text-lg pt-0.5"></i>
-			</a>
+			</BaseAnchor>
 		</section>
 		<section class="inline-flex items-center px-2">
 			<LightSwitch width="w-10" height="h-5" />
