@@ -6,12 +6,13 @@
 	import { mapSectionToIcon } from '$lib/shared/sidebar/sidebar-icon-mapper.js';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 
 	let selectedTile = $currentTile;
 	$: $currentTile = selectedTile;
 
 	onMount(() => {
-		$currentTile = sidebarData.find(({ section }) => $page.url.pathname.startsWith(`/content/${section.toLowerCase()}`))?.section || sidebarData[0].section;
+		$currentTile = sidebarData.find(({ section }) => $page.url.pathname.startsWith(`${base}/content/${section.toLowerCase()}`))?.section || sidebarData[0].section;
 	});
 </script>
 
