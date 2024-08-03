@@ -136,4 +136,4 @@ Key dependencies and devDependencies used in the project:
 - **Vite**: Build tool and development server.
 - **HtmlParser2**: Library to modify parsed HTML elements and their attributes.
 
-For the full list of dependencies, refer to `package.json`.
+For the full list of dependencies, refer to `package.json` file.
