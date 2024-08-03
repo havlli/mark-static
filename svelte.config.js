@@ -14,7 +14,8 @@ const config = {
 			handleMissingId: 'ignore'
 		},
 		paths: {
-			base: basePath
+			base: basePath,
+			relative: false
 		}
 	}
 };
