@@ -2,7 +2,7 @@
 	import { base } from '$app/paths';
 	import { createEventDispatcher } from 'svelte';
 	export let classes = '';
-	export let target = `${base}`;
+	export let target = `/`;
 	export let isActive = false;
 	export let activeClass = '';
 
