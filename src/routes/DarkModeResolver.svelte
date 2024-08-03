@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 
 	let isDarkMode;
 	let observer;
@@ -27,8 +28,8 @@
 
 <svelte:head>
 	{#if isDarkMode}
-		<link id="highlight-dark" rel="stylesheet" href="/css/github-dark.min.css" />
+		<link id="highlight-dark" rel="stylesheet" href="{base}/css/github-dark.min.css" />
 	{:else}
-		<link id="highlight-light" rel="stylesheet" href="/css/github.min.css" />
+		<link id="highlight-light" rel="stylesheet" href="{base}/css/github.min.css" />
 	{/if}
 </svelte:head>
