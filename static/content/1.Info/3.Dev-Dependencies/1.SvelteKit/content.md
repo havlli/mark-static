@@ -53,5 +53,3 @@ This configuration sets up SvelteKit with the static adapter, allowing the proje
 
 - [SvelteKit Documentation](https://kit.svelte.dev/docs)
 - [SvelteKit GitHub Repository](https://github.com/sveltejs/kit)
-
-Feel free to explore these resources to get a deeper understanding of how SvelteKit works and how you can leverage it in your projects.
