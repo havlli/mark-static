@@ -10,7 +10,7 @@ const config = {
 		adapter: adapter(),
 		prerender: {
 			handleMissingId: 'ignore',
-			handleHttpError: 'fail'
+			handleHttpError: 'warn'
 		},
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
