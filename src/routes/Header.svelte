@@ -63,9 +63,10 @@
 			</button>
 		</div>
 		<section class="hidden sm:inline-flex space-x-4">
-			<BaseAnchor classes="btn-icon hover:variant-soft-primary">
+			<a href="https://github.com/havlli/mark-static/"
+				 class="btn-icon hover:variant-soft-primary">
 				<i class="fa-brands fa-github text-lg pt-0.5"></i>
-			</BaseAnchor>
+			</a>
 		</section>
 		<section class="inline-flex items-center px-2">
 			<LightSwitch width="w-10" height="h-5" />

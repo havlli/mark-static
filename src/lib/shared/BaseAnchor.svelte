@@ -8,7 +8,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	$: fullLink = `${base}${target}`;
+	$: fullLink = target.startsWith('http') ? target : `${base}${target}`;
 
 	$: combinedClasses = isActive ? `${classes} ${activeClass}` : classes;
 </script>
