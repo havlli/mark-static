@@ -13,8 +13,7 @@ const config = {
 			handleHttpError: 'warn'
 		},
 		paths: {
-			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
-			relative: false
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
 		}
 	}
 };
