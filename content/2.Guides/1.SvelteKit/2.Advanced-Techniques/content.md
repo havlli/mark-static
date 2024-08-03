@@ -20,10 +20,10 @@ Update your `svelte.config.js`:
 import adapter from '@sveltejs/adapter-node';
 
 export default {
-  kit: {
-    adapter: adapter(),
-    target: '#svelte'
-  }
+	kit: {
+		adapter: adapter(),
+		target: '#svelte'
+	}
 };
 ```
 
@@ -33,14 +33,14 @@ You can fetch data from external APIs and use it in your components. Here's an e
 
 ```js
 export async function load({ fetch }) {
-    const response = await fetch('https://api.example.com/data');
-    const data = await response.json();
+	const response = await fetch('https://api.example.com/data');
+	const data = await response.json();
 
-    return {
-        props: {
-            data
-        }
-    };
+	return {
+		props: {
+			data
+		}
+	};
 }
 ```
 
@@ -48,23 +48,23 @@ Use the fetched data in your Svelte component:
 
 ```html
 <script context="module">
-    export async function load({ fetch }) {
-        const response = await fetch('/api/data');
-        return {
-            props: {
-                data: await response.json()
-            }
-        };
-    }
+	export async function load({ fetch }) {
+		const response = await fetch('/api/data');
+		return {
+			props: {
+				data: await response.json()
+			}
+		};
+	}
 </script>
 
 <script>
-    export let data;
+	export let data;
 </script>
 
 <main>
-    <h1>Data from API</h1>
-    <pre>{JSON.stringify(data, null, 2)}</pre>
+	<h1>Data from API</h1>
+	<pre>{JSON.stringify(data, null, 2)}</pre>
 </main>
 ```
 
@@ -83,16 +83,14 @@ Use the store in a Svelte component:
 
 ```html
 <script>
-    import { count } from '../stores';
+	import { count } from '../stores';
 
-    function increment() {
-        count.update(n => n + 1);
-    }
+	function increment() {
+		count.update((n) => n + 1);
+	}
 </script>
 
-<button on:click={increment}>
-    Clicked {$count} times
-</button>
+<button on:click="{increment}">Clicked {$count} times</button>
 ```
 
 These techniques will help you build more dynamic and efficient SvelteKit applications.
