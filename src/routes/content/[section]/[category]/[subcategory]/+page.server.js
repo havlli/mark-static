@@ -79,9 +79,9 @@ export function entries() {
 		route.categories.forEach((category) => {
 			category.subcategories.forEach((subcategory) => {
 				entries.push({
-					section: route.section,
-					category: category.title,
-					subcategory: subcategory.title
+					section: route.section.toLowerCase(),
+					category: category.title.toLowerCase(),
+					subcategory: subcategory.title.toLowerCase()
 				});
 			});
 		});
