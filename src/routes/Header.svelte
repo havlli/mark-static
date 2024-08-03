@@ -63,7 +63,7 @@
 			</button>
 		</div>
 		<section class="hidden sm:inline-flex space-x-4">
-			<BaseAnchor class="btn-icon hover:variant-soft-primary">
+			<BaseAnchor classes="btn-icon hover:variant-soft-primary">
 				<i class="fa-brands fa-github text-lg pt-0.5"></i>
 			</BaseAnchor>
 		</section>
