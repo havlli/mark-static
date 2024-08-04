@@ -8,11 +8,11 @@
 
 	const dispatch = createEventDispatcher();
 
-	$: fullLink = target.startsWith('http') ? target : `${base}${target}`;
+	$: href = target.startsWith('http') ? target : `${base}${target}`;
 
 	$: combinedClasses = isActive ? `${classes} ${activeClass}` : classes;
 </script>
 
-<a class={combinedClasses} href={fullLink} on:click={(e) => dispatch('click', e)}>
+<a class={combinedClasses} {href} on:click={(e) => dispatch('click', e)}>
 	<slot />
 </a>

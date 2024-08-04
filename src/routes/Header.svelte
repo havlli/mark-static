@@ -64,7 +64,8 @@
 		</div>
 		<section class="hidden sm:inline-flex space-x-4">
 			<a href="https://github.com/havlli/mark-static/"
-				 class="btn-icon hover:variant-soft-primary">
+				 class="btn-icon hover:variant-soft-primary"
+				 target="_blank">
 				<i class="fa-brands fa-github text-lg pt-0.5"></i>
 			</a>
 		</section>
