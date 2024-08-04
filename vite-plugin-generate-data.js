@@ -1,3 +1,4 @@
+import chokidar from 'chokidar';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -26,10 +27,27 @@ export default function generateDataPlugin() {
 			runScriptsWithNode();
 		},
 		configureServer(server) {
-			server.watcher.add(contentPath);
-			server.watcher.on('add', handleChanges);
-			server.watcher.on('unlink', handleChanges);
-			server.watcher.on('change', handleChanges);
+			const watcher = chokidar.watch(contentPath, {
+				ignoreInitial: true,
+				persistent: true,
+				awaitWriteFinish: {
+					stabilityThreshold: 200,
+					pollInterval: 100,
+				},
+			});
+
+			watcher.on('add', handleChanges);
+			watcher.on('unlink', handleChanges);
+			watcher.on('change', handleChanges);
+			watcher.on('rename', handleChanges);
+			watcher.on('ready', () => {
+				console.log('Watcher is ready and watching static/content folder for changes!');
+			});
+			watcher.on('close', () => {
+				console.log('Watcher has closed and released all file handles');
+			});
+
+			server.watcher.close = () => watcher.close();
 		}
 	};
 }
