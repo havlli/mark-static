@@ -5,6 +5,7 @@ import { sidebarData } from '$lib/data/sidebar.js';
 import { parseDocument } from 'htmlparser2';
 import { findAll } from 'domutils';
 import { render } from 'dom-serializer';
+import { error } from '@sveltejs/kit';
 
 const prependPathToStaticImages = (html, path) => {
 	const document = parseDocument(html);
@@ -58,9 +59,18 @@ export async function load({ params, fetch }) {
 	let paramRoute = `/content/${section}/${category}/${subcategory}`.toLowerCase();
 	let contentInfo = findContentInfo(paramRoute);
 
+	if (!contentInfo) {
+		throw error(404, 'Not Found');
+	}
+
 	const { categoryTitle, contentPath } = contentInfo;
 	console.log(`${contentPath}/content.md`);
 	const response = await fetch(`${contentPath}/content.md`);
+
+	if (!response.ok) {
+		throw error(404, 'Not Found');
+	}
+
 	const markdown = await response.text();
 	const html = await marked.parse(markdown);
 	const updatedHtml = prependPathToStaticImages(html, contentPath);
