@@ -8,14 +8,23 @@ import { render } from 'dom-serializer';
 import { error } from '@sveltejs/kit';
 import { base } from '$app/paths';
 
-const prependPathToStaticImages = (html, path) => {
+const prependPathToStaticResources = (html, path) => {
 	const document = parseDocument(html);
-	const images = findAll((el) => el.name === 'img', document.children);
 
-	images.forEach((image) => {
-		const src = image.attribs.src;
-		if (src && !src.startsWith('http')) {
-			image.attribs.src = `${base}${path}/${src}`;
+	const isStaticResource = (element) => {
+		const isImage = (element) => element.attribs.src && !element.attribs.src.startsWith('http');
+		const isAnchor = (element) => element.attribs.href && !element.attribs.href.startsWith('http');
+		return element.attribs && (isImage(element) || isAnchor(element));
+	}
+
+	const staticResources = findAll(isStaticResource, document.children);
+
+	staticResources.forEach((resource) => {
+		if (resource.attribs.src) {
+			resource.attribs.src = `${base}${path}/${resource.attribs.src}`;
+		}
+		if (resource.attribs.href) {
+			resource.attribs.href = `${base}${path}/${resource.attribs.href}`;
 		}
 	});
 
@@ -74,7 +83,7 @@ export async function load({ params, fetch }) {
 
 	const markdown = await response.text();
 	const html = await marked.parse(markdown);
-	const updatedHtml = prependPathToStaticImages(html, contentPath);
+	const updatedHtml = prependPathToStaticResources(html, contentPath);
 
 	return {
 		content: updatedHtml,
