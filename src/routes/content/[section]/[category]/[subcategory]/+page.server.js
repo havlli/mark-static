@@ -24,7 +24,7 @@ const prependPathToStaticResources = (html, path) => {
 			resource.attribs.src = `${base}${path}/${resource.attribs.src}`;
 		}
 		if (resource.attribs.href) {
-			resource.attribs.href = `${base}${path}/${resource.attribs.href}`;
+			resource.attribs.href = `${base}/${resource.attribs.href}`;
 		}
 	});
 
