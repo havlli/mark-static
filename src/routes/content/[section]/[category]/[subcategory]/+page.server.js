@@ -6,6 +6,7 @@ import { parseDocument } from 'htmlparser2';
 import { findAll } from 'domutils';
 import { render } from 'dom-serializer';
 import { error } from '@sveltejs/kit';
+import { base } from '$app/paths';
 
 const prependPathToStaticImages = (html, path) => {
 	const document = parseDocument(html);
@@ -14,7 +15,7 @@ const prependPathToStaticImages = (html, path) => {
 	images.forEach((image) => {
 		const src = image.attribs.src;
 		if (src && !src.startsWith('http')) {
-			image.attribs.src = `${path}/${src}`;
+			image.attribs.src = `${base}${path}/${src}`;
 		}
 	});
 
