@@ -8,9 +8,6 @@
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 
-	let selectedTile = $currentTile;
-	$: $currentTile = selectedTile;
-
 	onMount(() => {
 		$currentTile =
 			sidebarData.find(({ section }) =>
@@ -23,7 +20,7 @@
 	<AppRail background="transparent" active="bg-primary-300-600-token">
 		{#each sidebarData as tile}
 			<AppRailTile
-				bind:group={selectedTile}
+				bind:group={$currentTile}
 				name={tile.section}
 				value={tile.section}
 				title={tile.section}
