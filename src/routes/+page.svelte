@@ -10,7 +10,7 @@
 			<p class="text-xl mb-8">Dynamic Markdown to Static Site Generator with SvelteKit.</p>
 			<div class="flex flex-wrap justify-center gap-5 relative">
 				<a href={`${base}${searchIndex[0].route}`} class="btn bg-primary-400-500-token text-token py-2 px-4 rounded">Documentation</a>
-				<a href="https://github.com/havlli/mark-static" target="_blank" class="btn bg-gray-800 dark:bg-gray-700 text-white py-2 px-4 rounded">View on GitHub</a>
+				<a href="https://github.com/havlli/mark-static" target="_blank" class="btn bg-gray-800 dark:bg-gray-600 text-white py-2 px-4 rounded">View on GitHub</a>
 			</div>
 		</section>
 </main>
