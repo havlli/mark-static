@@ -4,6 +4,8 @@
 
 **mark-static** is a dynamic content-driven web application built using SvelteKit. This project dynamically generates routes, menus, subcategories, and topics from the folder structure and its content within the static directory. The folder structure follows this pattern: `section/category/subcategory/content.md`. Multiple sections, categories, and subcategories are supported, with routes dynamically built based on this structure. Content and images are also dynamically handled.
 
+Check the [Demo Site](https://havlli.github.io/mark-static/) hosted on GitHub Pages
+
 ## Features
 
 - **Dynamic Routing**: Routes are generated dynamically from the folder structure within the static directory.
