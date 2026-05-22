@@ -1,6 +1,6 @@
 # Svelte Static Adapter
 
-@Sveltejs/adapter-static is a SvelteKit adapter that allows you to build static sites. This adapter converts your SvelteKit project into static files that can be served by any static hosting provider.
+`@sveltejs/adapter-static` is the SvelteKit adapter used to build this project as a static site. It writes prerendered HTML, assets, and client-side JavaScript into the `build` directory.
 
 ## Why @sveltejs/adapter-static?
 
@@ -17,10 +17,10 @@ In this project, @sveltejs/adapter-static is used to:
 
 ### Installation
 
-To install @sveltejs/adapter-static, use the following command:
+To install `@sveltejs/adapter-static`, use the following command:
 
 ```bash
-npm install @sveltejs/adapter-static
+pnpm add -D @sveltejs/adapter-static
 ```
 
 ### Configuration
@@ -39,7 +39,12 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		prerender: {
-			handleMissingId: 'ignore'
+			handleMissingId: 'ignore',
+			handleHttpError: 'fail'
+		},
+		paths: {
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
+			relative: false
 		}
 	}
 };
@@ -63,7 +68,12 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		prerender: {
-			handleMissingId: 'ignore'
+			handleMissingId: 'ignore',
+			handleHttpError: 'fail'
+		},
+		paths: {
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
+			relative: false
 		}
 	}
 };
@@ -73,8 +83,8 @@ export default config;
 
 ### Additional Resources
 
-- [SvelteKit Documentation](https://kit.svelte.dev/docs)
+- [SvelteKit Documentation](https://svelte.dev/docs/kit)
 - [SvelteKit GitHub Repository](https://github.com/sveltejs/kit)
-- [Static Adapter Documentation](https://github.com/sveltejs/kit/tree/master/packages/adapter-static)
+- [Static Adapter Documentation](https://svelte.dev/docs/kit/adapter-static)
 
 Feel free to explore these resources to get a deeper understanding of how @sveltejs/adapter-static works and how you can leverage it in your projects.

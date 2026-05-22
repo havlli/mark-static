@@ -1,77 +1,52 @@
-# SkeletonUI
+# Skeleton UI
 
-Skeleton UI is a set of highly customizable UI components for TailwindCSS, used in this project to provide a cohesive and visually appealing design.
+Skeleton UI is a Svelte and Tailwind CSS toolkit used in this project for theme tokens, utility classes, and consistent interface styling.
 
 ## Why Skeleton UI?
 
-- **Pre-built Components**: Provides a variety of pre-built UI components that can be easily integrated into the project.
-- **Customization**: Allows extensive customization to match the design requirements of the project.
-- **Compatibility**: Works seamlessly with TailwindCSS, leveraging its utility-first approach.
+- **Tailwind CSS 4 Support**: Skeleton 4 ships as CSS that plugs into the Tailwind 4 pipeline.
+- **Theme Tokens**: Theme packages expose design tokens for colors, typography, spacing, and surfaces.
+- **Utility Classes**: Common UI primitives such as buttons, cards, and form controls are available as utilities.
 
 ## Usage in This Project
 
 In this project, Skeleton UI is used to:
 
-- **Enhance UI**: Provides a set of components like buttons, modals, and form elements that enhance the overall user interface.
-- **Theming**: Allows the creation of custom themes to maintain a consistent look and feel across the application.
+- **Theme Styling**: The Wintry theme provides the base color palette and typography tokens.
+- **UI Utilities**: Header controls, buttons, cards, and content surfaces use Skeleton-style utilities where useful.
+- **Compatibility Layer**: A small local CSS layer keeps the original template’s header controls visually stable after the Skeleton 4 upgrade.
 
 ### Installation
 
 To install Skeleton UI, use the following command:
 
 ```bash
-npm install @skeletonlabs/skeleton @skeletonlabs/tw-plugin
+pnpm add -D @skeletonlabs/skeleton
 ```
 
 ### Configuration
 
-The TailwindCSS configuration to include Skeleton UI is defined in `tailwind.config.js`:
+Skeleton 4 is imported directly from CSS. This project imports Skeleton after Tailwind, then adds the Wintry theme:
 
-```js
-import { join } from 'path';
-import { skeleton } from '@skeletonlabs/tw-plugin';
-
-export default {
-	darkMode: 'selector',
-	content: [
-		'./src/**/*.{html,js,svelte,ts}',
-		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
-	],
-	theme: {
-		extend: {}
-	},
-	plugins: [
-		skeleton({
-			themes: {
-				preset: [
-					{
-						name: 'wintry',
-						enhancements: true
-					}
-				]
-			}
-		})
-	]
-};
+```css
+@import 'tailwindcss';
+@import '@skeletonlabs/skeleton';
+@import '@skeletonlabs/skeleton/themes/wintry';
 ```
 
-This configuration sets up TailwindCSS with the Skeleton UI plugin, enabling the use of Skeleton UI components and theming capabilities.
+This replaces the older Skeleton v2 `@skeletonlabs/tw-plugin` setup and does not require a `tailwind.config.js` file for this project.
 
 ### Example Usage
 
-Here is an example of using a Skeleton UI button component:
+Here is an example of using Skeleton utility classes:
 
 ```svelte
-<script>
-	import { Button } from '@skeletonlabs/skeleton';
-</script>
-
-<Button color="primary">Click Me</Button>
+<button class="btn preset-filled-primary-500">Click Me</button>
 ```
 
 ### Additional Resources
 
-- [Skeleton UI Documentation](https://www.skeletonlabs.dev/docs)
+- [Skeleton UI Documentation](https://v4.skeleton.dev/)
 - [Skeleton UI GitHub Repository](https://github.com/skeletonlabs/skeleton)
 
 Feel free to explore these resources to get a deeper understanding of how Skeleton UI works and how you can leverage it in your projects.

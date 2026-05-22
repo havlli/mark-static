@@ -1,139 +1,119 @@
 # Overview
 
-**mark-static** is a dynamic content-driven web application built using SvelteKit. This project dynamically generates routes, menus, categories, and subcategories from the folder structure and its content within the static directory. The folder structure follows this pattern: `section/category/subcategory/content.md`. Multiple sections, categories, and subcategories are supported, with routes dynamically built based on this structure. Content and images are also dynamically handled.
+**mark-static** turns a folder of Markdown files into a static SvelteKit documentation site. Content lives in `static/content`, the navigation and search data are generated at build time, and the final site is prerendered with `@sveltejs/adapter-static`.
+
+The content tree can be nested to any depth. Every page is represented by a directory that contains `content.md`, and nearby assets such as images can be referenced from that Markdown file.
 
 ## Features
 
-- **Dynamic Routing**: Routes are generated dynamically from the folder structure within the static directory.
-- **Dynamic Menu and Categories**: Menu data and categories are generated from the folder structure at build time.
-- **Markdown Parsing**: Content in markdown files is parsed into HTML.
-- **Static Site Generation**: The application uses the `@sveltejs/adapter-static` to rebuild server-side components and logic to static files, making it suitable for hosting on static web hosting platforms.
-- **Real-time Content Update**: Custom Vite plugin (`vite-plugin-generate-data.js`) watches for changes in the content folder and regenerates JSON files to reflect the latest data.
+- **Arbitrary Nested Routing**: Folder names under `static/content` become stable `/content/...` routes through a catch-all SvelteKit route.
+- **Generated Navigation and Search**: The generator emits navigation, breadcrumbs, page metadata, and a search index into `src/lib/generated/content.js`.
+- **Stable Slugs**: Numeric ordering prefixes are stripped, folder names are normalized, and duplicate sibling slugs fail generation.
+- **Markdown Rendering**: Markdown is rendered with heading IDs, syntax highlighting, local asset URL rewriting, and sanitized HTML output.
+- **Static Site Generation**: `@sveltejs/adapter-static` builds a static site suitable for GitHub Pages, Netlify, Vercel, and similar hosts.
+- **Live Content Updates**: A Vite plugin watches `static/content` in development and regenerates content data when Markdown changes.
 
 ## Folder Structure
 
-The folder structure within the static directory that is used to generate content pages is as follows:
+Every page is a directory with a `content.md` file:
 
 ```
-static/
-└── content/
-    ├── section/
-    │   ├── category/
-    │   │   ├── subcategory/
-    │   │   │   ├── content.md
-    │   │   │   └── image.jpg
-    │   │   └── subcategory/
-    │   │       └── content.md
-    │   └── category/
-    │       └── subcategory/
-    │           └── content.md
-    └── section/
-        ├── category/
-        │   └── subcategory/
-        │       └── content.md
-        └── category/
-            └── subcategory/
-                └── content.md
+static/content/
+  01.Guides/
+    02.API v2/
+      003.Auth Flow/
+        content.md
+        diagram.png
+```
+
+This becomes:
+
+```txt
+/content/guides/api-v2/auth-flow
+```
+
+Numeric prefixes control sort order and are removed from URLs. Folder names can contain spaces, dots, mixed case, and other punctuation; the generator normalizes them into URL-safe slugs.
+
+## Frontmatter
+
+Frontmatter is optional. When present, it overrides folder-derived metadata:
+
+```md
+---
+title: OAuth Flow
+description: Configure API authentication.
+order: 30
+slug: auth-flow
+tags: [auth, api]
+draft: false
+---
+
+# Auth Flow
+
+Markdown content goes here.
 ```
 
 ## Scripts
 
-- **Generate Menu**: Generates the menu JSON data from the folder structure.
-- **Generate Search Index**: Builds the search index JSON data from the generated menu JSON.
-- **Vite Plugin**: Custom Vite plugin integrates these scripts into the build and dev environment.
+- **`pnpm generate`**: Regenerates `src/lib/generated/content.js`.
+- **`pnpm check:generated`**: Regenerates content and fails if the committed generated file is stale.
+- **Vite Plugin**: Runs generation during builds and watches `static/content` during development.
 
 ## Installation
 
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/yourusername/tango-procedures.git
-   cd tango-procedures
+   git clone https://github.com/havlli/mark-static.git
+   cd mark-static
    ```
 
 2. **Install dependencies**:
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Run the development server**:
 
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 4. **Build for production**:
 
    ```bash
-   npm run build
+   pnpm build
    ```
 
 5. **Preview the production build**:
    ```bash
-   npm run preview
+   pnpm preview
    ```
 
 ## Development
 
 The development workflow includes:
 
-- **Linting and Formatting**:
+- **Linting, Tests, and Generated Content Checks**:
 
   ```bash
-  npm run lint
-  npm run format
-  ```
-
-- **Custom Vite Plugin**:
-  The `vite-plugin-generate-data.js` plugin handles content updates and script execution during build and development:
-
-  ```js
-  import { execSync } from 'child_process';
-  import { fileURLToPath } from 'url';
-  import path from 'path';
-
-  const dirname = path.dirname(fileURLToPath(import.meta.url));
-  const contentDir = 'static/content';
-  const contentPath = path.resolve(dirname, contentDir);
-
-  function runScriptsWithNode() {
-  	const generateMenuPath = path.resolve(dirname, 'scripts/generate-menu.cjs');
-  	const generateSearchIndexPath = path.resolve(dirname, 'scripts/generate-search-index.cjs');
-  	execSync(`node ${generateMenuPath}`, { stdio: 'inherit' });
-  	execSync(`node ${generateSearchIndexPath}`, { stdio: 'inherit' });
-  }
-
-  function handleChanges(filePath) {
-  	if (filePath.startsWith(contentPath)) {
-  		runScriptsWithNode();
-  	}
-  }
-
-  export default function generateDataPlugin() {
-  	return {
-  		name: 'vite-plugin-generate-data',
-  		buildStart() {
-  			runScriptsWithNode();
-  		},
-  		configureServer(server) {
-  			server.watcher.add(contentPath);
-  			server.watcher.on('add', handleChanges);
-  			server.watcher.on('unlink', handleChanges);
-  			server.watcher.on('change', handleChanges);
-  		}
-  	};
-  }
+  pnpm lint
+  pnpm test
+  pnpm check:generated
   ```
 
 ## Dependencies
 
 Key dependencies and devDependencies used in the project:
 
-- **SvelteKit**: Core framework for building the application.
-- **TailwindCSS**: Utility-first CSS framework for styling.
+- **Svelte 5 and SvelteKit**: Core framework and routing layer.
+- **Tailwind CSS 4**: Utility-first CSS framework, integrated through the Vite plugin.
+- **Skeleton 4**: Svelte and Tailwind UI toolkit and theme styles.
 - **Marked**: Markdown parser.
+- **sanitize-html**: HTML sanitizer for rendered Markdown.
+- **highlight.js**: Syntax highlighting for code blocks.
 - **Vite**: Build tool and development server.
-- **HtmlParser2**: Library to modify parsed HTML elements and their attributes.
+- **HtmlParser2 and DOMUtils**: HTML parsing and transformation utilities.
 
 For the full list of dependencies, refer to `package.json` file.

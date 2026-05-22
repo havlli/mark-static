@@ -1,0 +1,1 @@
+import{rt as e}from"./lwUForf2.js";e();

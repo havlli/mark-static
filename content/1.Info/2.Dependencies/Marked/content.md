@@ -1,10 +1,10 @@
 # Marked
 
-Marked is a low-level markdown parser that allows for fast and efficient conversion of markdown content to HTML. It is used in this project to handle the parsing of markdown files.
+Marked is a low-level Markdown parser that allows for fast and efficient conversion of Markdown content to HTML. It is used in this project to handle the parsing of Markdown files.
 
 ## Why Marked?
 
-- **Performance**: Marked is designed to be fast and efficient, making it suitable for parsing large markdown files.
+- **Performance**: Marked is designed to be fast and efficient, making it suitable for parsing large Markdown files.
 - **Extensibility**: It provides hooks to customize the parsing process, allowing for tailored functionality.
 - **Simplicity**: Marked is easy to use and integrate into projects, with a simple API.
 
@@ -12,63 +12,64 @@ Marked is a low-level markdown parser that allows for fast and efficient convers
 
 In this project, Marked is used to:
 
-- **Parse Markdown Content**: Convert markdown files in the subcategory directories into HTML.
-- **Generate Static Content**: Work with SvelteKit to generate static HTML content from markdown during the build process.
+- **Parse Markdown Content**: Convert content page Markdown files into HTML.
+- **Generate Static Content**: Work with SvelteKit to generate static HTML content from Markdown during the build process.
+- **Highlight Code Blocks**: Integrate with `marked-highlight` and `highlight.js`.
+- **Render Safely**: Pass rendered HTML through `sanitize-html` before using Svelte’s `{@html}` directive.
 
 ### Installation
 
 To install Marked, use the following command:
 
 ```bash
-npm install marked
+pnpm add marked marked-highlight highlight.js sanitize-html
 ```
 
 ### Example Usage
 
-Here is an example of how Marked is used to parse markdown content:
+Here is an example of how Marked is used to parse Markdown content:
 
 ```js
-import { marked } from 'marked';
+import { Marked } from 'marked';
+import sanitizeHtml from 'sanitize-html';
 
-// Sample markdown content
+// Sample Markdown content
 const markdownContent = \`
 # Sample Title
 
-This is a sample markdown content.
+This is sample Markdown content.
 
 - Item 1
 - Item 2
 - Item 3
 \`;
 
-// Convert markdown to HTML
-const htmlContent = marked(markdownContent);
+const marked = new Marked();
+const htmlContent = sanitizeHtml(await marked.parse(markdownContent));
 
 console.log(htmlContent);
 ```
 
 ### Integration with SvelteKit
 
-In SvelteKit, Marked is used within the `+page.server.js` file to parse markdown content dynamically:
+In SvelteKit, Marked is used within the `+page.server.js` file to parse Markdown content dynamically:
 
 ```js
-import { marked } from 'marked';
-import fs from 'fs';
-import path from 'path';
+import { Marked } from 'marked';
+import sanitizeHtml from 'sanitize-html';
+import { pagesBySlugPath } from '$lib/generated/content.js';
 
-export async function load({ params }) {
-	const filePath = path.resolve(
-		'static/content',
-		params.section,
-		params.category,
-		params.subcategory,
-		'content.md'
-	);
-	const markdownContent = fs.readFileSync(filePath, 'utf-8');
-	const htmlContent = marked(markdownContent);
+const marked = new Marked();
+
+export async function load({ params, fetch }) {
+	const page = pagesBySlugPath[params.slug];
+	const response = await fetch(page.contentFile);
+	const markdownContent = await response.text();
+	const htmlContent = sanitizeHtml(await marked.parse(markdownContent));
 
 	return {
-		htmlContent
+		content: htmlContent,
+		page
 	};
 }
 ```

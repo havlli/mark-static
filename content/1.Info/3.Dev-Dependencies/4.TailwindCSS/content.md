@@ -1,68 +1,63 @@
-# TailwindCSS
+# Tailwind CSS
 
-TailwindCSS is a utility-first CSS framework that is used in this project to style the web application efficiently and with ease.
+Tailwind CSS is the utility-first CSS framework used to style this project. The current setup uses Tailwind CSS 4 with the official Vite plugin.
 
-## Why TailwindCSS?
+## Why Tailwind CSS?
 
-- **Utility-First Approach**: TailwindCSS provides low-level utility classes that let you build completely custom designs without having to write any custom CSS.
-- **Customization**: It is highly customizable, allowing you to extend or modify its configuration to suit the needs of your project.
-- **Efficiency**: TailwindCSS helps in writing less code and achieving responsive design faster compared to traditional CSS.
+- **Utility-First Approach**: Tailwind CSS provides low-level utility classes that let you build completely custom designs without having to write any custom CSS.
+- **CSS-First Configuration**: Tailwind 4 supports theme tokens and custom variants directly in CSS.
+- **Efficiency**: Tailwind CSS helps in writing less code and achieving responsive design faster compared to traditional CSS.
 
 ## Usage in This Project
 
-In this project, TailwindCSS is used to:
+In this project, Tailwind CSS is used to:
 
-- **Style Components**: TailwindCSS utility classes are used extensively to style various components throughout the application.
-- **Theming**: TailwindCSS is configured with Skeleton Labs plugin to provide a set of UI components and theming capabilities.
-- **Responsive Design**: TailwindCSS makes it straightforward to implement responsive design patterns.
+- **Style Components**: Tailwind utility classes are used throughout the Svelte components.
+- **Theme Integration**: Skeleton 4 theme styles are imported alongside Tailwind CSS.
+- **Responsive Design**: Breakpoint utilities drive the layout across mobile, tablet, and desktop views.
 
 ### Installation
 
-To install TailwindCSS, use the following commands:
+To install Tailwind CSS, use the following commands:
 
 ```bash
-npm install tailwindcss postcss autoprefixer
-npx tailwindcss init
+pnpm add -D tailwindcss @tailwindcss/vite
 ```
 
 ### Configuration
 
-The TailwindCSS configuration is defined in `tailwind.config.js`:
+Tailwind CSS is registered in `vite.config.js`:
 
 ```js
-import { join } from 'path';
-import { skeleton } from '@skeletonlabs/tw-plugin';
+import tailwindcss from '@tailwindcss/vite';
+import { sveltekit } from '@sveltejs/kit/vite';
+import { defineConfig } from 'vite';
 
-export default {
-	darkMode: 'selector',
-	content: [
-		'./src/**/*.{html,js,svelte,ts}',
-		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
-	],
-	theme: {
-		extend: {}
-	},
-	plugins: [
-		skeleton({
-			themes: {
-				preset: [
-					{
-						name: 'wintry',
-						enhancements: true
-					}
-				]
-			}
-		})
-	]
-};
+export default defineConfig({
+	plugins: [tailwindcss(), sveltekit()]
+});
 ```
 
-This configuration sets up TailwindCSS with the Skeleton Labs plugin to enable advanced theming and UI components.
+Tailwind is imported in `src/app.css`:
+
+```css
+@import 'tailwindcss';
+@import '@skeletonlabs/skeleton';
+@import '@skeletonlabs/skeleton/themes/wintry';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	--font-heading-token: ui-sans-serif, system-ui, sans-serif;
+}
+```
+
+This setup replaces the older PostCSS plus `tailwind.config.js` workflow for this project.
 
 ### Additional Resources
 
-- [TailwindCSS Documentation](https://tailwindcss.com/docs)
-- [TailwindCSS GitHub Repository](https://github.com/tailwindlabs/tailwindcss)
-- [Skeleton Labs Documentation](https://www.skeletonlabs.dev/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Tailwind CSS GitHub Repository](https://github.com/tailwindlabs/tailwindcss)
+- [Skeleton Labs Documentation](https://v4.skeleton.dev/)
 
-Feel free to explore these resources to get a deeper understanding of how TailwindCSS works and how you can leverage it in your projects.
+Feel free to explore these resources to get a deeper understanding of how Tailwind CSS works and how you can leverage it in your projects.
