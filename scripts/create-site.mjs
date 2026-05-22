@@ -373,6 +373,7 @@ async function updatePackageJson(targetDir, { packageName, description }) {
 	delete packageJson.scripts?.['release:check'];
 	delete packageJson.scripts?.prepublishOnly;
 	delete packageJson.scripts?.test;
+	delete packageJson.scripts?.['test:smoke'];
 
 	await fs.writeFile(packageFile, `${JSON.stringify(packageJson, null, '\t')}\n`);
 }

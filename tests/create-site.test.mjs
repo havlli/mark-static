@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
+import fsSync from 'node:fs';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -31,6 +32,44 @@ async function runCli(args, options = {}) {
 	});
 }
 
+async function runPnpm(args, options = {}) {
+	const pnpm = resolvePnpm();
+
+	return execFileAsync(pnpm.command, [...pnpm.args, ...args], {
+		cwd: options.cwd || projectRoot,
+		env: {
+			...process.env,
+			CI: '1',
+			PATH: [
+				process.env.PNPM_HOME,
+				process.env.npm_execpath ? path.dirname(process.env.npm_execpath) : '',
+				path.join(os.homedir(), 'Library/pnpm'),
+				path.join(os.homedir(), '.local/share/pnpm'),
+				process.env.PATH
+			]
+				.filter(Boolean)
+				.join(path.delimiter)
+		},
+		maxBuffer: 1024 * 1024 * 4
+	});
+}
+
+function resolvePnpm() {
+	const pnpmHome = process.env.PNPM_HOME;
+	if (!pnpmHome) return { command: 'pnpm', args: [] };
+
+	const shim = path.join(pnpmHome, process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm');
+	if (process.platform === 'win32' || !fsSync.existsSync(shim)) {
+		return { command: shim, args: [] };
+	}
+
+	const source = fsSync.readFileSync(shim, 'utf8');
+	const match = source.match(/\$basedir\/([^"]+pnpm\.cjs)/);
+	if (!match) return { command: shim, args: [] };
+
+	return { command: 'node', args: [path.join(pnpmHome, match[1])] };
+}
+
 test('prints help without scaffolding a project', async () => {
 	const { stdout } = await runCli(['--help']);
 
@@ -49,10 +88,7 @@ test('prints available scaffold presets', async () => {
 });
 
 test('published package contains the scaffold CLI template payload', async () => {
-	const { stdout } = await execFileAsync('pnpm', ['pack', '--dry-run', '--json'], {
-		cwd: projectRoot,
-		maxBuffer: 1024 * 1024
-	});
+	const { stdout } = await runPnpm(['pack', '--dry-run', '--json']);
 	const pack = JSON.parse(stdout);
 	const files = new Set(pack.files.map((file) => file.path));
 
@@ -122,6 +158,7 @@ test('scaffolds a clean generated site with provider config', async () => {
 	assert.equal(packageJson.scripts['release:check'], undefined);
 	assert.equal(packageJson.scripts.prepublishOnly, undefined);
 	assert.equal(packageJson.scripts.test, undefined);
+	assert.equal(packageJson.scripts['test:smoke'], undefined);
 	assert.match(config, /name: 'Acme Docs'/);
 	assert.match(config, /preset: 'mono'/);
 	assert.match(readme, /pnpm docs:check/);

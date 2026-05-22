@@ -240,7 +240,7 @@ npm whoami
 pnpm publish --access public
 ```
 
-`pnpm release:check` runs tests, linting, documentation validation, generated-manifest drift detection, production build, and a package dry run. The same command runs automatically through `prepublishOnly`.
+`pnpm release:check` runs tests, the packed-package scaffold smoke test, linting, documentation validation, generated-manifest drift detection, production build, and a package dry run. The same command runs automatically through `prepublishOnly`.
 
 After publishing, verify the public scaffold path:
 

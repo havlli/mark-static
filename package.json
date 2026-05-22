@@ -59,8 +59,9 @@
 		"generate": "node scripts/generate-content.mjs",
 		"docs:check": "node scripts/check-docs.mjs",
 		"check:generated": "pnpm generate && git diff --exit-code src/lib/generated/content.js",
-		"test": "node --test tests/*.test.mjs",
-		"release:check": "pnpm test && pnpm lint && pnpm docs:check && pnpm check:generated && pnpm build && pnpm pack --dry-run",
+		"test": "node --test tests/create-site.test.mjs tests/generate-content.test.mjs tests/render-content.test.mjs",
+		"test:smoke": "node --test tests/package-smoke.test.mjs",
+		"release:check": "pnpm test && pnpm test:smoke && pnpm lint && pnpm docs:check && pnpm check:generated && pnpm build && pnpm pack --dry-run",
 		"prepublishOnly": "pnpm release:check"
 	},
 	"devDependencies": {
