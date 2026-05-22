@@ -1,151 +1,198 @@
 # mark-static
 
-## Overview
+**mark-static** turns a folder of Markdown files into a static SvelteKit documentation site.
 
-**mark-static** is a dynamic content-driven web application built using SvelteKit. This project dynamically generates routes, menus, subcategories, and topics from the folder structure and its content within the static directory. The folder structure follows this pattern: `section/category/subcategory/content.md`. Multiple sections, categories, and subcategories are supported, with routes dynamically built based on this structure. Content and images are also dynamically handled.
+It is built for file-structure CMS style authoring: scaffold a site, choose a starter content preset, then add or move Markdown files in `static/content`.
 
-Check the [Demo Site](https://havlli.github.io/mark-static/) hosted on GitHub Pages
+[Demo site](https://havlli.github.io/mark-static/)
 
-## Features
+## Create a Site
 
-- **Dynamic Routing**: Routes are generated dynamically from the folder structure within the static directory.
-- **Dynamic Menu and Categories**: Menu data and categories are generated from the folder structure at build time.
-- **Markdown Parsing**: Content in markdown files is parsed into HTML.
-- **Static Site Generation**: The application uses the `@sveltejs/adapter-static` to rebuild server-side components and logic to static files, making it suitable for hosting on static web hosting platforms.
-- **Real-time Content Update**: Custom Vite plugin (`vite-plugin-generate-data.js`) watches for changes in the content folder and regenerates JSON files to reflect the latest data.
+From this repository checkout:
 
-## Folder Structure
-
-The folder structure within the static directory that is used to generate content pages is as follows:
-
+```bash
+pnpm install
+pnpm create-site ../my-docs
 ```
-static/
-└── content/
-    ├── section/
-    │   ├── category/
-    │   │   ├── subcategory/
-    │   │   │   ├── content.md
-    │   │   │   └── image.jpg
-    │   │   └── subcategory/
-    │   │       └── content.md
-    │   └── category/
-    │       └── subcategory/
-    │           └── content.md
-    └── section/
-        ├── category/
-        │   └── subcategory/
-        │       └── content.md
-        └── category/
-            └── subcategory/
-                └── content.md
+
+The scaffold asks for:
+
+- site name and description
+- content preset: `minimal`, `basic`, or `api`
+- theme preset: `default`, `forest`, or `mono`
+- background: `aurora`, `grid`, or `none`
+- deployment target: `github-pages`, `netlify`, `vercel`, or `static`
+
+For a non-interactive run:
+
+```bash
+pnpm create-site ../acme-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages
+```
+
+Then start the generated project:
+
+```bash
+cd ../my-docs
+pnpm install
+pnpm dev
+```
+
+When the package is published, the same CLI can be exposed through:
+
+```bash
+pnpm dlx mark-static my-docs
+```
+
+## Add Content
+
+Content lives in `static/content`.
+
+Use plain Markdown files for simple pages:
+
+```txt
+static/content/
+  01.Getting Started.md
+  02.Guides/
+    01.Installation.md
+    02.Configuration.md
+```
+
+Use `index.md` for folder landing pages:
+
+```txt
+static/content/
+  02.Guides/
+    index.md
+    01.Installation.md
+```
+
+The older folder page model is still supported when a page needs local assets grouped beside it:
+
+```txt
+static/content/
+  03.Reference/
+    API/
+      content.md
+      diagram.png
+```
+
+Numeric prefixes are used for sorting and removed from URLs. Folder and file names can contain spaces, dots, mixed case, and punctuation; the generator normalizes them into URL-safe slugs and fails if sibling routes collide.
+
+## Frontmatter
+
+Frontmatter is optional. When present, it overrides file or folder derived metadata:
+
+```md
+---
+title: OAuth Flow
+description: Configure API authentication.
+order: 30
+slug: auth-flow
+tags: [auth, api]
+draft: false
+---
+
+# Auth Flow
+
+Markdown content goes here.
+```
+
+Supported fields:
+
+- `title`: navigation and page title.
+- `description`: page metadata and search text.
+- `order`: sort order within sibling files and folders.
+- `slug`: URL segment override.
+- `tags`: search metadata.
+- `draft`: exclude from generated pages unless `INCLUDE_DRAFTS=true`.
+
+## Configure
+
+Site-level settings live in `markstatic.config.js`:
+
+```js
+export default {
+	site: {
+		name: 'Acme Docs',
+		description: 'Acme product documentation.',
+		docsLabel: 'Documentation',
+		repositoryUrl: '',
+		basePath: '/acme-docs',
+		language: 'en'
+	},
+	content: {
+		dir: 'static/content'
+	},
+	theme: {
+		skeleton: 'wintry',
+		preset: 'default',
+		background: 'aurora'
+	}
+};
+```
+
+Use `basePath` for GitHub Pages project sites. Keep it empty for root-hosted targets like Netlify, Vercel, or a custom domain.
+
+## Theme Overrides
+
+The default design tokens are defined in `src/theme.css`. Project-level overrides belong in `src/custom-theme.css` so users can change only what they need.
+
+Common tokens:
+
+- `--ms-page-bg`
+- `--ms-text`
+- `--ms-surface`
+- `--ms-border`
+- `--ms-accent`
+- `--ms-focus-ring`
+- `--ms-header-bg`
+- `--ms-sidebar-bg`
+
+Example:
+
+```css
+body {
+	--ms-accent: oklch(58% 0.18 250deg);
+	--ms-page-bg: oklch(99% 0.01 250deg);
+}
 ```
 
 ## Scripts
 
-- **Generate Menu**: Generates the menu JSON data from the folder structure.
-- **Generate Search Index**: Builds the search index JSON data from the generated menu JSON.
-- **Vite Plugin**: Custom Vite plugin integrates these scripts into the build and dev environment.
+```bash
+pnpm dev
+pnpm generate
+pnpm build
+pnpm preview
+pnpm lint
+pnpm test
+pnpm check:generated
+```
 
-## Installation
+`pnpm generate` writes `src/lib/generated/content.js` from the Markdown tree.
 
-1. **Clone the repository**:
+`pnpm check:generated` regenerates content data and fails if the committed generated manifest is stale.
 
-   ```bash
-   git clone https://github.com/yourusername/tango-procedures.git
-   cd tango-procedures
-   ```
+## Deployment
 
-2. **Install dependencies**:
+The included GitHub Pages workflow installs with pnpm, builds the static site, and publishes the `build` directory.
 
-   ```bash
-   npm install
-   ```
+For GitHub Pages project sites, set `site.basePath` in `markstatic.config.js` to the repository path, for example `/my-docs`.
 
-3. **Run the development server**:
+For Netlify, Vercel, or other root-hosted static targets, keep `site.basePath` empty.
 
-   ```bash
-   npm run dev
-   ```
+## Maintainer Development
 
-4. **Build for production**:
+This repository also serves as the demo site. Install dependencies and run:
 
-   ```bash
-   npm run build
-   ```
+```bash
+pnpm dev
+```
 
-5. **Preview the production build**:
-   ```bash
-   npm run preview
-   ```
+Before committing changes:
 
-## Development
-
-The development workflow includes:
-
-- **Linting and Formatting**:
-
-  ```bash
-  npm run lint
-  npm run format
-  ```
-
-- **Custom Vite Plugin**:
-  The `vite-plugin-generate-data.js` plugin handles content updates and script execution during build and development:
-
-  ```js
-  import { execSync } from 'child_process';
-  import { fileURLToPath } from 'url';
-  import path from 'path';
-
-  const dirname = path.dirname(fileURLToPath(import.meta.url));
-  const contentDir = 'static/content';
-  const contentPath = path.resolve(dirname, contentDir);
-
-  function runScriptsWithNode() {
-  	const generateMenuPath = path.resolve(dirname, 'scripts/generate-menu.cjs');
-  	const generateSearchIndexPath = path.resolve(dirname, 'scripts/generate-search-index.cjs');
-  	execSync(`node ${generateMenuPath}`, { stdio: 'inherit' });
-  	execSync(`node ${generateSearchIndexPath}`, { stdio: 'inherit' });
-  }
-
-  function handleChanges(filePath) {
-  	if (filePath.startsWith(contentPath)) {
-  		runScriptsWithNode();
-  	}
-  }
-
-  export default function generateDataPlugin() {
-  	return {
-  		name: 'vite-plugin-generate-data',
-  		buildStart() {
-  			runScriptsWithNode();
-  		},
-  		configureServer(server) {
-  			server.watcher.add(contentPath);
-  			server.watcher.on('add', handleChanges);
-  			server.watcher.on('unlink', handleChanges);
-  			server.watcher.on('change', handleChanges);
-  		}
-  	};
-  }
-  ```
-
-## Dependencies
-
-Key dependencies and devDependencies used in the project:
-
-- **SvelteKit**: Core framework for building the application.
-- **TailwindCSS**: Utility-first CSS framework for styling.
-- **Marked**: Markdown parser.
-- **Vite**: Build tool and development server.
-- **HtmlParser2**: Library to modify parsed HTML elements and their attributes.
-
-For the full list of dependencies, refer to `package.json`.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
----
-
-Feel free to modify this README to suit your project's specific needs and details.
+```bash
+pnpm lint
+pnpm test
+pnpm build
+```

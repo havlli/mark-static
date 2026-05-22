@@ -1,11 +1,11 @@
 <script>
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
-	import { searchIndex } from '$lib/data/search-index.js';
-	import { base } from '$app/paths';
+	import { firstPageRoute } from '$lib/generated/content.js';
 
 	onMount(() => {
-		goto(`${base}${searchIndex[0].route}`);
+		goto(resolve(firstPageRoute));
 	});
 </script>
 

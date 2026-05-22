@@ -1,27 +1,27 @@
 # SvelteKit
 
-SvelteKit is the framework used to build this project. It offers a rich set of features that make building modern web applications efficient and enjoyable.
+SvelteKit is the framework used to build this project. It provides file-based routing, server-side data loading, prerendering, and adapter-based deployment while keeping the authoring model close to standard Svelte components.
 
 ## Why SvelteKit?
 
-- **Ease of Use**: SvelteKit simplifies the development process with a straightforward and intuitive API.
-- **Performance**: By compiling components to highly optimized JavaScript, SvelteKit ensures fast loading times and responsive interactions.
-- **Flexibility**: SvelteKit supports server-side rendering, static site generation, and single-page applications, allowing you to choose the best approach for your project.
+- **Routing**: Routes are defined by files, and this project uses a catch-all route for arbitrary content depth.
+- **Performance**: Svelte components compile to efficient JavaScript and SvelteKit prerenders static pages when possible.
+- **Flexibility**: SvelteKit supports server rendering, static generation, and adapter-based deployment targets.
 
 ## Usage in This Project
 
 In this project, SvelteKit is used to handle:
 
-- **Routing**: Dynamic routes are generated based on the folder structure in the `static/content` directory.
-- **Markdown Parsing**: Markdown files in the subcategory directories are parsed into HTML.
-- **Static Site Generation**: The `@sveltejs/adapter-static` is used to build the project into static files for hosting on static web hosting platforms.
+- **Routing**: The `/content/[...slug]` route serves every generated content page.
+- **Data Loading**: `+page.server.js` resolves generated page metadata, fetches Markdown, renders it to HTML, sanitizes it, and rewrites local asset URLs.
+- **Static Site Generation**: `@sveltejs/adapter-static` prerenders the project into the `build` directory for static hosting.
 
 ### Installation
 
 To install SvelteKit, use the following command:
 
 ```bash
-npm install @sveltejs/kit
+pnpm add -D @sveltejs/kit @sveltejs/vite-plugin-svelte svelte vite
 ```
 
 ### Configuration
@@ -40,16 +40,21 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		prerender: {
-			handleMissingId: 'ignore'
+			handleMissingId: 'ignore',
+			handleHttpError: 'fail'
+		},
+		paths: {
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
+			relative: false
 		}
 	}
 };
 export default config;
 ```
 
-This configuration sets up SvelteKit with the static adapter, allowing the project to be built into static files.
+This configuration sets up SvelteKit with the static adapter, strict prerender error handling, and a configurable `BASE_PATH` for hosts such as GitHub Pages.
 
 ### Additional Resources
 
-- [SvelteKit Documentation](https://kit.svelte.dev/docs)
+- [SvelteKit Documentation](https://svelte.dev/docs/kit)
 - [SvelteKit GitHub Repository](https://github.com/sveltejs/kit)

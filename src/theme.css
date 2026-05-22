@@ -1,0 +1,92 @@
+body {
+	--ms-font-heading: ui-sans-serif, system-ui, sans-serif;
+	--ms-page-bg: var(--color-surface-50);
+	--ms-text: var(--color-surface-950);
+	--ms-text-muted: color-mix(in oklab, var(--ms-text), transparent 35%);
+	--ms-surface: oklch(100% 0 0 / 0.82);
+	--ms-surface-solid: oklch(100% 0 0);
+	--ms-surface-muted: color-mix(in oklab, var(--ms-surface-solid), var(--ms-text) 4%);
+	--ms-border: oklch(20% 0 0 / 0.14);
+	--ms-accent: var(--color-primary-500);
+	--ms-accent-contrast: var(--color-primary-contrast-500);
+	--ms-focus-ring: var(--color-primary-300);
+	--ms-header-bg: color-mix(in oklab, var(--ms-surface-solid), transparent 12%);
+	--ms-sidebar-bg: color-mix(in oklab, var(--ms-surface-solid), transparent 4%);
+	--ms-backdrop: oklch(18% 0.02 260deg / 0.52);
+	--ms-radius-sm: 0.25rem;
+	--ms-radius-md: 0.5rem;
+	--ms-radius-lg: 0.75rem;
+	--ms-shadow: 0 12px 40px oklch(20% 0.03 260deg / 0.1);
+	--ms-background-image: none;
+}
+
+.dark body {
+	--ms-page-bg: var(--color-surface-950);
+	--ms-text: var(--color-surface-50);
+	--ms-text-muted: color-mix(in oklab, var(--ms-text), transparent 38%);
+	--ms-surface: oklch(26% 0.03 260deg / 0.78);
+	--ms-surface-solid: var(--color-surface-900);
+	--ms-surface-muted: color-mix(in oklab, var(--ms-surface-solid), white 4%);
+	--ms-border: oklch(100% 0 0 / 0.14);
+	--ms-header-bg: color-mix(in oklab, var(--ms-surface-solid), transparent 16%);
+	--ms-sidebar-bg: color-mix(in oklab, var(--ms-surface-solid), transparent 8%);
+	--ms-backdrop: oklch(8% 0.02 260deg / 0.64);
+	--ms-shadow: 0 16px 48px oklch(0% 0 0 / 0.26);
+}
+
+body[data-ms-theme='forest'] {
+	--color-primary-50: oklch(97% 0.03 156deg);
+	--color-primary-100: oklch(92% 0.06 156deg);
+	--color-primary-200: oklch(85% 0.09 156deg);
+	--color-primary-300: oklch(77% 0.12 156deg);
+	--color-primary-400: oklch(69% 0.14 156deg);
+	--color-primary-500: oklch(58% 0.14 156deg);
+	--color-primary-600: oklch(50% 0.13 156deg);
+	--color-primary-700: oklch(42% 0.12 156deg);
+	--color-primary-800: oklch(34% 0.1 156deg);
+	--color-primary-900: oklch(27% 0.08 156deg);
+	--color-primary-950: oklch(21% 0.07 156deg);
+	--ms-accent: var(--color-primary-500);
+	--ms-focus-ring: var(--color-primary-300);
+}
+
+body[data-ms-theme='mono'] {
+	--color-primary-50: oklch(97% 0.004 260deg);
+	--color-primary-100: oklch(92% 0.006 260deg);
+	--color-primary-200: oklch(84% 0.008 260deg);
+	--color-primary-300: oklch(76% 0.01 260deg);
+	--color-primary-400: oklch(66% 0.012 260deg);
+	--color-primary-500: oklch(56% 0.014 260deg);
+	--color-primary-600: oklch(48% 0.014 260deg);
+	--color-primary-700: oklch(40% 0.012 260deg);
+	--color-primary-800: oklch(32% 0.01 260deg);
+	--color-primary-900: oklch(25% 0.008 260deg);
+	--color-primary-950: oklch(19% 0.006 260deg);
+	--ms-accent: var(--color-primary-600);
+	--ms-focus-ring: var(--color-primary-400);
+}
+
+body[data-ms-background='aurora'] {
+	--ms-background-image:
+		radial-gradient(
+			circle at 16% 18%,
+			color-mix(in oklab, var(--ms-accent), transparent 86%),
+			transparent 28rem
+		),
+		radial-gradient(
+			circle at 84% 6%,
+			color-mix(in oklab, var(--color-secondary-500), transparent 88%),
+			transparent 24rem
+		);
+}
+
+body[data-ms-background='grid'] {
+	--ms-background-image:
+		linear-gradient(var(--ms-border) 1px, transparent 1px),
+		linear-gradient(90deg, var(--ms-border) 1px, transparent 1px);
+	background-size: 32px 32px;
+}
+
+body[data-ms-background='none'] {
+	--ms-background-image: none;
+}

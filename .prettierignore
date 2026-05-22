@@ -2,3 +2,9 @@
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+
+# Generated build data
+src/lib/generated
+
+# Author-controlled content
+static/content

@@ -1,26 +1,28 @@
 <script>
-	import { searchIndex } from '$lib/data/search-index.js';
+	import { searchIndex } from '$lib/generated/content.js';
+	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { toLowerCaseNoDashes, removeDashes } from '$lib/text-utils.js';
-	import { getModalStore } from '@skeletonlabs/skeleton';
 	import BaseAnchor from '$lib/shared/BaseAnchor.svelte';
 
-	const modal = getModalStore();
+	export let onClose = () => {};
 
 	function removeStaticPath(route) {
 		return route.split('/').slice(2).join('/');
 	}
 
-	function groupByCategory(filteredData) {
+	function groupByParent(filteredData) {
 		const grouped = filteredData.reduce((acc, item) => {
-			if (!acc[item.category]) {
-				acc[item.category] = {
-					category: item.category,
+			const parent = item.breadcrumb.slice(0, -1).join(' / ') || item.section;
+
+			if (!acc[parent]) {
+				acc[parent] = {
+					parent,
 					subcategories: []
 				};
 			}
 
-			acc[item.category].subcategories.push(item);
+			acc[parent].subcategories.push(item);
 
 			return acc;
 		}, {});
@@ -29,47 +31,79 @@
 	}
 
 	function search(value) {
+		const normalizedQuery = toLowerCaseNoDashes(value.trim());
 		const filteredData = searchIndex.filter(
 			(item) =>
-				toLowerCaseNoDashes(item.section).includes(value.toLowerCase()) ||
-				toLowerCaseNoDashes(item.category).includes(value.toLowerCase()) ||
-				toLowerCaseNoDashes(item.subcategory).includes(value.toLowerCase())
+				normalizedQuery.length === 0 ||
+				toLowerCaseNoDashes(
+					[item.title, item.description, item.tags.join(' '), item.searchText].join(' ')
+				).includes(normalizedQuery)
 		);
 
-		return groupByCategory(filteredData);
+		return groupByParent(filteredData);
 	}
 
 	let query = '';
+	let searchInput;
 	const searchResults = writable(search(query));
 
+	onMount(() => searchInput?.focus());
+
 	$: $searchResults = search(query);
+	$: resultCount = $searchResults.reduce(
+		(count, groupedResults) => count + groupedResults.subcategories.length,
+		0
+	);
+	$: statusMessage =
+		query.trim().length === 0
+			? `${resultCount} pages available.`
+			: `${resultCount} search ${resultCount === 1 ? 'result' : 'results'} for ${query}.`;
 </script>
 
-<div class="card bg-animated backdrop-blur-lg w-full max-w-[800px] shadow-xl mt-8 mb-auto">
-	<header class="!bg-opacity-10 bg-white dark:bg-black flex items-center">
+<div class="card bg-animated relative mt-8 mb-auto w-full max-w-[800px] shadow-xl backdrop-blur-lg">
+	<header class="bg-white/10 dark:bg-black/10 flex items-center">
+		<h2 id="site-search-title" class="sr-only">Search documentation</h2>
+		<label for="site-search-input" class="sr-only">Search documentation</label>
 		<i class="fa-solid fa-magnifying-glass text-xl ml-4"></i>
 		<input
+			id="site-search-input"
 			type="search"
 			placeholder="Search..."
+			aria-controls="site-search-results"
+			aria-describedby="site-search-status"
+			data-autofocus
+			bind:this={searchInput}
 			bind:value={query}
-			class="bg-transparent border-0 w-full m-2 ml-4 text-lg px-3 py-2 placeholder-surface-900 placeholder-opacity-50 dark:placeholder-surface-50 dark:placeholder-opacity-50 focus:ring-0 focus:outline-none focus:outline-0"
+			class="m-2 ml-4 w-full border-0 bg-transparent px-3 py-2 text-lg placeholder-surface-900/50 dark:placeholder-surface-50/50"
 		/>
+		<button
+			type="button"
+			class="btn-icon m-2 shrink-0 hover:variant-soft-primary"
+			aria-label="Close search"
+			onclick={onClose}
+		>
+			<i class="fa-solid fa-xmark"></i>
+		</button>
 	</header>
-	<nav class="list-nav overflow-x-auto max-h-[480px] hide-scrollbar bg-transparent">
-		{#each $searchResults as groupedSearchResults}
-			<div class="text-sm font-bold p-4">{removeDashes(groupedSearchResults.category)}</div>
+	<p id="site-search-status" class="sr-only" aria-live="polite">{statusMessage}</p>
+	<nav
+		id="site-search-results"
+		aria-label="Search results"
+		class="list-nav hide-scrollbar max-h-[480px] overflow-x-auto bg-transparent"
+	>
+		{#each $searchResults as groupedSearchResults (groupedSearchResults.parent)}
+			<div class="text-sm font-bold p-4">{removeDashes(groupedSearchResults.parent)}</div>
 			<ul>
-				{#each groupedSearchResults.subcategories as subcategory}
+				{#each groupedSearchResults.subcategories as subcategory (subcategory.route)}
 					<li class="text-lg">
 						<BaseAnchor
 							target={subcategory.route}
-							on:click={() => modal.close()}
-							classes="!rounded-none justify-between hover:variant-soft focus:variant-filled-primary focus:ring-0 focus:outline-none focus:outline-0"
+							onclick={onClose}
+							classes="!rounded-none justify-between hover:variant-soft focus:variant-filled-primary"
 						>
 							<div class="flex items-center gap-4">
 								<i class="fa-solid fa-file"></i>
-								<span class="flex-auto font-bold opacity-75"
-									>{removeDashes(subcategory.subcategory)}</span
+								<span class="flex-auto font-bold opacity-75">{removeDashes(subcategory.title)}</span
 								>
 							</div>
 							<span class="hidden md:block text-xs opacity-50"
@@ -89,7 +123,7 @@
 		{/if}
 	</nav>
 	<footer
-		class="hidden md:flex items-center gap-2 !bg-opacity-10 bg-white dark:bg-black p-4 text-xs font-bold"
+		class="hidden md:flex items-center gap-2 bg-white/10 dark:bg-black/10 p-4 text-xs font-bold"
 	>
 		<div>
 			<kbd class="kbd">Esc</kbd> to Close
@@ -112,6 +146,12 @@
 		);
 		background-size: 500% 500%;
 		animation: gradient 5s ease infinite;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.bg-animated {
+			animation: none;
+		}
 	}
 
 	@keyframes gradient {

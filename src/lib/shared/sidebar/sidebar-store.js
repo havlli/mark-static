@@ -1,4 +1,4 @@
 import { writable } from 'svelte/store';
-import { sidebarData } from '$lib/data/sidebar.js';
+import { navigation } from '$lib/generated/content.js';
 
-export const currentTile = writable(sidebarData[0].section);
+export const currentTile = writable(navigation[0].id);

@@ -20,45 +20,53 @@ In this project, ESLint is used to:
 To install ESLint, use the following command:
 
 ```bash
-npm install eslint
+pnpm add -D eslint @eslint/js
 ```
 
 Additionally, install the necessary plugins for Svelte and Prettier integration:
 
 ```bash
-npm install eslint-plugin-svelte eslint-config-prettier @types/eslint
+pnpm add -D eslint-plugin-svelte eslint-config-prettier @types/eslint
 ```
 
 ### Configuration
 
-The ESLint configuration is defined in the `.eslintrc.cjs` file:
+The ESLint configuration is defined in `eslint.config.js` using ESLint’s flat config format:
 
 ```js
-module.exports = {
-	env: {
-		browser: true,
-		es2021: true
-	},
-	extends: ['eslint:recommended', 'plugin:svelte/recommended', 'prettier'],
-	parserOptions: {
-		ecmaVersion: 12,
-		sourceType: 'module'
-	},
-	plugins: ['svelte'],
-	rules: {
-		// Add custom rules here
+import js from '@eslint/js';
+import svelte from 'eslint-plugin-svelte';
+import prettier from 'eslint-config-prettier';
+
+export default [
+	js.configs.recommended,
+	...svelte.configs['flat/recommended'],
+	prettier,
+	...svelte.configs['flat/prettier'],
+	{
+		languageOptions: {
+			ecmaVersion: 2022,
+			sourceType: 'module',
+			globals: {
+				console: 'readonly',
+				document: 'readonly',
+				localStorage: 'readonly',
+				process: 'readonly',
+				window: 'readonly'
+			}
+		}
 	}
-};
+];
 ```
 
 ### Example Usage
 
-To lint your project files, you can use the following npm script defined in `package.json`:
+The project runs Prettier first, then ESLint:
 
 ```json
 {
 	"scripts": {
-		"lint": "eslint ."
+		"lint": "prettier --check . && eslint ."
 	}
 }
 ```
@@ -66,45 +74,37 @@ To lint your project files, you can use the following npm script defined in `pac
 Run the linting process with:
 
 ```bash
-npm run lint
+pnpm lint
 ```
 
 ### Integration with SvelteKit
 
-In SvelteKit, ESLint is configured to work with both JavaScript and Svelte files. Here's an example `.eslintrc.cjs` configuration:
+In SvelteKit, ESLint is configured to work with both JavaScript and Svelte files:
 
 ```js
-module.exports = {
-	env: {
-		browser: true,
-		es2021: true
-	},
-	extends: ['eslint:recommended', 'plugin:svelte/recommended', 'prettier'],
-	parserOptions: {
-		ecmaVersion: 12,
-		sourceType: 'module'
-	},
-	plugins: ['svelte'],
-	settings: {
-		'svelte3/ignore-warnings': (warn) => warn.code === 'a11y-no-onchange'
-	},
-	overrides: [
-		{
-			files: ['*.svelte'],
-			processor: 'svelte3/svelte3'
+import js from '@eslint/js';
+import svelte from 'eslint-plugin-svelte';
+import prettier from 'eslint-config-prettier';
+
+export default [
+	js.configs.recommended,
+	...svelte.configs['flat/recommended'],
+	prettier,
+	...svelte.configs['flat/prettier'],
+	{
+		languageOptions: {
+			ecmaVersion: 2022,
+			sourceType: 'module'
 		}
-	],
-	rules: {
-		// Add custom rules here
 	}
-};
+];
 ```
 
 ### Additional Resources
 
-- [ESLint Documentation](https://eslint.org/docs/user-guide/getting-started)
+- [ESLint Documentation](https://eslint.org/docs/latest/use/getting-started)
 - [ESLint GitHub Repository](https://github.com/eslint/eslint)
-- [ESLint Plugin for Svelte](https://github.com/sveltejs/eslint-plugin-svelte3)
+- [ESLint Plugin for Svelte](https://github.com/sveltejs/eslint-plugin-svelte)
 - [Prettier Integration](https://prettier.io/docs/en/integrating-with-linters.html)
 
 Feel free to explore these resources to get a deeper understanding of how ESLint works and how you can leverage it in your projects.

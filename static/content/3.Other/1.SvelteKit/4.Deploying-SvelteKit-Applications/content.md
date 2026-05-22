@@ -8,43 +8,39 @@ If you are using the `@sveltejs/adapter-static`, you can deploy your application
 
 ### Vercel
 
-1. **Install Vercel CLI**:
+1. **Login with the Vercel CLI**:
 
    ```bash
-   npm install -g vercel
+   pnpm dlx vercel login
    ```
 
-2. **Login to Vercel**:
+2. **Deploy**:
 
    ```bash
-   vercel login
-   ```
-
-3. **Deploy**:
-
-   ```bash
-   vercel
+   pnpm dlx vercel
    ```
 
 ### Netlify
 
-1. **Install Netlify CLI**:
+1. **Login to Netlify**:
 
    ```bash
-   npm install -g netlify-cli
+   pnpm dlx netlify-cli login
    ```
 
-2. **Login to Netlify**:
+2. **Deploy**:
 
    ```bash
-   netlify login
+   pnpm dlx netlify-cli deploy --prod
    ```
 
-3. **Deploy**:
+### GitHub Pages
 
-   ```bash
-   netlify deploy --prod
-   ```
+For a repository page, configure a base path and publish the static `build` directory:
+
+```bash
+BASE_PATH=/my-repo pnpm build
+```
 
 ## Server-Side Deployment
 
@@ -55,7 +51,7 @@ For server-side deployment, you need a suitable adapter like `@sveltejs/adapter-
 1. **Install Node adapter**:
 
    ```bash
-   npm install @sveltejs/adapter-node
+   pnpm add -D @sveltejs/adapter-node
    ```
 
 2. **Configure SvelteKit**:
@@ -66,17 +62,16 @@ For server-side deployment, you need a suitable adapter like `@sveltejs/adapter-
    import adapter from '@sveltejs/adapter-node';
 
    export default {
-   	kit: {
-   		adapter: adapter(),
-   		target: '#svelte'
-   	}
+    kit: {
+      adapter: adapter()
+    }
    };
    ```
 
 3. **Build and Start**:
 
    ```bash
-   npm run build
+   pnpm build
    node build
    ```
 
@@ -85,16 +80,18 @@ For server-side deployment, you need a suitable adapter like `@sveltejs/adapter-
 1. **Create a Dockerfile**:
 
    ```Dockerfile
-   FROM node:16
+   FROM node:22-alpine
 
    WORKDIR /app
 
-   COPY package*.json ./
-   RUN npm install
+   RUN corepack enable
+
+   COPY package.json pnpm-lock.yaml ./
+   RUN pnpm install --frozen-lockfile
 
    COPY . .
 
-   RUN npm run build
+   RUN pnpm build
 
    EXPOSE 3000
    CMD ["node", "build"]
@@ -116,7 +113,7 @@ For server-side deployment, you need a suitable adapter like `@sveltejs/adapter-
 
 - [Vercel Documentation](https://vercel.com/docs)
 - [Netlify Documentation](https://docs.netlify.com/)
-- [SvelteKit Documentation](https://kit.svelte.dev/docs)
+- [SvelteKit Documentation](https://svelte.dev/docs/kit)
 - [Docker Documentation](https://docs.docker.com/)
 
 These steps should help you deploy your SvelteKit applications effectively.

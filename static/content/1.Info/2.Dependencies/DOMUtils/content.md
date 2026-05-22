@@ -21,7 +21,7 @@ In this project, DOMUtils is used to:
 To install DOMUtils, use the following command:
 
 ```bash
-npm install domutils
+pnpm add domutils
 ```
 
 ### Example Usage
@@ -74,9 +74,7 @@ import path from 'path';
 export async function load({ params }) {
 	const filePath = path.resolve(
 		'static/content',
-		params.section,
-		params.category,
-		params.subcategory,
+		params.slug,
 		'content.html'
 	);
 	const htmlContent = fs.readFileSync(filePath, 'utf-8');

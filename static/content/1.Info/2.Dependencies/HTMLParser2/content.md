@@ -20,7 +20,7 @@ In this project, HTMLParser2 is used to:
 To install HTMLParser2, use the following command:
 
 ```bash
-npm install htmlparser2
+pnpm add htmlparser2
 ```
 
 ### Example Usage
@@ -69,16 +69,14 @@ import path from 'path';
 export async function load({ params }) {
 	const filePath = path.resolve(
 		'static/content',
-		params.section,
-		params.category,
-		params.subcategory,
+		params.slug,
 		'content.html'
 	);
 	const htmlContent = fs.readFileSync(filePath, 'utf-8');
 	const document = parseDocument(htmlContent);
 
 	const title = DomUtils.getText(DomUtils.findOne((elem) => elem.name === 'h1', document.children));
-	const paragraph = DomUtils.getText(DomUtils.findOne(elem.name === 'p', document.children));
+	const paragraph = DomUtils.getText(DomUtils.findOne((elem) => elem.name === 'p', document.children));
 
 	return {
 		title,

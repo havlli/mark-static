@@ -20,7 +20,7 @@ In this project, Font Awesome Free is used to:
 To install Font Awesome Free, use the following command:
 
 ```bash
-npm install @fortawesome/fontawesome-free
+pnpm add @fortawesome/fontawesome-free
 ```
 
 ### Example Usage
@@ -33,9 +33,9 @@ Here is an example of how to use Font Awesome icons in a Svelte component:
 </script>
 
 <div>
-	<i class="fas fa-home"></i>
-	<i class="fas fa-user"></i>
-	<i class="fas fa-cog"></i>
+	<i class="fa-solid fa-house"></i>
+	<i class="fa-solid fa-user"></i>
+	<i class="fa-solid fa-gear"></i>
 </div>
 ```
 
@@ -44,7 +44,7 @@ Here is an example of how to use Font Awesome icons in a Svelte component:
 You can customize the icons using CSS classes:
 
 ```html
-<i class="fas fa-home" style="color: red; font-size: 24px;"></i>
+<i class="fa-solid fa-house text-primary-500 text-2xl"></i>
 ```
 
 ### Additional Resources

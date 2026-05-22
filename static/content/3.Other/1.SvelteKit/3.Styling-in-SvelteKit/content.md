@@ -4,7 +4,7 @@ Styling is an important aspect of web development. In this guide, we will explor
 
 ## CSS in Svelte
 
-You can write CSS directly in your Svelte components. Here’s an example:
+You can write scoped CSS directly in Svelte components. Here’s an example:
 
 ```html
 <script>
@@ -26,60 +26,58 @@ CSS written in a Svelte component is scoped to that component by default. This m
 
 ## Global Styles
 
-To define global styles, use a `<style global>` tag:
+To define global styles, import a stylesheet from your root layout:
 
-```html
-<style global>
-	body {
-		margin: 0;
-		font-family: Arial, sans-serif;
-	}
-</style>
+```svelte
+<script>
+	import '../app.css';
+</script>
 ```
+
+Global CSS can then live in `src/app.css`.
 
 ## CSS Frameworks
 
-SvelteKit supports popular CSS frameworks like TailwindCSS and Bootstrap. Here’s how to set up TailwindCSS:
+SvelteKit supports popular CSS frameworks like Tailwind CSS and Bootstrap. Here’s how to set up Tailwind CSS 4 with Vite:
 
-1. **Install TailwindCSS**:
+1. **Install Tailwind CSS**:
 
    ```bash
-   npm install tailwindcss postcss autoprefixer
-   npx tailwindcss init -p
+   pnpm add -D tailwindcss @tailwindcss/vite
    ```
 
-2. **Configure TailwindCSS** in `tailwind.config.js`:
+2. **Configure Tailwind CSS** in `vite.config.js`:
 
    ```js
-   module.exports = {
-   	content: ['./src/**/*.{html,js,svelte,ts}'],
-   	theme: {
-   		extend: {}
-   	},
-   	plugins: []
-   };
+   import tailwindcss from '@tailwindcss/vite';
+   import { sveltekit } from '@sveltejs/kit/vite';
+   import { defineConfig } from 'vite';
+
+   export default defineConfig({
+    plugins: [tailwindcss(), sveltekit()]
+   });
    ```
 
-3. **Import TailwindCSS** in your `src/app.css`:
+3. **Import Tailwind CSS** in your `src/app.css`:
 
    ```css
-   @tailwind base;
-   @tailwind components;
-   @tailwind utilities;
+   @import 'tailwindcss';
    ```
 
 4. **Include the CSS file** in your project:
 
-   ```js
-   import './app.css';
+   ```svelte
+   <script>
+    import '../app.css';
+   </script>
    ```
 
-Now you can use TailwindCSS classes in your Svelte components:
+Now you can use Tailwind CSS classes in your Svelte components:
 
-```html
-<div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md space-y-4">
-	<h1 class="text-xl font-bold">Hello, TailwindCSS!</h1>
-	<p class="text-gray-500">This is styled with TailwindCSS.</p>
+```svelte
+<div class="mx-auto max-w-sm space-y-4 rounded-xl bg-white p-6 shadow-md">
+	<h1 class="text-xl font-bold">Hello, Tailwind CSS!</h1>
+	<p class="text-gray-500">This is styled with Tailwind CSS.</p>
 </div>
 ```
 
@@ -90,7 +88,7 @@ SvelteKit supports CSS preprocessors like SCSS. Here’s how to set up SCSS:
 1. **Install SCSS**:
 
    ```bash
-   npm install -D svelte-preprocess sass
+   pnpm add -D svelte-preprocess sass
    ```
 
 2. **Configure SCSS** in `svelte.config.js`:
@@ -109,7 +107,7 @@ SvelteKit supports CSS preprocessors like SCSS. Here’s how to set up SCSS:
 
 3. **Use SCSS** in your components:
 
-   ```html
+   ```svelte
    <style lang="scss">
    	$primary-color: blue;
 

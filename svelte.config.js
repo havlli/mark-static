@@ -1,5 +1,9 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import siteConfig from './markstatic.config.js';
+
+const configuredBasePath = siteConfig.site?.basePath ?? '';
+const basePath = process.argv.includes('dev') ? '' : (process.env.BASE_PATH ?? configuredBasePath);
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -13,7 +17,7 @@ const config = {
 			handleHttpError: 'fail'
 		},
 		paths: {
-			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
+			base: basePath,
 			relative: false
 		}
 	}
