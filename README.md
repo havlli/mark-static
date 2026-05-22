@@ -162,6 +162,7 @@ body {
 ```bash
 pnpm dev
 pnpm generate
+pnpm docs:check
 pnpm build
 pnpm preview
 pnpm lint
@@ -170,6 +171,8 @@ pnpm check:generated
 ```
 
 `pnpm generate` writes `src/lib/generated/content.js` from the Markdown tree.
+
+`pnpm docs:check` validates documentation pages for missing titles, duplicate headings, missing image alt text, broken local assets, and broken internal links.
 
 `pnpm check:generated` regenerates content data and fails if the committed generated manifest is stale.
 
