@@ -35,7 +35,13 @@ const deployTargets = {
 	static: 'Plain static files from pnpm build.'
 };
 
-const includedDotfileEntries = new Set(['.github', '.gitignore']);
+const includedDotfileEntries = new Set([
+	'.github',
+	'.gitignore',
+	'.npmrc',
+	'.prettierignore',
+	'.prettierrc'
+]);
 const excludedRootEntries = new Set([
 	'.git',
 	'.svelte-kit',
@@ -213,8 +219,40 @@ function createConfig({
 	};
 }
 
+function jsString(value) {
+	return `'${value
+		.replace(/\\/g, '\\\\')
+		.replace(/'/g, "\\'")
+		.replace(/\r/g, '\\r')
+		.replace(/\n/g, '\\n')}'`;
+}
+
 async function writeSiteConfig(targetDir, config) {
-	const contents = `export default ${JSON.stringify(config, null, '\t')};\n`;
+	const contents = `export default {
+\tsite: {
+\t\tname: ${jsString(config.site.name)},
+\t\tdescription: ${jsString(config.site.description)},
+\t\tdocsLabel: ${jsString(config.site.docsLabel)},
+\t\trepositoryUrl: ${jsString(config.site.repositoryUrl)},
+\t\tbasePath: ${jsString(config.site.basePath)},
+\t\tlanguage: ${jsString(config.site.language)}
+\t},
+\tcontent: {
+\t\tdir: ${jsString(config.content.dir)}
+\t},
+\ttheme: {
+\t\tskeleton: ${jsString(config.theme.skeleton)},
+\t\tpreset: ${jsString(config.theme.preset)},
+\t\tbackground: ${jsString(config.theme.background)}
+\t},
+\thomepage: {
+\t\ttitle: ${jsString(config.homepage.title)},
+\t\tdescription: ${jsString(config.homepage.description)},
+\t\tprimaryLabel: ${jsString(config.homepage.primaryLabel)},
+\t\tsecondaryLabel: ${jsString(config.homepage.secondaryLabel)}
+\t}
+};
+`;
 	await fs.writeFile(path.join(targetDir, 'markstatic.config.js'), contents);
 }
 
