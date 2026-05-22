@@ -66,6 +66,17 @@ export const contentManifest = {
               "route": "/content/info/about-project/configuration-and-theming",
               "firstPageRoute": "/content/info/about-project/configuration-and-theming",
               "children": []
+            },
+            {
+              "id": "info/about-project/publishing",
+              "title": "Publishing",
+              "slug": "publishing",
+              "slugPath": "info/about-project/publishing",
+              "sourcePath": "1.Info/1.About-Project/Publishing",
+              "order": 5,
+              "route": "/content/info/about-project/publishing",
+              "firstPageRoute": "/content/info/about-project/publishing",
+              "children": []
             }
           ]
         },
@@ -758,6 +769,64 @@ export const contentManifest = {
         "title": "Configuration and Theming",
         "description": "Configure site identity, deployment base paths, theme presets, and CSS token overrides.",
         "order": 4
+      }
+    },
+    {
+      "id": "info/about-project/publishing",
+      "title": "Publishing",
+      "description": "Release checks and npm publishing workflow for mark-static.",
+      "tags": [],
+      "draft": false,
+      "route": "/content/info/about-project/publishing",
+      "slugPath": "info/about-project/publishing",
+      "sourcePath": "1.Info/1.About-Project/Publishing",
+      "assetsBase": "/content/1.Info/1.About-Project/Publishing",
+      "contentFile": "/content/1.Info/1.About-Project/Publishing/content.md",
+      "order": 5,
+      "breadcrumb": [
+        {
+          "title": "Info",
+          "slug": "info",
+          "route": null
+        },
+        {
+          "title": "About Project",
+          "slug": "about-project",
+          "route": null
+        },
+        {
+          "title": "Publishing",
+          "slug": "publishing",
+          "route": "/content/info/about-project/publishing"
+        }
+      ],
+      "headings": [
+        {
+          "depth": 1,
+          "id": "publishing",
+          "title": "Publishing"
+        },
+        {
+          "depth": 2,
+          "id": "release-check",
+          "title": "Release Check"
+        },
+        {
+          "depth": 2,
+          "id": "publish",
+          "title": "Publish"
+        },
+        {
+          "depth": 2,
+          "id": "release-contents",
+          "title": "Release Contents"
+        }
+      ],
+      "searchText": "Publishing The package is prepared for npm publishing as . The expected public install path after release is: The npm registry currently returns 404 for , so the name appears unpublished before the first release. Release Check Run the full release gate before publishing: This runs: The same gate runs automatically through . Publish Verify the npm account, then publish: After publishing, verify the public package flow in an empty directory: Release Contents Version is the first release candidate. It includes the scaffold CLI, app template, presets, static assets, generated content system, docs validation, theme token layer, and deployment targets.",
+      "frontmatter": {
+        "title": "Publishing",
+        "description": "Release checks and npm publishing workflow for mark-static.",
+        "order": 5
       }
     },
     {
@@ -2420,6 +2489,44 @@ export const contentManifest = {
         }
       ],
       "searchText": "Info About Project Configuration and Theming Configure site identity, deployment base paths, theme presets, and CSS token overrides. Configuration and Theming Site level settings live in . Scaffolded sites use this file for identity, content location, deployment base path, and high level theme choices. Deployment Base Path Use for GitHub Pages project sites: Keep it empty for root hosted targets: The scaffold sets this automatically from the selected deployment target. Theme Presets The scaffold supports these high level theme choices: Background choices: These options are intentionally small. They make first setup fast while still leaving a stable CSS token layer for custom design work. Custom Theme Overrides Default design tokens are defined in . Project specific changes belong in so users can override only what they need. Common tokens: Example override: Validation Run this before publishing: The checker validates generated pages for missing titles, duplicate headings, missing image alt text, missing local assets, broken internal routes, and broken heading links."
+    },
+    {
+      "id": "info/about-project/publishing",
+      "title": "Publishing",
+      "section": "Info",
+      "category": "About Project",
+      "subcategory": "Publishing",
+      "breadcrumb": [
+        "Info",
+        "About Project",
+        "Publishing"
+      ],
+      "description": "Release checks and npm publishing workflow for mark-static.",
+      "tags": [],
+      "route": "/content/info/about-project/publishing",
+      "headings": [
+        {
+          "depth": 1,
+          "id": "publishing",
+          "title": "Publishing"
+        },
+        {
+          "depth": 2,
+          "id": "release-check",
+          "title": "Release Check"
+        },
+        {
+          "depth": 2,
+          "id": "publish",
+          "title": "Publish"
+        },
+        {
+          "depth": 2,
+          "id": "release-contents",
+          "title": "Release Contents"
+        }
+      ],
+      "searchText": "Info About Project Publishing Release checks and npm publishing workflow for mark-static. Publishing The package is prepared for npm publishing as . The expected public install path after release is: The npm registry currently returns 404 for , so the name appears unpublished before the first release. Release Check Run the full release gate before publishing: This runs: The same gate runs automatically through . Publish Verify the npm account, then publish: After publishing, verify the public package flow in an empty directory: Release Contents Version is the first release candidate. It includes the scaffold CLI, app template, presets, static assets, generated content system, docs validation, theme token layer, and deployment targets."
     },
     {
       "id": "info/dependencies/domutils",

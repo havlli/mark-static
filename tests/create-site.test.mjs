@@ -58,6 +58,9 @@ test('published package contains the scaffold CLI template payload', async () =>
 
 	assert.equal(files.has('scripts/create-site.mjs'), true);
 	assert.equal(files.has('scripts/generate-content.mjs'), true);
+	assert.equal(files.has('CHANGELOG.md'), true);
+	assert.equal(files.has('LICENSE'), true);
+	assert.equal(files.has('README.md'), true);
 	assert.equal(files.has('presets/content/minimal/01.Getting Started.md'), true);
 	assert.equal(files.has('pnpm-lock.yaml'), true);
 	assert.equal(files.has('static/css/github.min.css'), true);
@@ -106,6 +109,7 @@ test('scaffolds a clean generated site with provider config', async () => {
 	assert.equal(packageJson.private, true);
 	assert.equal(packageJson.packageManager, 'pnpm@10.28.0');
 	assert.deepEqual(packageJson.pnpm, { overrides: { cookie: '0.7.2' } });
+	assert.equal(packageJson.license, undefined);
 	assert.equal(packageJson.homepage, undefined);
 	assert.equal(packageJson.repository, undefined);
 	assert.equal(packageJson.bugs, undefined);
@@ -113,6 +117,8 @@ test('scaffolds a clean generated site with provider config', async () => {
 	assert.equal(packageJson.files, undefined);
 	assert.equal(packageJson.bin, undefined);
 	assert.equal(packageJson.scripts['create-site'], undefined);
+	assert.equal(packageJson.scripts['release:check'], undefined);
+	assert.equal(packageJson.scripts.prepublishOnly, undefined);
 	assert.equal(packageJson.scripts.test, undefined);
 	assert.match(config, /name: 'Acme Docs'/);
 	assert.match(config, /preset: 'mono'/);

@@ -362,6 +362,7 @@ async function updatePackageJson(targetDir, { packageName, description }) {
 	packageJson.private = true;
 	packageJson.packageManager ||= defaultPackageManager;
 	packageJson.pnpm ||= defaultPnpmConfig;
+	delete packageJson.license;
 	delete packageJson.homepage;
 	delete packageJson.repository;
 	delete packageJson.bugs;
@@ -369,6 +370,8 @@ async function updatePackageJson(targetDir, { packageName, description }) {
 	delete packageJson.files;
 	delete packageJson.bin;
 	delete packageJson.scripts?.['create-site'];
+	delete packageJson.scripts?.['release:check'];
+	delete packageJson.scripts?.prepublishOnly;
 	delete packageJson.scripts?.test;
 
 	await fs.writeFile(packageFile, `${JSON.stringify(packageJson, null, '\t')}\n`);

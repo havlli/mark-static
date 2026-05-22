@@ -230,6 +230,24 @@ For GitHub Pages project sites, set `site.basePath` in `markstatic.config.js` to
 
 For Netlify, Vercel, or other root-hosted static targets, keep `site.basePath` empty.
 
+## Release
+
+The package name currently returns 404 from the npm registry, so `mark-static` appears unpublished. Before publishing a release:
+
+```bash
+pnpm release:check
+npm whoami
+pnpm publish --access public
+```
+
+`pnpm release:check` runs tests, linting, documentation validation, generated-manifest drift detection, production build, and a package dry run. The same command runs automatically through `prepublishOnly`.
+
+After publishing, verify the public scaffold path:
+
+```bash
+pnpm dlx mark-static@latest init
+```
+
 ## Maintainer Development
 
 This repository also serves as the demo site. Install dependencies and run:
@@ -245,3 +263,7 @@ pnpm lint
 pnpm test
 pnpm build
 ```
+
+## License
+
+MIT
