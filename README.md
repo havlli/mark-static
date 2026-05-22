@@ -8,7 +8,7 @@ It is built for file-structure CMS style authoring: scaffold a site, choose a st
 
 ## Create a Site
 
-Once the package is published, scaffold directly from the package:
+After publishing a release to npm, use the package CLI to scaffold into the current empty directory:
 
 ```bash
 pnpm dlx mark-static@latest init
@@ -19,6 +19,8 @@ Or create a new directory in one command:
 ```bash
 pnpm dlx mark-static@latest my-docs
 ```
+
+The CLI downloads the generator, asks a few setup questions, writes a complete SvelteKit static documentation project, and then exits. The generated project is yours: it is private by default, includes a lockfile, and can be developed without keeping this repository around.
 
 For a non-interactive run:
 
@@ -49,6 +51,13 @@ The scaffold asks for:
 - background: `aurora`, `grid`, or `none`
 - deployment target: `github-pages`, `netlify`, `vercel`, or `static`
 
+Useful package CLI helpers:
+
+```bash
+pnpm dlx mark-static@latest --help
+pnpm dlx mark-static@latest --list-presets
+```
+
 Local non-interactive run:
 
 ```bash
@@ -67,6 +76,18 @@ Useful CLI helpers:
 pnpm create-site --help
 pnpm create-site --list-presets
 ```
+
+## Generated Projects
+
+Scaffolded sites include:
+
+- `markstatic.config.js` for site identity, content directory, base path, and theme choices.
+- `static/content` for Markdown pages and assets.
+- `src/custom-theme.css` for project-specific CSS variable overrides.
+- `pnpm-lock.yaml` and `.npmrc` for reproducible pnpm installs.
+- Provider config for the selected deployment target.
+
+The scaffold removes generator-only files, so the new project does not keep the `mark-static` CLI, test suite, demo content, or package publishing metadata.
 
 ## Add Content
 

@@ -33,6 +33,39 @@ export const contentManifest = {
               "route": "/content/info/about-project/overview",
               "firstPageRoute": "/content/info/about-project/overview",
               "children": []
+            },
+            {
+              "id": "info/about-project/create-a-site",
+              "title": "Create a Site",
+              "slug": "create-a-site",
+              "slugPath": "info/about-project/create-a-site",
+              "sourcePath": "1.Info/1.About-Project/Create-a-Site",
+              "order": 2,
+              "route": "/content/info/about-project/create-a-site",
+              "firstPageRoute": "/content/info/about-project/create-a-site",
+              "children": []
+            },
+            {
+              "id": "info/about-project/content-structure",
+              "title": "Content Structure",
+              "slug": "content-structure",
+              "slugPath": "info/about-project/content-structure",
+              "sourcePath": "1.Info/1.About-Project/Content-Structure",
+              "order": 3,
+              "route": "/content/info/about-project/content-structure",
+              "firstPageRoute": "/content/info/about-project/content-structure",
+              "children": []
+            },
+            {
+              "id": "info/about-project/configuration-and-theming",
+              "title": "Configuration and Theming",
+              "slug": "configuration-and-theming",
+              "slugPath": "info/about-project/configuration-and-theming",
+              "sourcePath": "1.Info/1.About-Project/Configuration-and-Theming",
+              "order": 4,
+              "route": "/content/info/about-project/configuration-and-theming",
+              "firstPageRoute": "/content/info/about-project/configuration-and-theming",
+              "children": []
             }
           ]
         },
@@ -483,7 +516,7 @@ export const contentManifest = {
     {
       "id": "info/about-project/overview",
       "title": "Overview",
-      "description": "",
+      "description": "What mark-static generates and how the documentation workflow is structured.",
       "tags": [],
       "draft": false,
       "route": "/content/info/about-project/overview",
@@ -517,42 +550,215 @@ export const contentManifest = {
         },
         {
           "depth": 2,
-          "id": "features",
-          "title": "Features"
+          "id": "what-gets-generated",
+          "title": "What Gets Generated"
         },
         {
           "depth": 2,
-          "id": "folder-structure",
-          "title": "Folder Structure"
+          "id": "core-features",
+          "title": "Core Features"
+        },
+        {
+          "depth": 2,
+          "id": "where-to-go-next",
+          "title": "Where to Go Next"
+        }
+      ],
+      "searchText": "Overview mark static turns a folder of Markdown files into a static SvelteKit documentation site. It is built around a file structure CMS workflow: create a site, drop Markdown into , and let the generator build navigation, routes, breadcrumbs, and search data. The intended published package flow is scaffold first: The CLI writes a complete documentation project with pnpm, Svelte 5, SvelteKit, Tailwind CSS 4, Skeleton 4, Markdown rendering, search, theme variables, static deployment settings, and documentation validation. What Gets Generated A scaffolded site includes the application template, starter content, project config, lockfile, and deployment files for the selected target. Generator only files are removed from the new project, so users do not inherit the scaffold CLI, demo content, test suite, or package publishing metadata. Common generated files: for site name, description, base path, content directory, and theme options. for Markdown files, folder landing pages, and page assets. for project specific design token overrides. and for reproducible pnpm installs. , , or depending on the selected deployment target. Core Features One command scaffold : Run or create a new directory with . Flexible Markdown structure : Use direct pages, folder files, or legacy page folders. Generated navigation and search : Content structure produces the sidebar, breadcrumbs, page metadata, and search index. Stable slugs : Numeric ordering prefixes are stripped, names are normalized, and sibling route collisions fail generation. Safe Markdown rendering : Markdown is rendered with heading IDs, syntax highlighting, asset URL rewriting, and sanitized HTML. Accessible UI : Search, mobile navigation, active page state, and image previews are keyboard and screen reader aware. Static deployment : Builds to plain static files for GitHub Pages, Netlify, Vercel, or any static host. Where to Go Next Create a Site Content Structure Configuration and Theming",
+      "frontmatter": {
+        "title": "Overview",
+        "description": "What mark-static generates and how the documentation workflow is structured.",
+        "order": 1
+      }
+    },
+    {
+      "id": "info/about-project/create-a-site",
+      "title": "Create a Site",
+      "description": "Scaffold a new documentation site from the package or from a local checkout.",
+      "tags": [],
+      "draft": false,
+      "route": "/content/info/about-project/create-a-site",
+      "slugPath": "info/about-project/create-a-site",
+      "sourcePath": "1.Info/1.About-Project/Create-a-Site",
+      "assetsBase": "/content/1.Info/1.About-Project/Create-a-Site",
+      "contentFile": "/content/1.Info/1.About-Project/Create-a-Site/content.md",
+      "order": 2,
+      "breadcrumb": [
+        {
+          "title": "Info",
+          "slug": "info",
+          "route": null
+        },
+        {
+          "title": "About Project",
+          "slug": "about-project",
+          "route": null
+        },
+        {
+          "title": "Create a Site",
+          "slug": "create-a-site",
+          "route": "/content/info/about-project/create-a-site"
+        }
+      ],
+      "headings": [
+        {
+          "depth": 1,
+          "id": "create-a-site",
+          "title": "Create a Site"
+        },
+        {
+          "depth": 2,
+          "id": "start-the-generated-site",
+          "title": "Start the Generated Site"
+        },
+        {
+          "depth": 2,
+          "id": "cli-choices",
+          "title": "CLI Choices"
+        },
+        {
+          "depth": 2,
+          "id": "local-repository-development",
+          "title": "Local Repository Development"
+        }
+      ],
+      "searchText": "Create a Site After publishing a release to npm, the easiest flow is to run the package CLI with pnpm: scaffolds into the current empty directory. To create a new directory instead, pass the directory name: The CLI asks for the site name, description, content preset, theme preset, background style, and deployment target. For repeatable setup, pass the choices as flags: Start the Generated Site After scaffolding: The generated project is a normal private SvelteKit project. It includes , , docs validation, static build scripts, and only the content preset you selected. CLI Choices Content presets: : one starter page. : a small guide and reference tree. : a compact API reference starter. Theme presets: : default documentation theme. : green accent preset. : neutral monochrome preset. Background options: : soft radial background. : subtle documentation grid. : no decorative background. Deployment targets: : writes a GitHub Pages workflow and sets the base path to the package name. : writes . : writes . : writes plain static hosting defaults. Local Repository Development When working from this repository instead of a published package: The local helper uses the same scaffold code as the package CLI.",
+      "frontmatter": {
+        "title": "Create a Site",
+        "description": "Scaffold a new documentation site from the package or from a local checkout.",
+        "order": 2
+      }
+    },
+    {
+      "id": "info/about-project/content-structure",
+      "title": "Content Structure",
+      "description": "Supported Markdown file patterns, ordering, slugs, frontmatter, and assets.",
+      "tags": [],
+      "draft": false,
+      "route": "/content/info/about-project/content-structure",
+      "slugPath": "info/about-project/content-structure",
+      "sourcePath": "1.Info/1.About-Project/Content-Structure",
+      "assetsBase": "/content/1.Info/1.About-Project/Content-Structure",
+      "contentFile": "/content/1.Info/1.About-Project/Content-Structure/content.md",
+      "order": 3,
+      "breadcrumb": [
+        {
+          "title": "Info",
+          "slug": "info",
+          "route": null
+        },
+        {
+          "title": "About Project",
+          "slug": "about-project",
+          "route": null
+        },
+        {
+          "title": "Content Structure",
+          "slug": "content-structure",
+          "route": "/content/info/about-project/content-structure"
+        }
+      ],
+      "headings": [
+        {
+          "depth": 1,
+          "id": "content-structure",
+          "title": "Content Structure"
+        },
+        {
+          "depth": 2,
+          "id": "direct-markdown-pages",
+          "title": "Direct Markdown Pages"
+        },
+        {
+          "depth": 2,
+          "id": "folder-landing-pages",
+          "title": "Folder Landing Pages"
+        },
+        {
+          "depth": 2,
+          "id": "page-folders-with-assets",
+          "title": "Page Folders With Assets"
+        },
+        {
+          "depth": 2,
+          "id": "ordering-and-slugs",
+          "title": "Ordering and Slugs"
         },
         {
           "depth": 2,
           "id": "frontmatter",
           "title": "Frontmatter"
-        },
-        {
-          "depth": 2,
-          "id": "scripts",
-          "title": "Scripts"
-        },
-        {
-          "depth": 2,
-          "id": "installation",
-          "title": "Installation"
-        },
-        {
-          "depth": 2,
-          "id": "development",
-          "title": "Development"
-        },
-        {
-          "depth": 2,
-          "id": "dependencies",
-          "title": "Dependencies"
         }
       ],
-      "searchText": "Overview mark static turns a folder of Markdown files into a static SvelteKit documentation site. Content lives in , the navigation and search data are generated at build time, and the final site is prerendered with . The content tree can be nested to any depth. Every page is represented by a directory that contains , and nearby assets such as images can be referenced from that Markdown file. Features Arbitrary Nested Routing : Folder names under become stable routes through a catch all SvelteKit route. Generated Navigation and Search : The generator emits navigation, breadcrumbs, page metadata, and a search index into . Stable Slugs : Numeric ordering prefixes are stripped, folder names are normalized, and duplicate sibling slugs fail generation. Markdown Rendering : Markdown is rendered with heading IDs, syntax highlighting, local asset URL rewriting, and sanitized HTML output. Static Site Generation : builds a static site suitable for GitHub Pages, Netlify, Vercel, and similar hosts. Live Content Updates : A Vite plugin watches in development and regenerates content data when Markdown changes. Folder Structure Every page is a directory with a file: This becomes: Numeric prefixes control sort order and are removed from URLs. Folder names can contain spaces, dots, mixed case, and other punctuation; the generator normalizes them into URL safe slugs. Frontmatter Frontmatter is optional. When present, it overrides folder derived metadata: Scripts : Regenerates . : Regenerates content and fails if the committed generated file is stale. Vite Plugin : Runs generation during builds and watches during development. Installation 1. Clone the repository : 2. Install dependencies : 3. Run the development server : 4. Build for production : 5. Preview the production build : Development The development workflow includes: Linting, Tests, and Generated Content Checks : Dependencies Key dependencies and devDependencies used in the project: Svelte 5 and SvelteKit : Core framework and routing layer. Tailwind CSS 4 : Utility first CSS framework, integrated through the Vite plugin. Skeleton 4 : Svelte and Tailwind UI toolkit and theme styles. Marked : Markdown parser. sanitize html : HTML sanitizer for rendered Markdown. highlight.js : Syntax highlighting for code blocks. Vite : Build tool and development server. HtmlParser2 and DOMUtils : HTML parsing and transformation utilities. For the full list of dependencies, refer to file.",
-      "frontmatter": {}
+      "searchText": "Content Structure Content lives in . The generator scans that tree and turns Markdown files into routes. Direct Markdown Pages For simple pages, drop files directly into the content tree: This produces routes like: Folder Landing Pages Use when a folder should also be a page: The folder route becomes , and child pages stay below it. Page Folders With Assets Use when a page needs local assets grouped beside the Markdown: Inside , local image references resolve relative to that folder: Ordering and Slugs Numeric prefixes control sort order and are removed from URLs: Folder and file names can contain spaces, punctuation, dots, and mixed case. The generator normalizes names into URL safe slugs and fails if two sibling entries resolve to the same route. Frontmatter Frontmatter is optional. Use it when derived names are not enough: Supported fields: : navigation and page title. : metadata and search text. : explicit sibling sort order. : route segment override. : search metadata. : exclude the page unless .",
+      "frontmatter": {
+        "title": "Content Structure",
+        "description": "Supported Markdown file patterns, ordering, slugs, frontmatter, and assets.",
+        "order": 3
+      }
+    },
+    {
+      "id": "info/about-project/configuration-and-theming",
+      "title": "Configuration and Theming",
+      "description": "Configure site identity, deployment base paths, theme presets, and CSS token overrides.",
+      "tags": [],
+      "draft": false,
+      "route": "/content/info/about-project/configuration-and-theming",
+      "slugPath": "info/about-project/configuration-and-theming",
+      "sourcePath": "1.Info/1.About-Project/Configuration-and-Theming",
+      "assetsBase": "/content/1.Info/1.About-Project/Configuration-and-Theming",
+      "contentFile": "/content/1.Info/1.About-Project/Configuration-and-Theming/content.md",
+      "order": 4,
+      "breadcrumb": [
+        {
+          "title": "Info",
+          "slug": "info",
+          "route": null
+        },
+        {
+          "title": "About Project",
+          "slug": "about-project",
+          "route": null
+        },
+        {
+          "title": "Configuration and Theming",
+          "slug": "configuration-and-theming",
+          "route": "/content/info/about-project/configuration-and-theming"
+        }
+      ],
+      "headings": [
+        {
+          "depth": 1,
+          "id": "configuration-and-theming",
+          "title": "Configuration and Theming"
+        },
+        {
+          "depth": 2,
+          "id": "deployment-base-path",
+          "title": "Deployment Base Path"
+        },
+        {
+          "depth": 2,
+          "id": "theme-presets",
+          "title": "Theme Presets"
+        },
+        {
+          "depth": 2,
+          "id": "custom-theme-overrides",
+          "title": "Custom Theme Overrides"
+        },
+        {
+          "depth": 2,
+          "id": "validation",
+          "title": "Validation"
+        }
+      ],
+      "searchText": "Configuration and Theming Site level settings live in . Scaffolded sites use this file for identity, content location, deployment base path, and high level theme choices. Deployment Base Path Use for GitHub Pages project sites: Keep it empty for root hosted targets: The scaffold sets this automatically from the selected deployment target. Theme Presets The scaffold supports these high level theme choices: Background choices: These options are intentionally small. They make first setup fast while still leaving a stable CSS token layer for custom design work. Custom Theme Overrides Default design tokens are defined in . Project specific changes belong in so users can override only what they need. Common tokens: Example override: Validation Run this before publishing: The checker validates generated pages for missing titles, duplicate headings, missing image alt text, missing local assets, broken internal routes, and broken heading links.",
+      "frontmatter": {
+        "title": "Configuration and Theming",
+        "description": "Configure site identity, deployment base paths, theme presets, and CSS token overrides.",
+        "order": 4
+      }
     },
     {
       "id": "info/dependencies/domutils",
@@ -2059,7 +2265,7 @@ export const contentManifest = {
         "About Project",
         "Overview"
       ],
-      "description": "",
+      "description": "What mark-static generates and how the documentation workflow is structured.",
       "tags": [],
       "route": "/content/info/about-project/overview",
       "headings": [
@@ -2070,41 +2276,150 @@ export const contentManifest = {
         },
         {
           "depth": 2,
-          "id": "features",
-          "title": "Features"
+          "id": "what-gets-generated",
+          "title": "What Gets Generated"
         },
         {
           "depth": 2,
-          "id": "folder-structure",
-          "title": "Folder Structure"
+          "id": "core-features",
+          "title": "Core Features"
+        },
+        {
+          "depth": 2,
+          "id": "where-to-go-next",
+          "title": "Where to Go Next"
+        }
+      ],
+      "searchText": "Info About Project Overview What mark-static generates and how the documentation workflow is structured. Overview mark static turns a folder of Markdown files into a static SvelteKit documentation site. It is built around a file structure CMS workflow: create a site, drop Markdown into , and let the generator build navigation, routes, breadcrumbs, and search data. The intended published package flow is scaffold first: The CLI writes a complete documentation project with pnpm, Svelte 5, SvelteKit, Tailwind CSS 4, Skeleton 4, Markdown rendering, search, theme variables, static deployment settings, and documentation validation. What Gets Generated A scaffolded site includes the application template, starter content, project config, lockfile, and deployment files for the selected target. Generator only files are removed from the new project, so users do not inherit the scaffold CLI, demo content, test suite, or package publishing metadata. Common generated files: for site name, description, base path, content directory, and theme options. for Markdown files, folder landing pages, and page assets. for project specific design token overrides. and for reproducible pnpm installs. , , or depending on the selected deployment target. Core Features One command scaffold : Run or create a new directory with . Flexible Markdown structure : Use direct pages, folder files, or legacy page folders. Generated navigation and search : Content structure produces the sidebar, breadcrumbs, page metadata, and search index. Stable slugs : Numeric ordering prefixes are stripped, names are normalized, and sibling route collisions fail generation. Safe Markdown rendering : Markdown is rendered with heading IDs, syntax highlighting, asset URL rewriting, and sanitized HTML. Accessible UI : Search, mobile navigation, active page state, and image previews are keyboard and screen reader aware. Static deployment : Builds to plain static files for GitHub Pages, Netlify, Vercel, or any static host. Where to Go Next Create a Site Content Structure Configuration and Theming"
+    },
+    {
+      "id": "info/about-project/create-a-site",
+      "title": "Create a Site",
+      "section": "Info",
+      "category": "About Project",
+      "subcategory": "Create a Site",
+      "breadcrumb": [
+        "Info",
+        "About Project",
+        "Create a Site"
+      ],
+      "description": "Scaffold a new documentation site from the package or from a local checkout.",
+      "tags": [],
+      "route": "/content/info/about-project/create-a-site",
+      "headings": [
+        {
+          "depth": 1,
+          "id": "create-a-site",
+          "title": "Create a Site"
+        },
+        {
+          "depth": 2,
+          "id": "start-the-generated-site",
+          "title": "Start the Generated Site"
+        },
+        {
+          "depth": 2,
+          "id": "cli-choices",
+          "title": "CLI Choices"
+        },
+        {
+          "depth": 2,
+          "id": "local-repository-development",
+          "title": "Local Repository Development"
+        }
+      ],
+      "searchText": "Info About Project Create a Site Scaffold a new documentation site from the package or from a local checkout. Create a Site After publishing a release to npm, the easiest flow is to run the package CLI with pnpm: scaffolds into the current empty directory. To create a new directory instead, pass the directory name: The CLI asks for the site name, description, content preset, theme preset, background style, and deployment target. For repeatable setup, pass the choices as flags: Start the Generated Site After scaffolding: The generated project is a normal private SvelteKit project. It includes , , docs validation, static build scripts, and only the content preset you selected. CLI Choices Content presets: : one starter page. : a small guide and reference tree. : a compact API reference starter. Theme presets: : default documentation theme. : green accent preset. : neutral monochrome preset. Background options: : soft radial background. : subtle documentation grid. : no decorative background. Deployment targets: : writes a GitHub Pages workflow and sets the base path to the package name. : writes . : writes . : writes plain static hosting defaults. Local Repository Development When working from this repository instead of a published package: The local helper uses the same scaffold code as the package CLI."
+    },
+    {
+      "id": "info/about-project/content-structure",
+      "title": "Content Structure",
+      "section": "Info",
+      "category": "About Project",
+      "subcategory": "Content Structure",
+      "breadcrumb": [
+        "Info",
+        "About Project",
+        "Content Structure"
+      ],
+      "description": "Supported Markdown file patterns, ordering, slugs, frontmatter, and assets.",
+      "tags": [],
+      "route": "/content/info/about-project/content-structure",
+      "headings": [
+        {
+          "depth": 1,
+          "id": "content-structure",
+          "title": "Content Structure"
+        },
+        {
+          "depth": 2,
+          "id": "direct-markdown-pages",
+          "title": "Direct Markdown Pages"
+        },
+        {
+          "depth": 2,
+          "id": "folder-landing-pages",
+          "title": "Folder Landing Pages"
+        },
+        {
+          "depth": 2,
+          "id": "page-folders-with-assets",
+          "title": "Page Folders With Assets"
+        },
+        {
+          "depth": 2,
+          "id": "ordering-and-slugs",
+          "title": "Ordering and Slugs"
         },
         {
           "depth": 2,
           "id": "frontmatter",
           "title": "Frontmatter"
-        },
-        {
-          "depth": 2,
-          "id": "scripts",
-          "title": "Scripts"
-        },
-        {
-          "depth": 2,
-          "id": "installation",
-          "title": "Installation"
-        },
-        {
-          "depth": 2,
-          "id": "development",
-          "title": "Development"
-        },
-        {
-          "depth": 2,
-          "id": "dependencies",
-          "title": "Dependencies"
         }
       ],
-      "searchText": "Info About Project Overview Overview mark static turns a folder of Markdown files into a static SvelteKit documentation site. Content lives in , the navigation and search data are generated at build time, and the final site is prerendered with . The content tree can be nested to any depth. Every page is represented by a directory that contains , and nearby assets such as images can be referenced from that Markdown file. Features Arbitrary Nested Routing : Folder names under become stable routes through a catch all SvelteKit route. Generated Navigation and Search : The generator emits navigation, breadcrumbs, page metadata, and a search index into . Stable Slugs : Numeric ordering prefixes are stripped, folder names are normalized, and duplicate sibling slugs fail generation. Markdown Rendering : Markdown is rendered with heading IDs, syntax highlighting, local asset URL rewriting, and sanitized HTML output. Static Site Generation : builds a static site suitable for GitHub Pages, Netlify, Vercel, and similar hosts. Live Content Updates : A Vite plugin watches in development and regenerates content data when Markdown changes. Folder Structure Every page is a directory with a file: This becomes: Numeric prefixes control sort order and are removed from URLs. Folder names can contain spaces, dots, mixed case, and other punctuation; the generator normalizes them into URL safe slugs. Frontmatter Frontmatter is optional. When present, it overrides folder derived metadata: Scripts : Regenerates . : Regenerates content and fails if the committed generated file is stale. Vite Plugin : Runs generation during builds and watches during development. Installation 1. Clone the repository : 2. Install dependencies : 3. Run the development server : 4. Build for production : 5. Preview the production build : Development The development workflow includes: Linting, Tests, and Generated Content Checks : Dependencies Key dependencies and devDependencies used in the project: Svelte 5 and SvelteKit : Core framework and routing layer. Tailwind CSS 4 : Utility first CSS framework, integrated through the Vite plugin. Skeleton 4 : Svelte and Tailwind UI toolkit and theme styles. Marked : Markdown parser. sanitize html : HTML sanitizer for rendered Markdown. highlight.js : Syntax highlighting for code blocks. Vite : Build tool and development server. HtmlParser2 and DOMUtils : HTML parsing and transformation utilities. For the full list of dependencies, refer to file."
+      "searchText": "Info About Project Content Structure Supported Markdown file patterns, ordering, slugs, frontmatter, and assets. Content Structure Content lives in . The generator scans that tree and turns Markdown files into routes. Direct Markdown Pages For simple pages, drop files directly into the content tree: This produces routes like: Folder Landing Pages Use when a folder should also be a page: The folder route becomes , and child pages stay below it. Page Folders With Assets Use when a page needs local assets grouped beside the Markdown: Inside , local image references resolve relative to that folder: Ordering and Slugs Numeric prefixes control sort order and are removed from URLs: Folder and file names can contain spaces, punctuation, dots, and mixed case. The generator normalizes names into URL safe slugs and fails if two sibling entries resolve to the same route. Frontmatter Frontmatter is optional. Use it when derived names are not enough: Supported fields: : navigation and page title. : metadata and search text. : explicit sibling sort order. : route segment override. : search metadata. : exclude the page unless ."
+    },
+    {
+      "id": "info/about-project/configuration-and-theming",
+      "title": "Configuration and Theming",
+      "section": "Info",
+      "category": "About Project",
+      "subcategory": "Configuration and Theming",
+      "breadcrumb": [
+        "Info",
+        "About Project",
+        "Configuration and Theming"
+      ],
+      "description": "Configure site identity, deployment base paths, theme presets, and CSS token overrides.",
+      "tags": [],
+      "route": "/content/info/about-project/configuration-and-theming",
+      "headings": [
+        {
+          "depth": 1,
+          "id": "configuration-and-theming",
+          "title": "Configuration and Theming"
+        },
+        {
+          "depth": 2,
+          "id": "deployment-base-path",
+          "title": "Deployment Base Path"
+        },
+        {
+          "depth": 2,
+          "id": "theme-presets",
+          "title": "Theme Presets"
+        },
+        {
+          "depth": 2,
+          "id": "custom-theme-overrides",
+          "title": "Custom Theme Overrides"
+        },
+        {
+          "depth": 2,
+          "id": "validation",
+          "title": "Validation"
+        }
+      ],
+      "searchText": "Info About Project Configuration and Theming Configure site identity, deployment base paths, theme presets, and CSS token overrides. Configuration and Theming Site level settings live in . Scaffolded sites use this file for identity, content location, deployment base path, and high level theme choices. Deployment Base Path Use for GitHub Pages project sites: Keep it empty for root hosted targets: The scaffold sets this automatically from the selected deployment target. Theme Presets The scaffold supports these high level theme choices: Background choices: These options are intentionally small. They make first setup fast while still leaving a stable CSS token layer for custom design work. Custom Theme Overrides Default design tokens are defined in . Project specific changes belong in so users can override only what they need. Common tokens: Example override: Validation Run this before publishing: The checker validates generated pages for missing titles, duplicate headings, missing image alt text, missing local assets, broken internal routes, and broken heading links."
     },
     {
       "id": "info/dependencies/domutils",
