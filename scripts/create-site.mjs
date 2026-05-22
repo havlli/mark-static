@@ -2,7 +2,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import readline from 'node:readline/promises';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { writeContentManifest, slugify } from './generate-content.mjs';
 
 const scriptPath = fileURLToPath(import.meta.url);
@@ -48,18 +48,44 @@ const excludedRootEntries = new Set([
 	'build',
 	'node_modules',
 	'package',
-	'presets'
+	'presets',
+	'tests'
+]);
+
+const knownFlags = new Set([
+	'background',
+	'deploy',
+	'description',
+	'help',
+	'listPresets',
+	'name',
+	'packageName',
+	'preset',
+	'target',
+	'theme',
+	'version',
+	'yes'
 ]);
 
 function parseArgs(argv) {
 	const args = [...argv];
-	if (args[0] === 'init' || args[0] === 'create') args.shift();
+	const command = args[0] === 'init' || args[0] === 'create' ? args.shift() : 'create';
 
 	const flags = {};
 	const positional = [];
 
 	for (let index = 0; index < args.length; index += 1) {
 		const arg = args[index];
+
+		if (arg === '-h') {
+			flags.help = true;
+			continue;
+		}
+
+		if (arg === '-v') {
+			flags.version = true;
+			continue;
+		}
 
 		if (!arg.startsWith('--')) {
 			positional.push(arg);
@@ -79,7 +105,72 @@ function parseArgs(argv) {
 		}
 	}
 
-	return { flags, positional };
+	return { command, flags, positional };
+}
+
+function assertKnownFlags(flags) {
+	const unknownFlags = Object.keys(flags).filter((flag) => !knownFlags.has(flag));
+
+	if (unknownFlags.length > 0) {
+		throw new Error(
+			`Unknown option: --${unknownFlags[0].replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}`
+		);
+	}
+}
+
+function formatChoices(choices) {
+	return Object.entries(choices)
+		.map(([key, description]) => `  ${key.padEnd(14)} ${description}`)
+		.join('\n');
+}
+
+function helpText() {
+	return `Usage:
+  mark-static <directory> [options]
+  mark-static create <directory> [options]
+  mark-static init [directory] [options]
+
+Commands:
+  create             Scaffold a new site in a target directory.
+  init               Scaffold into the current empty directory by default.
+
+Options:
+  --name <name>              Site name.
+  --description <text>       Site description.
+  --package-name <name>      Package name. Defaults to the target directory name.
+  --preset <name>            Content preset: ${Object.keys(contentPresets).join(', ')}.
+  --theme <name>             Theme preset: ${Object.keys(themePresets).join(', ')}.
+  --background <name>        Background preset: ${Object.keys(backgroundPresets).join(', ')}.
+  --deploy <target>          Deployment target: ${Object.keys(deployTargets).join(', ')}.
+  --target <directory>       Target directory.
+  --yes                      Use defaults for omitted options.
+  --list-presets             Print available presets and exit.
+  --version, -v              Print the package version and exit.
+  --help, -h                 Print this help and exit.
+
+Examples:
+  mark-static my-docs
+  mark-static init --name "Acme Docs"
+  mark-static my-docs --yes --preset api --theme forest --deploy github-pages`;
+}
+
+function listPresetsText() {
+	return `Content presets:
+${formatChoices(contentPresets)}
+
+Theme presets:
+${formatChoices(themePresets)}
+
+Background presets:
+${formatChoices(backgroundPresets)}
+
+Deployment targets:
+${formatChoices(deployTargets)}`;
+}
+
+async function packageVersion() {
+	const packageJson = JSON.parse(await fs.readFile(path.join(projectRoot, 'package.json'), 'utf8'));
+	return packageJson.version;
 }
 
 function normalizePackageName(value) {
@@ -264,23 +355,29 @@ async function updatePackageJson(targetDir, packageName) {
 	packageJson.private = true;
 	delete packageJson.bin;
 	delete packageJson.scripts?.['create-site'];
+	delete packageJson.scripts?.test;
 
 	await fs.writeFile(packageFile, `${JSON.stringify(packageJson, null, '\t')}\n`);
 }
 
 async function removeScaffoldOnlyFiles(targetDir) {
 	await fs.rm(path.join(targetDir, 'scripts/create-site.mjs'), { force: true });
+	await fs.rm(path.join(targetDir, 'tests'), { recursive: true, force: true });
 }
 
 async function writeGeneratedReadme(targetDir, { siteName, deployTarget }) {
-	const deployNote =
-		deployTarget === 'github-pages'
-			? 'This site is configured for GitHub Pages. The production base path is set in `markstatic.config.js`.'
-			: 'This site is configured for root-hosted static deployment.';
+	const deployNotes = {
+		'github-pages':
+			'This site is configured for GitHub Pages. The production base path is set in `markstatic.config.js`, and `.github/workflows/deploy.yml` publishes the `build` directory.',
+		netlify:
+			'This site includes `netlify.toml` with `pnpm build` and `build` as the publish directory.',
+		vercel:
+			'This site includes `vercel.json` with `pnpm build` and `build` as the output directory.',
+		static:
+			'This site builds plain static files into `build`. Upload that directory to any static host.'
+	};
 
 	const contents = `# ${siteName}
-
-Generated with mark-static.
 
 ## Start
 
@@ -294,24 +391,46 @@ pnpm dev
 Drop Markdown files into \`static/content\`.
 
 \`\`\`txt
-static/content/01.Getting Started.md
-static/content/02.Guides/index.md
-static/content/02.Guides/01.Installation.md
+static/content/
+  01.Getting Started.md
+  02.Guides/
+    index.md
+    01.Installation.md
+\`\`\`
+
+Use numeric prefixes for ordering. They are removed from URLs.
+
+Use frontmatter when a page needs custom metadata:
+
+\`\`\`md
+---
+title: Installation
+description: Install and configure the project.
+slug: install
+---
+
+# Installation
 \`\`\`
 
 ## Configure
 
 - Site settings: \`markstatic.config.js\`
 - Theme overrides: \`src/custom-theme.css\`
-- Generated content data: \`pnpm generate\`
+- Regenerate content data: \`pnpm generate\`
+- Check docs before publishing: \`pnpm docs:check\`
 
-## Build
+## Commands
 
 \`\`\`bash
+pnpm dev
+pnpm docs:check
 pnpm build
+pnpm preview
 \`\`\`
 
-${deployNote}
+## Deployment
+
+${deployNotes[deployTarget]}
 `;
 
 	await fs.writeFile(path.join(targetDir, 'README.md'), contents);
@@ -320,22 +439,67 @@ ${deployNote}
 async function applyDeployTarget(targetDir, deployTarget) {
 	if (deployTarget === 'github-pages') return;
 
-	await fs.rm(path.join(targetDir, '.github/workflows/deploy.yml'), { force: true });
+	await fs.rm(path.join(targetDir, '.github'), { recursive: true, force: true });
+
+	if (deployTarget === 'netlify') {
+		await fs.writeFile(
+			path.join(targetDir, 'netlify.toml'),
+			`[build]
+command = "pnpm build"
+publish = "build"
+`
+		);
+	}
+
+	if (deployTarget === 'vercel') {
+		await fs.writeFile(
+			path.join(targetDir, 'vercel.json'),
+			`${JSON.stringify(
+				{
+					buildCommand: 'pnpm build',
+					outputDirectory: 'build',
+					framework: null
+				},
+				null,
+				'\t'
+			)}\n`
+		);
+	}
 }
 
-async function scaffold() {
-	const { flags, positional } = parseArgs(process.argv.slice(2));
+export async function scaffold(argv = process.argv.slice(2)) {
+	const { command, flags, positional } = parseArgs(argv);
+	assertKnownFlags(flags);
+
+	if (flags.help) {
+		console.log(helpText());
+		return;
+	}
+
+	if (flags.version) {
+		console.log(await packageVersion());
+		return;
+	}
+
+	if (flags.listPresets) {
+		console.log(listPresetsText());
+		return;
+	}
+
 	const interactive = process.stdin.isTTY && process.stdout.isTTY && !flags.yes;
 	const rl = interactive
 		? readline.createInterface({ input: process.stdin, output: process.stdout })
 		: null;
+	const defaultTarget = command === 'init' ? '.' : 'my-docs';
 
 	try {
 		const targetInput =
 			flags.target ||
 			positional[0] ||
-			(await askText(rl, 'Project directory', 'my-docs', interactive));
-		const packageName = normalizePackageName(flags.packageName || path.basename(targetInput));
+			(await askText(rl, 'Project directory', defaultTarget, interactive));
+		const packageName = normalizePackageName(
+			flags.packageName || path.basename(path.resolve(targetInput))
+		);
 		const siteName = await askText(
 			rl,
 			'Site name',
@@ -411,7 +575,11 @@ async function scaffold() {
 	}
 }
 
-scaffold().catch((error) => {
-	console.error(error.message);
-	process.exitCode = 1;
-});
+const entryUrl = process.argv[1] ? pathToFileURL(path.resolve(process.argv[1])).href : '';
+
+if (import.meta.url === entryUrl) {
+	scaffold().catch((error) => {
+		console.error(error.message);
+		process.exitCode = 1;
+	});
+}
