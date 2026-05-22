@@ -29,6 +29,19 @@ For a non-interactive run:
 pnpm create-site ../acme-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages
 ```
 
+To scaffold into the current empty directory:
+
+```bash
+pnpm create-site init --name "Acme Docs"
+```
+
+Useful CLI helpers:
+
+```bash
+pnpm create-site --help
+pnpm create-site --list-presets
+```
+
 Then start the generated project:
 
 ```bash
@@ -41,6 +54,7 @@ When the package is published, the same CLI can be exposed through:
 
 ```bash
 pnpm dlx mark-static my-docs
+pnpm dlx mark-static init
 ```
 
 ## Add Content
