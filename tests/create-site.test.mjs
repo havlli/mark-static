@@ -146,3 +146,26 @@ test('init scaffolds into the current empty directory by default', async () => {
 	assert.equal(await exists(path.join(targetDir, 'netlify.toml')), false);
 	assert.equal(await exists(path.join(targetDir, 'vercel.json')), false);
 });
+
+test('github pages scaffold uses first-party pages deployment', async () => {
+	const fixture = await createFixture();
+	const targetDir = path.join(fixture, 'pages-docs');
+
+	await runCli([
+		targetDir,
+		'--yes',
+		'--name',
+		'Pages Docs',
+		'--preset',
+		'minimal',
+		'--deploy',
+		'github-pages'
+	]);
+
+	const workflow = await fs.readFile(path.join(targetDir, '.github/workflows/deploy.yml'), 'utf8');
+
+	assert.match(workflow, /actions\/upload-pages-artifact@v5/);
+	assert.match(workflow, /actions\/deploy-pages@v5/);
+	assert.doesNotMatch(workflow, /peaceiris/);
+	assert.doesNotMatch(workflow, /FORCE_JAVASCRIPT_ACTIONS_TO_NODE24/);
+});

@@ -36,11 +36,14 @@ If you are using the `@sveltejs/adapter-static`, you can deploy your application
 
 ### GitHub Pages
 
-For a repository page, configure a base path and publish the static `build` directory:
+For a repository page, configure a base path and publish the static `build` directory through GitHub Pages artifacts:
 
-```bash
-BASE_PATH=/my-repo pnpm build
-```
+1. Set `site.basePath` in `markstatic.config.js`, for example `/my-repo`.
+2. Build with `pnpm build`.
+3. Upload `build` with `actions/upload-pages-artifact`.
+4. Deploy with `actions/deploy-pages`.
+
+Scaffolded `github-pages` projects include this workflow automatically.
 
 ## Server-Side Deployment
 

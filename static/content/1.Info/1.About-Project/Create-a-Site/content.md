@@ -58,7 +58,7 @@ Background options:
 
 Deployment targets:
 
-- `github-pages`: writes a GitHub Pages workflow and sets the base path to the package name.
+- `github-pages`: writes a first-party GitHub Pages artifact workflow and sets the base path to the package name.
 - `netlify`: writes `netlify.toml`.
 - `vercel`: writes `vercel.json`.
 - `static`: writes plain static hosting defaults.

@@ -224,7 +224,7 @@ pnpm check:generated
 
 ## Deployment
 
-The included GitHub Pages workflow installs with pnpm, builds the static site, and publishes the `build` directory.
+The included GitHub Pages workflow installs with pnpm, builds the static site, uploads `build` as a Pages artifact, and deploys it with GitHub's first-party Pages deployment action.
 
 For GitHub Pages project sites, set `site.basePath` in `markstatic.config.js` to the repository path, for example `/my-docs`.
 
