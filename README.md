@@ -8,7 +8,33 @@ It is built for file-structure CMS style authoring: scaffold a site, choose a st
 
 ## Create a Site
 
-From this repository checkout:
+Once the package is published, scaffold directly from the package:
+
+```bash
+pnpm dlx mark-static@latest init
+```
+
+Or create a new directory in one command:
+
+```bash
+pnpm dlx mark-static@latest my-docs
+```
+
+For a non-interactive run:
+
+```bash
+pnpm dlx mark-static@latest my-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages
+```
+
+Then start the generated project:
+
+```bash
+cd my-docs
+pnpm install
+pnpm dev
+```
+
+From this repository checkout, use the local scaffold command:
 
 ```bash
 pnpm install
@@ -23,7 +49,7 @@ The scaffold asks for:
 - background: `aurora`, `grid`, or `none`
 - deployment target: `github-pages`, `netlify`, `vercel`, or `static`
 
-For a non-interactive run:
+Local non-interactive run:
 
 ```bash
 pnpm create-site ../acme-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages
@@ -40,21 +66,6 @@ Useful CLI helpers:
 ```bash
 pnpm create-site --help
 pnpm create-site --list-presets
-```
-
-Then start the generated project:
-
-```bash
-cd ../my-docs
-pnpm install
-pnpm dev
-```
-
-When the package is published, the same CLI can be exposed through:
-
-```bash
-pnpm dlx mark-static my-docs
-pnpm dlx mark-static init
 ```
 
 ## Add Content
