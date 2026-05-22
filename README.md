@@ -259,10 +259,10 @@ pnpm dev
 Before committing changes:
 
 ```bash
-pnpm lint
-pnpm test
-pnpm build
+pnpm release:check
 ```
+
+The `CI` workflow runs the same release check on pushes to `main` and on pull requests.
 
 ## License
 

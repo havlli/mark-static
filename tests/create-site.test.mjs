@@ -56,6 +56,8 @@ test('published package contains the scaffold CLI template payload', async () =>
 	const pack = JSON.parse(stdout);
 	const files = new Set(pack.files.map((file) => file.path));
 
+	assert.equal(files.has('.github/workflows/deploy.yml'), true);
+	assert.equal(files.has('.github/workflows/ci.yml'), false);
 	assert.equal(files.has('scripts/create-site.mjs'), true);
 	assert.equal(files.has('scripts/generate-content.mjs'), true);
 	assert.equal(files.has('CHANGELOG.md'), true);
