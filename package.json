@@ -1,8 +1,47 @@
 {
 	"name": "mark-static",
 	"version": "0.0.1",
+	"description": "File-structure Markdown CMS generator for static SvelteKit documentation sites.",
 	"private": false,
 	"packageManager": "pnpm@10.28.0",
+	"homepage": "https://havlli.github.io/mark-static/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/havlli/mark-static.git"
+	},
+	"bugs": {
+		"url": "https://github.com/havlli/mark-static/issues"
+	},
+	"keywords": [
+		"documentation",
+		"markdown",
+		"sveltekit",
+		"static-site",
+		"docs"
+	],
+	"engines": {
+		"node": ">=22.12.0",
+		"pnpm": ">=10.0.0"
+	},
+	"files": [
+		".github/workflows/deploy.yml",
+		".prettierignore",
+		".prettierrc",
+		"eslint.config.js",
+		"markstatic.config.js",
+		"pnpm-lock.yaml",
+		"presets/content",
+		"scripts/check-docs.mjs",
+		"scripts/create-site.mjs",
+		"scripts/generate-content.mjs",
+		"src",
+		"static/.nojekyll",
+		"static/css",
+		"static/favicon.png",
+		"svelte.config.js",
+		"vite-plugin-generate-data.js",
+		"vite.config.js"
+	],
 	"bin": {
 		"mark-static": "scripts/create-site.mjs"
 	},

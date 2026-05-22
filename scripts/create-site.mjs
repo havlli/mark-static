@@ -9,6 +9,12 @@ const scriptPath = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(scriptPath), '..');
 const presetsRoot = path.join(projectRoot, 'presets/content');
 const defaultContentDir = 'static/content';
+const defaultPackageManager = 'pnpm@10.28.0';
+const defaultPnpmConfig = {
+	overrides: {
+		cookie: '0.7.2'
+	}
+};
 
 const contentPresets = {
 	minimal: 'One starter page with the basic authoring model.',
@@ -347,12 +353,20 @@ async function writeSiteConfig(targetDir, config) {
 	await fs.writeFile(path.join(targetDir, 'markstatic.config.js'), contents);
 }
 
-async function updatePackageJson(targetDir, packageName) {
+async function updatePackageJson(targetDir, { packageName, description }) {
 	const packageFile = path.join(targetDir, 'package.json');
 	const packageJson = JSON.parse(await fs.readFile(packageFile, 'utf8'));
 
 	packageJson.name = packageName;
+	packageJson.description = description;
 	packageJson.private = true;
+	packageJson.packageManager ||= defaultPackageManager;
+	packageJson.pnpm ||= defaultPnpmConfig;
+	delete packageJson.homepage;
+	delete packageJson.repository;
+	delete packageJson.bugs;
+	delete packageJson.keywords;
+	delete packageJson.files;
 	delete packageJson.bin;
 	delete packageJson.scripts?.['create-site'];
 	delete packageJson.scripts?.test;
@@ -363,6 +377,28 @@ async function updatePackageJson(targetDir, packageName) {
 async function removeScaffoldOnlyFiles(targetDir) {
 	await fs.rm(path.join(targetDir, 'scripts/create-site.mjs'), { force: true });
 	await fs.rm(path.join(targetDir, 'tests'), { recursive: true, force: true });
+}
+
+async function writeProjectDotfiles(targetDir) {
+	await fs.writeFile(
+		path.join(targetDir, '.gitignore'),
+		`.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+/.idea
+/.vscode
+`
+	);
+
+	await fs.writeFile(path.join(targetDir, '.npmrc'), 'engine-strict=true\n');
 }
 
 async function writeGeneratedReadme(targetDir, { siteName, deployTarget }) {
@@ -559,8 +595,9 @@ export async function scaffold(argv = process.argv.slice(2)) {
 		await copyProjectTemplate(targetDir);
 		await copyContentPreset(targetDir, contentPreset);
 		await writeSiteConfig(targetDir, config);
-		await updatePackageJson(targetDir, packageName);
+		await updatePackageJson(targetDir, { packageName, description });
 		await removeScaffoldOnlyFiles(targetDir);
+		await writeProjectDotfiles(targetDir);
 		await writeGeneratedReadme(targetDir, { siteName, deployTarget });
 		await applyDeployTarget(targetDir, deployTarget);
 		await writeContentManifest({ rootDir: targetDir, contentDir: defaultContentDir });

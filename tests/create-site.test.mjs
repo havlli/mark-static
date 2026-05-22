@@ -48,6 +48,29 @@ test('prints available scaffold presets', async () => {
 	assert.match(stdout, /Deployment targets:/);
 });
 
+test('published package contains the scaffold CLI template payload', async () => {
+	const { stdout } = await execFileAsync('pnpm', ['pack', '--dry-run', '--json'], {
+		cwd: projectRoot,
+		maxBuffer: 1024 * 1024
+	});
+	const pack = JSON.parse(stdout);
+	const files = new Set(pack.files.map((file) => file.path));
+
+	assert.equal(files.has('scripts/create-site.mjs'), true);
+	assert.equal(files.has('scripts/generate-content.mjs'), true);
+	assert.equal(files.has('presets/content/minimal/01.Getting Started.md'), true);
+	assert.equal(files.has('pnpm-lock.yaml'), true);
+	assert.equal(files.has('static/css/github.min.css'), true);
+	assert.equal(
+		[...files].some((file) => file.startsWith('tests/')),
+		false
+	);
+	assert.equal(
+		[...files].some((file) => file.startsWith('static/content/')),
+		false
+	);
+});
+
 test('scaffolds a clean generated site with provider config', async () => {
 	const fixture = await createFixture();
 	const targetDir = path.join(fixture, 'acme-docs');
@@ -79,7 +102,15 @@ test('scaffolds a clean generated site with provider config', async () => {
 
 	assert.match(stdout, /Created Acme Docs/);
 	assert.equal(packageJson.name, 'acme-docs');
+	assert.equal(packageJson.description, 'Acme documentation.');
 	assert.equal(packageJson.private, true);
+	assert.equal(packageJson.packageManager, 'pnpm@10.28.0');
+	assert.deepEqual(packageJson.pnpm, { overrides: { cookie: '0.7.2' } });
+	assert.equal(packageJson.homepage, undefined);
+	assert.equal(packageJson.repository, undefined);
+	assert.equal(packageJson.bugs, undefined);
+	assert.equal(packageJson.keywords, undefined);
+	assert.equal(packageJson.files, undefined);
 	assert.equal(packageJson.bin, undefined);
 	assert.equal(packageJson.scripts['create-site'], undefined);
 	assert.equal(packageJson.scripts.test, undefined);
@@ -89,6 +120,8 @@ test('scaffolds a clean generated site with provider config', async () => {
 	assert.match(generatedContent, /Getting Started/);
 	assert.equal(await exists(path.join(targetDir, 'scripts/create-site.mjs')), false);
 	assert.equal(await exists(path.join(targetDir, 'tests')), false);
+	assert.equal(await exists(path.join(targetDir, '.gitignore')), true);
+	assert.equal(await exists(path.join(targetDir, '.npmrc')), true);
 	assert.equal(await exists(path.join(targetDir, 'netlify.toml')), true);
 	assert.equal(await exists(path.join(targetDir, '.github')), false);
 });
