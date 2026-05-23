@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.1 - 2026-05-23
+
+### Added
+
+- More polished scaffold CLI output with a branded intro, clearer prompts, setup summary, and step-by-step status messages.
+- Optional `--git-commit` and `--no-git-commit` scaffold flags for creating an initial documentation-site commit.
+
+### Changed
+
+- Publishing documentation now reflects that `mark-static` is available on npm.
+
 ## 0.1.0 - 2026-05-23
 
 ### Added

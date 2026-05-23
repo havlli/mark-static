@@ -38,6 +38,7 @@ async function runPnpm(args, options = {}) {
 			env: {
 				...process.env,
 				CI: '1',
+				NO_COLOR: '1',
 				PATH: [
 					process.env.PNPM_HOME,
 					process.env.npm_execpath ? path.dirname(process.env.npm_execpath) : '',
@@ -78,7 +79,8 @@ async function runNode(args, options = {}) {
 			cwd: options.cwd || projectRoot,
 			env: {
 				...process.env,
-				CI: '1'
+				CI: '1',
+				NO_COLOR: '1'
 			},
 			maxBuffer: 1024 * 1024 * 8
 		});

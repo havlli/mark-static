@@ -66,11 +66,13 @@ const knownFlags = new Set([
 	'deploy',
 	'description',
 	'git',
+	'gitCommit',
 	'help',
 	'install',
 	'listPresets',
 	'name',
 	'noGit',
+	'noGitCommit',
 	'noInstall',
 	'packageName',
 	'preset',
@@ -79,6 +81,59 @@ const knownFlags = new Set([
 	'version',
 	'yes'
 ]);
+
+function colorEnabled() {
+	if (process.env.NO_COLOR || process.env.TERM === 'dumb') return false;
+	if (process.env.FORCE_COLOR && process.env.FORCE_COLOR !== '0') return true;
+	return Boolean(process.stdout.isTTY);
+}
+
+const useColor = colorEnabled();
+
+function ansi(code, text) {
+	return useColor ? `\u001b[${code}m${text}\u001b[0m` : text;
+}
+
+const ui = {
+	bold: (text) => ansi(1, text),
+	dim: (text) => ansi(2, text),
+	cyan: (text) => ansi(36, text),
+	green: (text) => ansi(32, text),
+	yellow: (text) => ansi(33, text)
+};
+
+function printIntro(version) {
+	console.log(`\n${ui.cyan(ui.bold('mark-static'))} ${ui.dim(`v${version}`)}`);
+	console.log(ui.dim('Create a static documentation site from your Markdown folders.'));
+}
+
+function promptLabel(question) {
+	return `${ui.cyan('?')} ${ui.bold(question)}`;
+}
+
+function logStep(message) {
+	console.log(`${ui.cyan('>')} ${message}`);
+}
+
+function logSuccess(message) {
+	console.log(`${ui.green('OK')} ${message}`);
+}
+
+function formatValue(value) {
+	return ui.cyan(String(value));
+}
+
+function yesNo(value) {
+	return value ? 'yes' : 'no';
+}
+
+function printSummary(rows) {
+	const labelWidth = Math.max(...rows.map(([label]) => label.length));
+	console.log(`\n${ui.bold('Project summary')}`);
+	for (const [label, value] of rows) {
+		console.log(`  ${ui.dim(label.padEnd(labelWidth))}  ${formatValue(value)}`);
+	}
+}
 
 function parseArgs(argv) {
 	const args = [...argv];
@@ -133,7 +188,7 @@ function assertKnownFlags(flags) {
 
 function formatChoices(choices) {
 	return Object.entries(choices)
-		.map(([key, description]) => `  ${key.padEnd(14)} ${description}`)
+		.map(([key, description]) => `  ${ui.cyan(key.padEnd(14))} ${description}`)
 		.join('\n');
 }
 
@@ -157,6 +212,8 @@ Options:
   --deploy <target>          Deployment target: ${Object.keys(deployTargets).join(', ')}.
   --install, --no-install    Install dependencies after scaffolding. Defaults to no install.
   --git, --no-git            Initialize a Git repository after scaffolding. Defaults to no Git init.
+  --git-commit, --no-git-commit
+                              Create an initial commit after Git init. Defaults to no commit.
   --target <directory>       Target directory.
   --yes                      Use defaults for omitted options.
   --list-presets             Print available presets and exit.
@@ -166,7 +223,7 @@ Options:
 Examples:
   mark-static my-docs
   mark-static init --name "Acme Docs"
-  mark-static my-docs --yes --preset api --theme forest --deploy github-pages --install --git`;
+  mark-static my-docs --yes --preset api --theme forest --deploy github-pages --install --git --git-commit`;
 }
 
 function listPresetsText() {
@@ -211,7 +268,7 @@ function assertChoice(value, choices, label) {
 async function askText(rl, question, fallback, interactive) {
 	if (!interactive) return fallback;
 
-	const answer = await rl.question(`${question} (${fallback}): `);
+	const answer = await rl.question(`${promptLabel(question)} ${ui.dim(`(${fallback})`)}: `);
 	return answer.trim() || fallback;
 }
 
@@ -219,12 +276,15 @@ async function askChoice(rl, question, choices, fallback, interactive) {
 	if (!interactive) return fallback;
 
 	const entries = Object.entries(choices);
-	console.log(`\n${question}`);
+	console.log(`\n${ui.bold(question)}`);
 	entries.forEach(([key, description], index) => {
-		console.log(`  ${index + 1}. ${key} - ${description}`);
+		const marker = key === fallback ? ui.green('*') : ' ';
+		console.log(
+			` ${marker} ${ui.cyan(String(index + 1).padStart(2))}. ${key} ${ui.dim(description)}`
+		);
 	});
 
-	const answer = await rl.question(`Choose ${fallback}: `);
+	const answer = await rl.question(`${promptLabel('Choose')} ${ui.dim(`(${fallback})`)}: `);
 	const trimmed = answer.trim();
 	if (!trimmed) return fallback;
 
@@ -241,7 +301,7 @@ async function askBoolean(rl, question, fallback, interactive) {
 	if (!interactive) return fallback;
 
 	const suffix = fallback ? 'Y/n' : 'y/N';
-	const answer = await rl.question(`${question} (${suffix}): `);
+	const answer = await rl.question(`${promptLabel(question)} ${ui.dim(`(${suffix})`)}: `);
 	const trimmed = answer.trim().toLowerCase();
 	if (!trimmed) return fallback;
 
@@ -586,6 +646,16 @@ async function initializeGitRepository(targetDir) {
 	await runProjectCommand('git', ['init'], targetDir, 'git init');
 }
 
+async function createInitialCommit(targetDir) {
+	await runProjectCommand('git', ['add', '.'], targetDir, 'git add .');
+	await runProjectCommand(
+		'git',
+		['commit', '-m', 'Initial documentation site'],
+		targetDir,
+		'git commit'
+	);
+}
+
 async function installDependencies(targetDir) {
 	await runProjectCommand('pnpm', ['install'], targetDir, 'pnpm install');
 }
@@ -608,6 +678,8 @@ export async function scaffold(argv = process.argv.slice(2)) {
 		console.log(listPresetsText());
 		return;
 	}
+
+	printIntro(await packageVersion());
 
 	const interactive = process.stdin.isTTY && process.stdout.isTTY && !flags.yes;
 	const rl = interactive
@@ -665,6 +737,10 @@ export async function scaffold(argv = process.argv.slice(2)) {
 		);
 		const installChoice = booleanFlagPair(flags, 'install', 'noInstall');
 		const gitChoice = booleanFlagPair(flags, 'git', 'noGit');
+		const gitCommitChoice = booleanFlagPair(flags, 'gitCommit', 'noGitCommit');
+		if (gitChoice === false && gitCommitChoice === true) {
+			throw new Error('Cannot use --no-git and --git-commit together.');
+		}
 		const shouldInstall = await askBoolean(
 			rl,
 			'Install dependencies after scaffolding',
@@ -674,16 +750,40 @@ export async function scaffold(argv = process.argv.slice(2)) {
 		const shouldInitializeGit = await askBoolean(
 			rl,
 			'Initialize a Git repository',
-			gitChoice ?? false,
-			interactive && gitChoice === undefined
+			gitChoice ?? gitCommitChoice === true,
+			interactive && gitChoice === undefined && gitCommitChoice !== true
 		);
+		const shouldCreateInitialCommit = shouldInitializeGit
+			? await askBoolean(
+					rl,
+					'Create an initial commit',
+					gitCommitChoice ?? false,
+					interactive && gitCommitChoice === undefined
+				)
+			: false;
+		if (!shouldInitializeGit && gitCommitChoice === true) {
+			throw new Error('Cannot create an initial commit without initializing Git.');
+		}
 
 		assertChoice(contentPreset, contentPresets, 'content preset');
 		assertChoice(themePreset, themePresets, 'theme preset');
 		assertChoice(backgroundPreset, backgroundPresets, 'background');
 		assertChoice(deployTarget, deployTargets, 'deployment target');
 
+		printSummary([
+			['Site', siteName],
+			['Preset', contentPreset],
+			['Theme', themePreset],
+			['Background', backgroundPreset],
+			['Deploy', deployTarget],
+			['Install', yesNo(shouldInstall)],
+			['Git', yesNo(shouldInitializeGit)],
+			['Commit', yesNo(shouldCreateInitialCommit)]
+		]);
+
 		const targetDir = await ensureEmptyTarget(targetInput);
+
+		logStep('Writing project files');
 		const config = createConfig({
 			siteName,
 			description,
@@ -702,22 +802,34 @@ export async function scaffold(argv = process.argv.slice(2)) {
 		await writeGeneratedReadme(targetDir, { siteName, deployTarget });
 		await applyDeployTarget(targetDir, deployTarget);
 		await writeContentManifest({ rootDir: targetDir, contentDir: defaultContentDir });
+		logSuccess('Project files written.');
+
 		if (shouldInitializeGit) {
-			console.log('\nInitializing Git repository...');
+			logStep('Initializing Git repository');
 			await initializeGitRepository(targetDir);
+			logSuccess('Git repository initialized.');
 		}
 		if (shouldInstall) {
-			console.log('\nInstalling dependencies...');
+			logStep('Installing dependencies');
 			await installDependencies(targetDir);
+			logSuccess('Dependencies installed.');
+		}
+		if (shouldCreateInitialCommit) {
+			logStep('Creating initial commit');
+			await createInitialCommit(targetDir);
+			logSuccess('Initial commit created.');
 		}
 
-		console.log(`\nCreated ${siteName} in ${targetDir}`);
-		if (shouldInitializeGit) console.log('Initialized Git repository.');
-		if (shouldInstall) console.log('Installed dependencies.');
-		console.log('\nNext steps:');
+		console.log(`\nCreated ${ui.bold(siteName)} in ${formatValue(targetDir)}`);
+		console.log(`\n${ui.bold('Next steps')}`);
 		console.log(`  cd ${path.relative(process.cwd(), targetDir) || '.'}`);
 		if (!shouldInstall) console.log('  pnpm install');
 		console.log('  pnpm dev');
+		if (shouldInitializeGit && !shouldCreateInitialCommit) {
+			console.log(
+				`\n${ui.yellow('Tip')} Run git add . && git commit -m "Initial documentation site" when ready.`
+			);
+		}
 	} finally {
 		rl?.close();
 	}

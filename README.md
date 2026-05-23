@@ -8,7 +8,7 @@ It is built for file-structure CMS style authoring: scaffold a site, choose a st
 
 ## Create a Site
 
-After publishing a release to npm, use the package CLI to scaffold into the current empty directory:
+Use the published package CLI to scaffold into the current empty directory:
 
 ```bash
 pnpm dlx mark-static@latest init
@@ -20,7 +20,7 @@ Or create a new directory in one command:
 pnpm dlx mark-static@latest my-docs
 ```
 
-The CLI downloads the generator, asks a few setup questions, writes a complete SvelteKit static documentation project, and then exits. The generated project is yours: it is private by default, includes a lockfile, and can be developed without keeping this repository around.
+The CLI downloads the generator, guides you through a short setup, shows a project summary, writes a complete SvelteKit static documentation project, and then exits. The generated project is yours: it is private by default, includes a lockfile, and can be developed without keeping this repository around.
 
 For a non-interactive run:
 
@@ -28,10 +28,10 @@ For a non-interactive run:
 pnpm dlx mark-static@latest my-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages
 ```
 
-Add `--install --git` when you want the scaffold to install dependencies and initialize a local Git repository before it exits:
+Add `--install --git --git-commit` when you want the scaffold to install dependencies, initialize a local Git repository, and create the first commit before it exits:
 
 ```bash
-pnpm dlx mark-static@latest my-docs --yes --install --git
+pnpm dlx mark-static@latest my-docs --yes --install --git --git-commit
 ```
 
 Then start the generated project:
@@ -58,6 +58,7 @@ The scaffold asks for:
 - deployment target: `github-pages`, `netlify`, `vercel`, or `static`
 - whether to install dependencies
 - whether to initialize Git
+- whether to create an initial commit
 
 Useful package CLI helpers:
 
@@ -69,7 +70,7 @@ pnpm dlx mark-static@latest --list-presets
 Local non-interactive run:
 
 ```bash
-pnpm create-site ../acme-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages --install --git
+pnpm create-site ../acme-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages --install --git --git-commit
 ```
 
 To scaffold into the current empty directory:
@@ -240,9 +241,7 @@ For Netlify, Vercel, or other root-hosted static targets, keep `site.basePath` e
 
 ## Release
 
-The package name currently returns 404 from the npm registry, so `mark-static` appears unpublished before the first release.
-
-Before publishing, run the full release gate:
+`mark-static` is published on npm. Before publishing a new version, update `package.json` and `CHANGELOG.md`, then run the full release gate:
 
 ```bash
 pnpm release:check

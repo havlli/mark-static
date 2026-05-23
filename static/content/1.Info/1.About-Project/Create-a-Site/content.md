@@ -6,7 +6,7 @@ order: 2
 
 # Create a Site
 
-After publishing a release to npm, the easiest flow is to run the package CLI with pnpm:
+The easiest flow is to run the published package CLI with pnpm:
 
 ```bash
 pnpm dlx mark-static@latest init
@@ -18,16 +18,16 @@ pnpm dlx mark-static@latest init
 pnpm dlx mark-static@latest my-docs
 ```
 
-The CLI asks for the site name, description, content preset, theme preset, background style, and deployment target. For repeatable setup, pass the choices as flags:
+The CLI asks for the site name, description, content preset, theme preset, background style, deployment target, and optional setup actions. It then shows a project summary before writing files. For repeatable setup, pass the choices as flags:
 
 ```bash
 pnpm dlx mark-static@latest my-docs --yes --name "Acme Docs" --description "Acme product documentation." --preset basic --theme forest --background grid --deploy github-pages
 ```
 
-Add `--install --git` when you want the CLI to install dependencies and initialize a local Git repository before it exits:
+Add `--install --git --git-commit` when you want the CLI to install dependencies, initialize a local Git repository, and create the first commit before it exits:
 
 ```bash
-pnpm dlx mark-static@latest my-docs --yes --install --git
+pnpm dlx mark-static@latest my-docs --yes --install --git --git-commit
 ```
 
 ## Start the Generated Site
@@ -75,6 +75,8 @@ Post-scaffold actions:
 - `--no-install`: skips dependency installation.
 - `--git`: runs `git init` in the generated project.
 - `--no-git`: skips Git initialization.
+- `--git-commit`: creates an initial `Initial documentation site` commit after Git initialization.
+- `--no-git-commit`: skips initial commit creation.
 
 ## Local Repository Development
 

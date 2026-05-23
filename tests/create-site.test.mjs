@@ -30,6 +30,7 @@ async function runCli(args, options = {}) {
 		cwd: options.cwd || projectRoot,
 		env: {
 			...process.env,
+			NO_COLOR: '1',
 			...options.env
 		},
 		maxBuffer: 1024 * 1024
@@ -44,6 +45,7 @@ async function runPnpm(args, options = {}) {
 		env: {
 			...process.env,
 			CI: '1',
+			NO_COLOR: '1',
 			PATH: [
 				process.env.PNPM_HOME,
 				process.env.npm_execpath ? path.dirname(process.env.npm_execpath) : '',
@@ -88,6 +90,7 @@ test('prints help without scaffolding a project', async () => {
 	assert.match(stdout, /mark-static init/);
 	assert.match(stdout, /--install, --no-install/);
 	assert.match(stdout, /--git, --no-git/);
+	assert.match(stdout, /--git-commit, --no-git-commit/);
 	assert.match(stdout, /--list-presets/);
 });
 
@@ -157,6 +160,8 @@ test('scaffolds a clean generated site with provider config', async () => {
 	);
 
 	assert.match(stdout, /Created Acme Docs/);
+	assert.match(stdout, /Project summary/);
+	assert.match(stdout, /OK Project files written/);
 	assert.equal(packageJson.name, 'acme-docs');
 	assert.equal(packageJson.description, 'Acme documentation.');
 	assert.equal(packageJson.private, true);
@@ -231,7 +236,7 @@ test('github pages scaffold uses first-party pages deployment', async () => {
 	assert.doesNotMatch(workflow, /FORCE_JAVASCRIPT_ACTIONS_TO_NODE24/);
 });
 
-test('can initialize git and install dependencies when requested', async () => {
+test('can initialize git, install dependencies, and create an initial commit when requested', async () => {
 	const fixture = await createFixture();
 	const targetDir = path.join(fixture, 'ready-docs');
 	const binDir = path.join(fixture, 'bin');
@@ -248,21 +253,44 @@ test('can initialize git and install dependencies when requested', async () => {
 	await fs.chmod(fakePnpm, 0o755);
 
 	const { stdout } = await runCli(
-		[targetDir, '--yes', '--name', 'Ready Docs', '--deploy', 'static', '--install', '--git'],
+		[
+			targetDir,
+			'--yes',
+			'--name',
+			'Ready Docs',
+			'--deploy',
+			'static',
+			'--install',
+			'--git',
+			'--git-commit'
+		],
 		{
 			env: {
-				PATH: `${binDir}${path.delimiter}${process.env.PATH}`
+				PATH: `${binDir}${path.delimiter}${process.env.PATH}`,
+				GIT_AUTHOR_NAME: 'Mark Static Test',
+				GIT_AUTHOR_EMAIL: 'mark-static@example.invalid',
+				GIT_COMMITTER_NAME: 'Mark Static Test',
+				GIT_COMMITTER_EMAIL: 'mark-static@example.invalid'
 			}
 		}
 	);
 	const installLogContents = await fs.readFile(installLog, 'utf8');
 	const realTargetDir = await fs.realpath(targetDir);
+	const { stdout: commitSubject } = await execFileAsync('git', ['log', '--format=%s', '-1'], {
+		cwd: targetDir
+	});
+	const { stdout: gitStatus } = await execFileAsync('git', ['status', '--short'], {
+		cwd: targetDir
+	});
 
-	assert.match(stdout, /Initialized Git repository/);
-	assert.match(stdout, /Installed dependencies/);
+	assert.match(stdout, /Git repository initialized/);
+	assert.match(stdout, /Dependencies installed/);
+	assert.match(stdout, /Initial commit created/);
 	assert.doesNotMatch(stdout, /\n {2}pnpm install/);
 	assert.equal(await exists(path.join(targetDir, '.git')), true);
 	assert.equal(installLogContents, `${realTargetDir}\ninstall`);
+	assert.equal(commitSubject.trim(), 'Initial documentation site');
+	assert.equal(gitStatus, '');
 });
 
 test('rejects conflicting post-scaffold flags', async () => {
@@ -275,5 +303,13 @@ test('rejects conflicting post-scaffold flags', async () => {
 	await assert.rejects(
 		runCli([path.join(fixture, 'git-conflict'), '--yes', '--git', '--no-git']),
 		/Cannot use --git and --no-git together/
+	);
+	await assert.rejects(
+		runCli([path.join(fixture, 'commit-conflict'), '--yes', '--git-commit', '--no-git-commit']),
+		/Cannot use --git-commit and --no-git-commit together/
+	);
+	await assert.rejects(
+		runCli([path.join(fixture, 'no-git-commit'), '--yes', '--no-git', '--git-commit']),
+		/Cannot use --no-git and --git-commit together/
 	);
 });

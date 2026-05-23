@@ -6,17 +6,15 @@ order: 5
 
 # Publishing
 
-The package is prepared for npm publishing as `mark-static`. The expected public install path after release is:
+The package is published on npm as `mark-static`. The public install path is:
 
 ```bash
 pnpm dlx mark-static@latest init
 ```
 
-The npm registry currently returns 404 for `mark-static`, so the name appears unpublished before the first release.
-
 ## Release Check
 
-Run the full release gate before publishing:
+Before publishing a new version, update `package.json` and `CHANGELOG.md`, then run the full release gate:
 
 ```bash
 pnpm release:check
@@ -64,4 +62,4 @@ pnpm dev
 
 ## Release Contents
 
-Version `0.1.0` is the first release candidate. It includes the scaffold CLI, app template, presets, static assets, generated content system, docs validation, theme token layer, and deployment targets.
+Version `0.1.0` was the first public release. It includes the scaffold CLI, app template, presets, static assets, generated content system, docs validation, theme token layer, and deployment targets.

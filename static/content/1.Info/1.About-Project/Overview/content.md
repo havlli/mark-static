@@ -14,7 +14,7 @@ The intended published-package flow is scaffold-first:
 pnpm dlx mark-static@latest init
 ```
 
-The CLI writes a complete documentation project with pnpm, Svelte 5, SvelteKit, Tailwind CSS 4, Skeleton 4, Markdown rendering, search, theme variables, static deployment settings, and documentation validation. It can also install dependencies and initialize Git when requested.
+The CLI writes a complete documentation project with pnpm, Svelte 5, SvelteKit, Tailwind CSS 4, Skeleton 4, Markdown rendering, search, theme variables, static deployment settings, and documentation validation. It can also install dependencies, initialize Git, and create an initial commit when requested.
 
 ## What Gets Generated
 
@@ -30,7 +30,7 @@ Common generated files:
 
 ## Core Features
 
-- **One-command scaffold**: Run `pnpm dlx mark-static@latest init` or create a new directory with `pnpm dlx mark-static@latest my-docs`, with optional `--install --git` setup.
+- **One-command scaffold**: Run `pnpm dlx mark-static@latest init` or create a new directory with `pnpm dlx mark-static@latest my-docs`, with optional `--install --git --git-commit` setup.
 - **Flexible Markdown structure**: Use direct `.md` pages, folder `index.md` files, or legacy `content.md` page folders.
 - **Generated navigation and search**: Content structure produces the sidebar, breadcrumbs, page metadata, and search index.
 - **Stable slugs**: Numeric ordering prefixes are stripped, names are normalized, and sibling route collisions fail generation.
