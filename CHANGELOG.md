@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Background presets: `aurora`, `grid`, and `none`.
 - Deployment targets for GitHub Pages, Netlify, Vercel, and plain static hosting.
 - Optional post-scaffold `--install` and `--git` setup actions.
+- Package metadata validation, pack checks, and a local release dry-run script.
 - Flexible Markdown content model supporting direct `.md` pages, `index.md` folder landing pages, and `content.md` page folders.
 - Generated navigation, breadcrumbs, search index, prerender entries, and stable route slugs.
 - Markdown frontmatter for title, description, order, slug, tags, and draft status.

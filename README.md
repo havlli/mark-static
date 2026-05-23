@@ -240,15 +240,32 @@ For Netlify, Vercel, or other root-hosted static targets, keep `site.basePath` e
 
 ## Release
 
-The package name currently returns 404 from the npm registry, so `mark-static` appears unpublished. Before publishing a release:
+The package name currently returns 404 from the npm registry, so `mark-static` appears unpublished before the first release.
+
+Before publishing, run the full release gate:
 
 ```bash
 pnpm release:check
+```
+
+This runs package metadata validation, unit tests, the packed-package scaffold smoke test, linting, documentation validation, generated-manifest drift detection, a production build, and a package dry run. The same command runs automatically through `prepublishOnly`.
+
+To create an inspectable local tarball without publishing:
+
+```bash
+pnpm release:dry-run
+```
+
+This writes the packed archive to the ignored `package` directory after the full release gate passes.
+
+The `prepack` lifecycle also runs the package metadata check, documentation check, and generated-manifest drift check whenever the package is packed or published.
+
+When the dry run looks right, verify the npm account and publish:
+
+```bash
 npm whoami
 pnpm publish --access public
 ```
-
-`pnpm release:check` runs tests, the packed-package scaffold smoke test, linting, documentation validation, generated-manifest drift detection, production build, and a package dry run. The same command runs automatically through `prepublishOnly`.
 
 After publishing, verify the public scaffold path:
 

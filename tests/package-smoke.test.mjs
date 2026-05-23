@@ -145,6 +145,13 @@ test('packed package scaffolds a lockfile-valid buildable site', async () => {
 	assert.equal(generatedPackage.private, true);
 	assert.equal(generatedPackage.packageManager, projectPackage.packageManager);
 	assert.deepEqual(generatedPackage.pnpm, projectPackage.pnpm);
+	assert.equal(generatedPackage.publishConfig, undefined);
+	assert.equal(generatedPackage.scripts['package:check'], undefined);
+	assert.equal(generatedPackage.scripts['pack:check'], undefined);
+	assert.equal(generatedPackage.scripts['release:dry-run'], undefined);
+	assert.equal(generatedPackage.scripts.prepack, undefined);
 	assert.equal(generatedPackage.scripts['test:smoke'], undefined);
+	assert.equal(await exists(path.join(targetDir, 'scripts/check-package.mjs')), false);
+	assert.equal(await exists(path.join(targetDir, 'scripts/check-generated.mjs')), true);
 	assert.equal(await exists(path.join(targetDir, 'build/index.html')), true);
 });

@@ -419,8 +419,13 @@ async function updatePackageJson(targetDir, { packageName, description }) {
 	delete packageJson.keywords;
 	delete packageJson.files;
 	delete packageJson.bin;
+	delete packageJson.publishConfig;
 	delete packageJson.scripts?.['create-site'];
+	delete packageJson.scripts?.['package:check'];
+	delete packageJson.scripts?.['pack:check'];
 	delete packageJson.scripts?.['release:check'];
+	delete packageJson.scripts?.['release:dry-run'];
+	delete packageJson.scripts?.prepack;
 	delete packageJson.scripts?.prepublishOnly;
 	delete packageJson.scripts?.test;
 	delete packageJson.scripts?.['test:smoke'];
@@ -430,6 +435,7 @@ async function updatePackageJson(targetDir, { packageName, description }) {
 
 async function removeScaffoldOnlyFiles(targetDir) {
 	await fs.rm(path.join(targetDir, 'scripts/create-site.mjs'), { force: true });
+	await fs.rm(path.join(targetDir, 'scripts/check-package.mjs'), { force: true });
 	await fs.rm(path.join(targetDir, 'tests'), { recursive: true, force: true });
 }
 

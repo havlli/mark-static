@@ -24,14 +24,26 @@ pnpm release:check
 
 This runs:
 
+- `pnpm package:check`
 - `pnpm test`
+- `pnpm test:smoke`
 - `pnpm lint`
 - `pnpm docs:check`
 - `pnpm check:generated`
 - `pnpm build`
-- `pnpm pack --dry-run`
+- `pnpm pack:check`
 
 The same gate runs automatically through `prepublishOnly`.
+
+`pnpm package:check` validates the npm metadata, public publish config, CLI bin, package file allowlist, and release scripts. `pnpm pack:check` runs the package dry run, which also triggers `prepack`. The `prepack` lifecycle repeats the package metadata check, documentation check, and generated-manifest drift check whenever the package is packed or published.
+
+To create an inspectable local tarball without publishing:
+
+```bash
+pnpm release:dry-run
+```
+
+The tarball is written to the ignored `package` directory after the full release gate passes.
 
 ## Publish
 

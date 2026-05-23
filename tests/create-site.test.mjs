@@ -74,6 +74,13 @@ function resolvePnpm() {
 	return { command: 'node', args: [path.join(pnpmHome, match[1])] };
 }
 
+function parsePackJson(stdout) {
+	const marker = '{\n  "name":';
+	const start = stdout.lastIndexOf(marker);
+	assert.notEqual(start, -1, `Could not find pack JSON in output:\n${stdout}`);
+	return JSON.parse(stdout.slice(start));
+}
+
 test('prints help without scaffolding a project', async () => {
 	const { stdout } = await runCli(['--help']);
 
@@ -95,13 +102,15 @@ test('prints available scaffold presets', async () => {
 
 test('published package contains the scaffold CLI template payload', async () => {
 	const { stdout } = await runPnpm(['pack', '--dry-run', '--json']);
-	const pack = JSON.parse(stdout);
+	const pack = parsePackJson(stdout);
 	const files = new Set(pack.files.map((file) => file.path));
 
 	assert.equal(files.has('.github/workflows/deploy.yml'), true);
 	assert.equal(files.has('.github/workflows/ci.yml'), false);
 	assert.equal(files.has('scripts/create-site.mjs'), true);
+	assert.equal(files.has('scripts/check-generated.mjs'), true);
 	assert.equal(files.has('scripts/generate-content.mjs'), true);
+	assert.equal(files.has('scripts/check-package.mjs'), true);
 	assert.equal(files.has('CHANGELOG.md'), true);
 	assert.equal(files.has('LICENSE'), true);
 	assert.equal(files.has('README.md'), true);
@@ -160,8 +169,13 @@ test('scaffolds a clean generated site with provider config', async () => {
 	assert.equal(packageJson.keywords, undefined);
 	assert.equal(packageJson.files, undefined);
 	assert.equal(packageJson.bin, undefined);
+	assert.equal(packageJson.publishConfig, undefined);
 	assert.equal(packageJson.scripts['create-site'], undefined);
+	assert.equal(packageJson.scripts['package:check'], undefined);
+	assert.equal(packageJson.scripts['pack:check'], undefined);
 	assert.equal(packageJson.scripts['release:check'], undefined);
+	assert.equal(packageJson.scripts['release:dry-run'], undefined);
+	assert.equal(packageJson.scripts.prepack, undefined);
 	assert.equal(packageJson.scripts.prepublishOnly, undefined);
 	assert.equal(packageJson.scripts.test, undefined);
 	assert.equal(packageJson.scripts['test:smoke'], undefined);
@@ -170,6 +184,8 @@ test('scaffolds a clean generated site with provider config', async () => {
 	assert.match(readme, /pnpm docs:check/);
 	assert.match(generatedContent, /Getting Started/);
 	assert.equal(await exists(path.join(targetDir, 'scripts/create-site.mjs')), false);
+	assert.equal(await exists(path.join(targetDir, 'scripts/check-package.mjs')), false);
+	assert.equal(await exists(path.join(targetDir, 'scripts/check-generated.mjs')), true);
 	assert.equal(await exists(path.join(targetDir, 'tests')), false);
 	assert.equal(await exists(path.join(targetDir, '.gitignore')), true);
 	assert.equal(await exists(path.join(targetDir, '.npmrc')), true);

@@ -6,6 +6,9 @@
 	"license": "MIT",
 	"packageManager": "pnpm@10.28.0",
 	"homepage": "https://havlli.github.io/mark-static/",
+	"publishConfig": {
+		"access": "public"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/havlli/mark-static.git"
@@ -18,6 +21,8 @@
 		"markdown",
 		"sveltekit",
 		"static-site",
+		"static-site-generator",
+		"file-based-cms",
 		"docs"
 	],
 	"engines": {
@@ -36,6 +41,8 @@
 		"README.md",
 		"presets/content",
 		"scripts/check-docs.mjs",
+		"scripts/check-generated.mjs",
+		"scripts/check-package.mjs",
 		"scripts/create-site.mjs",
 		"scripts/generate-content.mjs",
 		"src",
@@ -58,10 +65,14 @@
 		"format": "prettier --write .",
 		"generate": "node scripts/generate-content.mjs",
 		"docs:check": "node scripts/check-docs.mjs",
-		"check:generated": "pnpm generate && git diff --exit-code src/lib/generated/content.js",
+		"package:check": "node scripts/check-package.mjs",
+		"check:generated": "node scripts/check-generated.mjs",
 		"test": "node --test tests/create-site.test.mjs tests/generate-content.test.mjs tests/render-content.test.mjs",
 		"test:smoke": "node --test tests/package-smoke.test.mjs",
-		"release:check": "pnpm test && pnpm test:smoke && pnpm lint && pnpm docs:check && pnpm check:generated && pnpm build && pnpm pack --dry-run",
+		"prepack": "pnpm package:check && pnpm docs:check && pnpm check:generated",
+		"pack:check": "pnpm pack --dry-run",
+		"release:check": "pnpm package:check && pnpm test && pnpm test:smoke && pnpm lint && pnpm docs:check && pnpm check:generated && pnpm build && pnpm pack:check",
+		"release:dry-run": "pnpm release:check && pnpm pack --pack-destination package",
 		"prepublishOnly": "pnpm release:check"
 	},
 	"devDependencies": {
