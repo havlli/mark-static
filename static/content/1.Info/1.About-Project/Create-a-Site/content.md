@@ -24,6 +24,12 @@ The CLI asks for the site name, description, content preset, theme preset, backg
 pnpm dlx mark-static@latest my-docs --yes --name "Acme Docs" --description "Acme product documentation." --preset basic --theme forest --background grid --deploy github-pages
 ```
 
+Add `--install --git` when you want the CLI to install dependencies and initialize a local Git repository before it exits:
+
+```bash
+pnpm dlx mark-static@latest my-docs --yes --install --git
+```
+
 ## Start the Generated Site
 
 After scaffolding:
@@ -62,6 +68,13 @@ Deployment targets:
 - `netlify`: writes `netlify.toml`.
 - `vercel`: writes `vercel.json`.
 - `static`: writes plain static hosting defaults.
+
+Post-scaffold actions:
+
+- `--install`: runs `pnpm install` in the generated project.
+- `--no-install`: skips dependency installation.
+- `--git`: runs `git init` in the generated project.
+- `--no-git`: skips Git initialization.
 
 ## Local Repository Development
 

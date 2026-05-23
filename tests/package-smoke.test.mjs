@@ -124,7 +124,9 @@ test('packed package scaffolds a lockfile-valid buildable site', async () => {
 		'--background',
 		'none',
 		'--deploy',
-		'static'
+		'static',
+		'--no-install',
+		'--no-git'
 	]);
 
 	await runPnpm(['install', '--frozen-lockfile', '--lockfile-only'], { cwd: targetDir });

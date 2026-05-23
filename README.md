@@ -28,6 +28,12 @@ For a non-interactive run:
 pnpm dlx mark-static@latest my-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages
 ```
 
+Add `--install --git` when you want the scaffold to install dependencies and initialize a local Git repository before it exits:
+
+```bash
+pnpm dlx mark-static@latest my-docs --yes --install --git
+```
+
 Then start the generated project:
 
 ```bash
@@ -50,6 +56,8 @@ The scaffold asks for:
 - theme preset: `default`, `forest`, or `mono`
 - background: `aurora`, `grid`, or `none`
 - deployment target: `github-pages`, `netlify`, `vercel`, or `static`
+- whether to install dependencies
+- whether to initialize Git
 
 Useful package CLI helpers:
 
@@ -61,7 +69,7 @@ pnpm dlx mark-static@latest --list-presets
 Local non-interactive run:
 
 ```bash
-pnpm create-site ../acme-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages
+pnpm create-site ../acme-docs --yes --name "Acme Docs" --preset basic --theme forest --background aurora --deploy github-pages --install --git
 ```
 
 To scaffold into the current empty directory:

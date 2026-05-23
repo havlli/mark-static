@@ -28,6 +28,10 @@ async function exists(filePath) {
 async function runCli(args, options = {}) {
 	return execFileAsync(process.execPath, [createSiteScript, ...args], {
 		cwd: options.cwd || projectRoot,
+		env: {
+			...process.env,
+			...options.env
+		},
 		maxBuffer: 1024 * 1024
 	});
 }
@@ -75,6 +79,8 @@ test('prints help without scaffolding a project', async () => {
 
 	assert.match(stdout, /Usage:/);
 	assert.match(stdout, /mark-static init/);
+	assert.match(stdout, /--install, --no-install/);
+	assert.match(stdout, /--git, --no-git/);
 	assert.match(stdout, /--list-presets/);
 });
 
@@ -207,4 +213,51 @@ test('github pages scaffold uses first-party pages deployment', async () => {
 	assert.match(workflow, /actions\/deploy-pages@v5/);
 	assert.doesNotMatch(workflow, /peaceiris/);
 	assert.doesNotMatch(workflow, /FORCE_JAVASCRIPT_ACTIONS_TO_NODE24/);
+});
+
+test('can initialize git and install dependencies when requested', async () => {
+	const fixture = await createFixture();
+	const targetDir = path.join(fixture, 'ready-docs');
+	const binDir = path.join(fixture, 'bin');
+	const installLog = path.join(fixture, 'install.log');
+	await fs.mkdir(binDir);
+	const fakePnpm = path.join(binDir, 'pnpm');
+	const fakePnpmSource = [
+		'#!/usr/bin/env node',
+		"const fs = require('node:fs');",
+		`fs.writeFileSync(${JSON.stringify(installLog)}, process.cwd() + '\\n' + process.argv.slice(2).join(' '));`,
+		''
+	].join('\n');
+	await fs.writeFile(fakePnpm, fakePnpmSource);
+	await fs.chmod(fakePnpm, 0o755);
+
+	const { stdout } = await runCli(
+		[targetDir, '--yes', '--name', 'Ready Docs', '--deploy', 'static', '--install', '--git'],
+		{
+			env: {
+				PATH: `${binDir}${path.delimiter}${process.env.PATH}`
+			}
+		}
+	);
+	const installLogContents = await fs.readFile(installLog, 'utf8');
+	const realTargetDir = await fs.realpath(targetDir);
+
+	assert.match(stdout, /Initialized Git repository/);
+	assert.match(stdout, /Installed dependencies/);
+	assert.doesNotMatch(stdout, /\n {2}pnpm install/);
+	assert.equal(await exists(path.join(targetDir, '.git')), true);
+	assert.equal(installLogContents, `${realTargetDir}\ninstall`);
+});
+
+test('rejects conflicting post-scaffold flags', async () => {
+	const fixture = await createFixture();
+
+	await assert.rejects(
+		runCli([path.join(fixture, 'install-conflict'), '--yes', '--install', '--no-install']),
+		/Cannot use --install and --no-install together/
+	);
+	await assert.rejects(
+		runCli([path.join(fixture, 'git-conflict'), '--yes', '--git', '--no-git']),
+		/Cannot use --git and --no-git together/
+	);
 });

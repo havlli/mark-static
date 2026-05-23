@@ -1,10 +1,13 @@
 #!/usr/bin/env node
+import { execFile } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import readline from 'node:readline/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { promisify } from 'node:util';
 import { writeContentManifest, slugify } from './generate-content.mjs';
 
+const execFileAsync = promisify(execFile);
 const scriptPath = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(scriptPath), '..');
 const presetsRoot = path.join(projectRoot, 'presets/content');
@@ -62,9 +65,13 @@ const knownFlags = new Set([
 	'background',
 	'deploy',
 	'description',
+	'git',
 	'help',
+	'install',
 	'listPresets',
 	'name',
+	'noGit',
+	'noInstall',
 	'packageName',
 	'preset',
 	'target',
@@ -148,6 +155,8 @@ Options:
   --theme <name>             Theme preset: ${Object.keys(themePresets).join(', ')}.
   --background <name>        Background preset: ${Object.keys(backgroundPresets).join(', ')}.
   --deploy <target>          Deployment target: ${Object.keys(deployTargets).join(', ')}.
+  --install, --no-install    Install dependencies after scaffolding. Defaults to no install.
+  --git, --no-git            Initialize a Git repository after scaffolding. Defaults to no Git init.
   --target <directory>       Target directory.
   --yes                      Use defaults for omitted options.
   --list-presets             Print available presets and exit.
@@ -157,7 +166,7 @@ Options:
 Examples:
   mark-static my-docs
   mark-static init --name "Acme Docs"
-  mark-static my-docs --yes --preset api --theme forest --deploy github-pages`;
+  mark-static my-docs --yes --preset api --theme forest --deploy github-pages --install --git`;
 }
 
 function listPresetsText() {
@@ -226,6 +235,47 @@ async function askChoice(rl, question, choices, fallback, interactive) {
 
 	assertChoice(trimmed, choices, question.toLowerCase());
 	return trimmed;
+}
+
+async function askBoolean(rl, question, fallback, interactive) {
+	if (!interactive) return fallback;
+
+	const suffix = fallback ? 'Y/n' : 'y/N';
+	const answer = await rl.question(`${question} (${suffix}): `);
+	const trimmed = answer.trim().toLowerCase();
+	if (!trimmed) return fallback;
+
+	if (trimmed === 'y' || trimmed === 'yes') return true;
+	if (trimmed === 'n' || trimmed === 'no') return false;
+
+	throw new Error(`Expected yes or no for "${question}".`);
+}
+
+function readBooleanFlag(value, flagName) {
+	if (value === true) return true;
+	if (value === false) return false;
+	if (value === 'true') return true;
+	if (value === 'false') return false;
+	throw new Error(`Invalid value for ${formatFlagName(flagName)}: ${value}`);
+}
+
+function formatFlagName(flagName) {
+	return `--${flagName.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}`;
+}
+
+function booleanFlagPair(flags, positiveFlag, negativeFlag) {
+	const positive = flags[positiveFlag];
+	const negative = flags[negativeFlag];
+
+	if (positive !== undefined && negative !== undefined) {
+		throw new Error(
+			`Cannot use ${formatFlagName(positiveFlag)} and ${formatFlagName(negativeFlag)} together.`
+		);
+	}
+
+	if (positive !== undefined) return readBooleanFlag(positive, positiveFlag);
+	if (negative !== undefined) return !readBooleanFlag(negative, negativeFlag);
+	return undefined;
 }
 
 async function ensureEmptyTarget(targetDir) {
@@ -507,6 +557,33 @@ publish = "build"
 	}
 }
 
+async function runProjectCommand(command, args, targetDir, label) {
+	try {
+		await execFileAsync(command, args, {
+			cwd: targetDir,
+			env: process.env,
+			maxBuffer: 1024 * 1024 * 8
+		});
+	} catch (error) {
+		if (error.code === 'ENOENT') {
+			throw new Error(`Could not run ${label}. Is "${command}" installed and on PATH?`, {
+				cause: error
+			});
+		}
+
+		const detail = [error.stderr, error.stdout].filter(Boolean).join('\n').trim();
+		throw new Error(`Failed to run ${label}.${detail ? `\n${detail}` : ''}`, { cause: error });
+	}
+}
+
+async function initializeGitRepository(targetDir) {
+	await runProjectCommand('git', ['init'], targetDir, 'git init');
+}
+
+async function installDependencies(targetDir) {
+	await runProjectCommand('pnpm', ['install'], targetDir, 'pnpm install');
+}
+
 export async function scaffold(argv = process.argv.slice(2)) {
 	const { command, flags, positional } = parseArgs(argv);
 	assertKnownFlags(flags);
@@ -580,6 +657,20 @@ export async function scaffold(argv = process.argv.slice(2)) {
 			flags.deploy || 'github-pages',
 			interactive
 		);
+		const installChoice = booleanFlagPair(flags, 'install', 'noInstall');
+		const gitChoice = booleanFlagPair(flags, 'git', 'noGit');
+		const shouldInstall = await askBoolean(
+			rl,
+			'Install dependencies after scaffolding',
+			installChoice ?? false,
+			interactive && installChoice === undefined
+		);
+		const shouldInitializeGit = await askBoolean(
+			rl,
+			'Initialize a Git repository',
+			gitChoice ?? false,
+			interactive && gitChoice === undefined
+		);
 
 		assertChoice(contentPreset, contentPresets, 'content preset');
 		assertChoice(themePreset, themePresets, 'theme preset');
@@ -605,11 +696,21 @@ export async function scaffold(argv = process.argv.slice(2)) {
 		await writeGeneratedReadme(targetDir, { siteName, deployTarget });
 		await applyDeployTarget(targetDir, deployTarget);
 		await writeContentManifest({ rootDir: targetDir, contentDir: defaultContentDir });
+		if (shouldInitializeGit) {
+			console.log('\nInitializing Git repository...');
+			await initializeGitRepository(targetDir);
+		}
+		if (shouldInstall) {
+			console.log('\nInstalling dependencies...');
+			await installDependencies(targetDir);
+		}
 
 		console.log(`\nCreated ${siteName} in ${targetDir}`);
+		if (shouldInitializeGit) console.log('Initialized Git repository.');
+		if (shouldInstall) console.log('Installed dependencies.');
 		console.log('\nNext steps:');
 		console.log(`  cd ${path.relative(process.cwd(), targetDir) || '.'}`);
-		console.log('  pnpm install');
+		if (!shouldInstall) console.log('  pnpm install');
 		console.log('  pnpm dev');
 	} finally {
 		rl?.close();
