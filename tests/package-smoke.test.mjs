@@ -15,7 +15,8 @@ const projectPackage = JSON.parse(
 );
 
 async function createFixture() {
-	return fs.mkdtemp(path.join('/private/tmp', 'mark-static-package-smoke-'));
+	const tmpRoot = process.platform === 'darwin' ? '/private/tmp' : os.tmpdir();
+	return fs.mkdtemp(path.join(tmpRoot, 'mark-static-package-smoke-'));
 }
 
 async function exists(filePath) {
