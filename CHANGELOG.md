@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- GitHub Pages deploys now cancel stale queued deploy attempts when a newer push arrives.
 - Publishing documentation now reflects that `mark-static` is available on npm.
 
 ## 0.1.0 - 2026-05-23
